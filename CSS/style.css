@@ -1,0 +1,73 @@
+body {
+	padding: 1em;
+	background-color: #c9e4ec;
+}
+
+header {
+	position: relative;
+	background-color: blue;
+	text-align: center;
+}
+
+div#body {
+	overflow: hidden;
+}
+
+footer {
+	background-color: green;
+}
+
+/* --Header Elements-- */
+
+#logo {
+	position: absolute;
+	top: 1em;
+	bottom: 1em;
+	left: 1em;
+	height: 4em;
+}
+
+#title {
+	padding: 1em;
+}
+
+#login_form {
+
+}
+
+/* --Body Elements-- */
+
+/* Menu */
+
+#menuWrapper {
+	float: left;
+	width: 19%;
+	margin-right: 1%;
+}
+
+#menu {
+	background-color: #777;
+	height: 10em;
+	/* Height should be removed once elements are added so it auto resizes */
+}
+
+
+/* Map */
+
+#mapWrapper {
+	float: left;
+	width: 79%;
+	margin-left: 1%;
+}
+
+#map {
+	background-color: purple;
+	height: 10em;
+	
+}
+
+/* --Footer Elements-- */
+
+footer p {
+	padding: 1em;
+}
