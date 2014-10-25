@@ -1,33 +1,40 @@
 body {
-	padding: 1em;
 	background-color: #c9e4ec;
 }
 
 header {
+	left: -.4%;
+	width: 100.8%;
 	position: relative;
 	background-color: #163B8C;
 	background-image: url("../img/MastheadGradientBG.jpg");
 	background-size: 100% 100%;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat; 
 	text-align: center;
 }
 
 div#body {
+	padding: 1em;
+	padding-top: 0;
 	overflow: hidden;
 }
 
 footer {
-	background-color: green;
+	margin: 1%;
+	box-shadow: -1px -1px 1px 2px #000;
+	background-color: #96001B;
+	text-shadow: -1px -1px 1px #000;
+	color: #FFF;
+	text-align: center;
 }
 
 /* --Header Elements-- */
 
 #logo {
 	position: absolute;
-	top: 1em;
-	bottom: 1em;
-	left: 1em;
-	height: 4em;
+	top: .2em;
+	left: 5em;
+	height: 6em;
 }
 
 #title {
@@ -41,8 +48,8 @@ footer {
 
 #login_form {
     position: absolute;
-    top:5px;
-    right:0;
+    top:1em;
+    right: 3em;
     padding:10px;
 }
 
@@ -50,7 +57,7 @@ footer {
     color:white;
     position:absolute;
     top:35px;
-    left:150px;
+    left:190px;
 }
 
 /* --Body Elements-- */
@@ -77,12 +84,6 @@ footer {
 	width: 79%;
 	margin-left: 1%;
 	height: 40em;
-}
-
-#map {
-	background-color: purple;
-	
-	
 }
 
 /* --Footer Elements-- */
