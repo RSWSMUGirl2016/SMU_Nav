@@ -20,6 +20,13 @@
             <h1 id="title">SMU NAV</h1>
 
             <div id="login_form">
+                <form id="signInArea" name = "signInArea" method = "post">
+                    <input id="UserName" type = "text" name="username" placeholder="Username">
+                    <input id="Password" type="password" name="password" placeholder="Password" required pattern=".{8,}">
+                    <input class="button" type="submit" value="Login" id="login">
+                    <input class="button" type="button" value="Register" id="register">
+                    <a id ="forgotPass" href = "forgotpass.html">Forgot Password?</a>
+                </form>
             </div>
         </header>
 

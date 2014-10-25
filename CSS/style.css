@@ -40,7 +40,17 @@ footer {
 }
 
 #login_form {
+    position: absolute;
+    top:5px;
+    right:0;
+    padding:10px;
+}
 
+#forgotPass{
+    color:white;
+    position:absolute;
+    top:35px;
+    left:150px;
 }
 
 /* --Body Elements-- */
