@@ -58,11 +58,12 @@ footer {
 	float: left;
 	width: 79%;
 	margin-left: 1%;
+	height: 30em;
 }
 
 #map {
 	background-color: purple;
-	height: 10em;
+	
 	
 }
 
