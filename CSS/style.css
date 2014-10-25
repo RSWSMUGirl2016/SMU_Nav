@@ -5,7 +5,10 @@ body {
 
 header {
 	position: relative;
-	background-color: blue;
+	background-color: #163B8C;
+	background-image: url("../img/MastheadGradientBG.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 	text-align: center;
 }
 
@@ -28,7 +31,12 @@ footer {
 }
 
 #title {
-	padding: 1em;
+	padding: .5em;
+	font-size: 3em;
+	color: #FFFFFF;
+   	text-shadow: -1px 0 0 #96001B, 1px 1px 0 #96001B,
+           2px -1px 0 #96001B, 3px 0 0 #96001B;
+
 }
 
 #login_form {
