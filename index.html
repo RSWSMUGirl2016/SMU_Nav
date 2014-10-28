@@ -6,12 +6,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="CSS/style.css">
-        <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-        <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <!--<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+            THIS CAUSES AN ERROR!!! (Chris) -->
         <script type="text/javascript" src="js/main.js"></script>
+<<<<<<< HEAD
+=======
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYQFQZrHScITrdvdYilzjSuJIE4gjHXB8">
+            </script>
+
+>>>>>>> 0617353fb847ff013db9fe7c7745e30942b14328
     </head>
     <body>
-        <header>          
-        </header>    
+        <header>
+            <img src="img/SMU_Nav_Logo2.png" id="logo">
+            <h1 id="title">SMU NAV</h1>
+
+            <div id="login_form">
+                <form id="signInArea" name = "signInArea" method = "post">
+                    <input id="UserName" type = "text" name="username" placeholder="Username">
+                    <input id="Password" type="password" name="password" placeholder="Password" required pattern=".{8,}">
+                    <input class="button" type="submit" value="Login" id="login">
+                    <input class="button" type="button" value="Register" id="register">
+                    <a id ="forgotPass" href = "forgotpass.html">Forgot Password?</a>
+                </form>
+            </div>
+        </header>
+
+        <div id="body">
+            <div id="menuWrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="mapWrapper">
+                <div id="map">
+                </div>
+            </div>
+        </div>
+            
+        <footer>
+            <p>Copyright &copy; 2014 Compass Studios. All Rights Reserved.</p>
+        </footer> 
     </body>
 </html>
