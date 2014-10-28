@@ -76,6 +76,22 @@ footer {
 	/* Height should be removed once elements are added so it auto resizes */
 }
 
+#menu > ul > li {
+	color: white;
+	list-style-type: none;
+}
+
+#menu > ul > li > ul {
+	color: black;
+	list-style-type: none;
+}
+
+#menu > ul{
+    list-style-type: none;
+}
+
+
+
 
 /* Map */
 
