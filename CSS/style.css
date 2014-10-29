@@ -60,6 +60,18 @@ footer {
     left:190px;
 }
 
+#SignedIn{
+    position: absolute;
+    top:1em;
+    right:3em;
+    padding:10px;
+    display:none;
+}
+
+#register_form{
+    display: none;
+}
+
 /* --Body Elements-- */
 
 /* Menu */
