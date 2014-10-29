@@ -12,7 +12,7 @@ $(document).ready(function() {
 	google.maps.event.addDomListener(window, 'load', initializeMap);
         //Registration Popup
         $("#register_form").dialog({
-            autoOpen:false, height:300, width:350, modal: true
+            autoOpen:false, height:300, width:350, modal: true, background:"blue"
         });
         $( "#registration").click(function() {
             $("#register_form" ).dialog( "open" );
@@ -36,10 +36,36 @@ $(document).ready(function() {
 //    }
 //}
 //
-//function register(){
-//    event.preventDefault();
-//    $.ajax(
-//            {)
-//}
+function register(event){
+    event.preventDefault();
+    $.ajax({
+        type:"POST",
+        url: "api/createUserAccount",
+        datatype:"json",
+        data: {
+                firstname: $("#fname").val(),
+                lastname: $("#lname").val(),
+                email: $("#email").val(),
+                password: $("#password").val()
+            },
+        success:function(result){
+            if(result == "error_email"){
+                return;
+            }
+            $.ajax({
+                    type: "POST",
+                    url: "api/loginUser",
+                    data: {
+                        email: $("#Email").val(),
+                        password: $("#Password").val()
+                    },
+                    success: function(result){
+                       $("#login_form").css('display','none');
+                       $("#SignedIn").css('display','none');
+                    }
+            });
+        }
+    });
+}
 
 
