@@ -42,4 +42,10 @@ $(document).ready(function() {
 //            {)
 //}
 
+//Hide these if user is not logged in
+$(function() {
+    $('#favorites, #recommended')
+        .hide();
+});
+
 
