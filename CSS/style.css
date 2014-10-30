@@ -5,7 +5,7 @@ body {
 }
 
 header {
-	top: 0;
+	margin-top: -2em;
 	position: relative;
 	background-color: #163B8C;
 	background-image: url("../img/MastheadGradientBG.jpg");
