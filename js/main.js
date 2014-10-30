@@ -91,6 +91,11 @@ $(function() {
         .hide();
 });
 
+$(document).ready(function(){
+  $('.favs_list').hide();
+  $('.recomms_list').hide();
+});
+
 $(document).ready(function() {
     // Hide submenus
     $(".favs_title").click(function() {
