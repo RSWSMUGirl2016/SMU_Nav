@@ -10,7 +10,7 @@ INSERT INTO Coordinates(x,y,z) VALUES
 	(49.313657,-69.113975,3),
 	(59.313657,-59.113975,1),
 	(69.313657,-49.113975,3);
-INSERT INTO Location(buildName, roomName, roomNumber, Coordinates_idCoordinates) VALUES 
+INSERT INTO Location(buildingName, roomName, roomNumber, Coordinates_idCoordinates) VALUES 
 	("Embrey", NULL, NULL,1),
 	("Embrey", NULL, 216,1),
 	("Embrey", NULL, 215,2),
