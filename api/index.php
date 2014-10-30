@@ -31,6 +31,7 @@ function saltCost(){
 }
 
 $app->post('/loginUser', function(){
+	session_start();
     global $mysqli;
     $email = $_POST['email'];
     $password = $_POST['password'];

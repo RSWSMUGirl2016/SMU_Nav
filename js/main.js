@@ -10,16 +10,17 @@ $(document).ready(function() {
 	}
 
 	google.maps.event.addDomListener(window, 'load', initializeMap);
-        //Registration Popup
-        $("#register_form").dialog({
-            autoOpen:false, height:300, width:350, modal: true, background:"blue"
-        });
-        $( "#registration").click(function() {
-            $("#register_form" ).dialog( "open" );
-        });
-        $("#cancel").click(function() {
-           $("#register_form" ).dialog( "close" ); 
-        });
+	
+    //Registration Popup
+    $("#register_form").dialog({
+        autoOpen:false, height:300, width:350, modal: true, background:"blue"
+    });
+    $( "#registration").click(function() {
+        $("#register_form" ).dialog( "open" );
+    });
+    $("#cancel").click(function() {
+       $("#register_form" ).dialog( "close" ); 
+    });
 });
 
 
