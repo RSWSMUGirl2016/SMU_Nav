@@ -57,7 +57,26 @@ footer {
     color:white;
     position:absolute;
     top:35px;
-    left:190px;
+    left:50px;
+}
+
+#registration{
+    color:white;
+    position:absolute;
+    top:35px;
+    left:200px;
+}
+
+#SignedIn{
+    position: absolute;
+    top:1em;
+    right:3em;
+    padding:10px;
+    display:none;
+}
+
+#register_form{
+    display: none;
 }
 
 /* --Body Elements-- */
@@ -71,26 +90,75 @@ footer {
 }
 
 #menu {
-	background-color: #777;
-	height: 10em;
+	/*background-color: #777;
+	height: 10em;*/
+	/*border-right: 1px solid #000;*/
+	padding: 0 0 1em 0;
+	margin-bottom: 1em;
+	font-size: 1.25em;
+	/*background-color: #90bade;*/
+	color: #333;
 	/* Height should be removed once elements are added so it auto resizes */
 }
 
-#menu > ul > li {
-	color: white;
-	list-style-type: none;
+#menu  ul {
+	list-style:none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	/*color: white;
+	list-style-type: none;*/
 }
 
-#menu > ul > li > ul {
+#menu li {
+	border-bottom: 1px solid #90bade;
+	margin: 0;
+	list-style: none;
+	list-style-image: none;
+}
+
+#menu li p {
+	display: block;
+	padding: 5px 5px 5px 0.5em;
+	border-left: 10px solid #CE1126;
+	border-right: 10px solid #E2D6B5;
+	background-color: #CE1126;
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.2em;
+	width: 100%; 
+}
+
+html>body #menu li a, html>body #menu li p {
+	width: auto;
+	margin: 0;
+}
+
+#menu li a {
+	border-left: 10px solid #E2D6B5;
+	border-right: 10px solid #E2D6B5;
+	background-color: #E2D6B5;
+	display: block;
+	padding: 5px 5px 5px 0.5em;
+	color: #000;
+	text-decoration: none;
+	width: 100%; 
+}
+
+#favorites{
+	margin-bottom: 2em;
+}
+
+/*#menu > ul > li > ul {
 	color: black;
 	list-style-type: none;
 }
-
-#menu > ul{
-    list-style-type: none;
+ul li ul {
+    display: none;
 }
-
-
+ul li:hover ul {
+    display: block;
+}*/
 
 
 /* Map */
