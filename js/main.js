@@ -9,7 +9,6 @@ $(document).ready(function () {
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
     }
 
-<<<<<<< HEAD
 	google.maps.event.addDomListener(window, 'load', initializeMap);
 	
     //Registration Popup
@@ -22,25 +21,12 @@ $(document).ready(function () {
     $("#cancel").click(function() {
        $("#register_form" ).dialog( "close" ); 
     });
-=======
-    google.maps.event.addDomListener(window, 'load', initializeMap);
-    //Registration Popup
-    $("#register_form").dialog({
-        autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
-    });
-    $("#registration").click(function () {
-        $("#register_form").dialog("open");
-    });
-    $("#cancel").click(function () {
-        $("#register_form").dialog("close");
-    });
 
     //Form Submit
     var signIn = document.getElementById("login_form");
     var register = document.getElementById("registerArea");
     signIn.addEventListener('submit', login, false);
     register.addEventListener('submit', register, false);
->>>>>>> origin/master
 });
 
 
