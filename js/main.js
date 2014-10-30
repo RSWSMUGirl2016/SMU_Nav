@@ -23,7 +23,7 @@ $(document).ready(function () {
     });
 
     //Form Submit
-    var signIn = document.getElementById("login_form");
+    var signIn = document.getElementById("signInArea");
     var register = document.getElementById("registerArea");
     signIn.addEventListener('submit', login, false);
     register.addEventListener('submit', register, false);
