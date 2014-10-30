@@ -49,14 +49,12 @@ $app->post('/createUserAccount', function () {
 			$row = $prevUser->fetch_assoc();
 			if($row === NULL){
 			    $outputJSON = array ('u_id'=>1);
-			    $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email) VALUES (1, '$fName', '$lName', '$email')");
-			    $passInsertion = $mysqli->query("INSERT INTO Passwords VALUES (1, '$password')");
+			    $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES (1, '$fName', '$lName', '$email', '$password')");
 			}
 			else{
 			    $newID = $row['idUser']+1;
 			    $outputJSON = array ('u_id'=>$newID);
-			    $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email) VALUES ($newID, '$fName', '$lName', '$email')");
-			    $passInsertion = $mysqli->query("INSERT INTO Passwords VALUES ($newID, '$password')");
+			    $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES ($newID, '$fName', '$lName', '$email', '$password')");
 		    }
                 }
             }
