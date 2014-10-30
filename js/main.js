@@ -79,3 +79,36 @@ function register(event) {
 }
 
 
+//Menu jquery and js
+//Hide these if user is not logged in
+/*$(function() {
+    $('#favorites, #recommended')
+        .hide();
+});*/
+
+$(function() {
+    $('#dir_title', '#directions')
+        .hide();
+});
+
+$(document).ready(function() {
+    $( '.favs_title' ).hover(
+        function(){
+            $(this).children('.favs_list').slideDown(200);
+        },
+        function(){
+            $(this).children('.favs_list').slideUp(200);
+        }
+    );
+}); // end ready
+
+$(document).ready(function() {
+    $( '.recomms_title' ).hover(
+        function(){
+            $(this).children('.recomms_list').slideDown(200);
+        },
+        function(){
+            $(this).children('.recomms_list').slideUp(200);
+        }
+    );
+}); 

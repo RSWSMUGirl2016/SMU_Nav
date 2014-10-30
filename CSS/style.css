@@ -98,6 +98,8 @@ footer {
 	font-size: 1.25em;
 	/*background-color: #90bade;*/
 	color: #333;
+	/*border: 2px solid #000;
+	border-radius: 10px;*/
 	/* Height should be removed once elements are added so it auto resizes */
 }
 
@@ -147,6 +149,17 @@ html>body #menu li a, html>body #menu li p {
 
 #favorites{
 	margin-bottom: 2em;
+}
+
+#dir_title {
+	color: white;
+	margin: 10px;
+	border: 2px solid #000;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+#directions div {
 }
 
 /*#menu > ul > li > ul {
