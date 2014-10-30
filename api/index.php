@@ -1,9 +1,31 @@
 <?php
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
-$app->get('/hello/:name', function ($name) {
-    echo "Hello, $name";
+$app->get('/getEvents', function () {
+   $dummyData = '{
+        "1": {
+            "name": "event_name",
+            "location": [
+                3.1234,
+                4.1234
+            ],
+            "description": "Event description",
+            "eventDateTime": "9999-12-31 23:59:59"
+        },
+        "2": {
+            "name": "event_name",
+            "location": [
+                3.1234,
+                4.1234
+            ],
+            "description": "Event description",
+            "eventDateTime": "9999-12-31 23:59:59"
+        }
+    }'; 
+
+    echo json_encode(json_decode($dummyData, true));
 });
+
 
 
 $app->post('/createUserAccount', function () {

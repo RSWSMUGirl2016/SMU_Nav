@@ -7,6 +7,9 @@
         <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="CSS/style.css">
         <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" /> 
         <!--<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
             THIS CAUSES AN ERROR!!! (Chris) -->
         <script type="text/javascript" src="js/main.js"></script>
@@ -19,12 +22,28 @@
             <h1 id="title">SMU NAV</h1>
 
             <div id="login_form">
-                <form id="signInArea" name = "signInArea" method = "post">
-                    <input id="UserName" type = "text" name="username" placeholder="Username">
-                    <input id="Password" type="password" name="password" placeholder="Password" required pattern=".{8,}">
-                    <input class="button" type="submit" value="Login" id="login">
-                    <input class="button" type="button" value="Register" id="register">
+                <form id="signInArea" action="index.html" method = "POST">
+                    <input id="SignInEmail" type = "email" name="email" placeholder="Email">
+                    <input id="SignInPassword" type="password" name="password" placeholder="Password" required pattern=".{8,}">
+                    <input id="login" class="button" type="submit" value="Login">
+                    <input id="registration" class="button" type="button" value="Register" >
                     <a id ="forgotPass" href = "forgotpass.html">Forgot Password?</a>
+                </form>
+            </div>
+            
+            <div id ="SignedIn">
+                <p id ="welcome"></p>
+            </div>
+            
+            <div id="register_form" title="Registration Form">
+                <form id ="registerArea" action ="index.html" method="POST">
+                    <input id ="fName" type="text" name="firstName" placeholder="First Name">
+                    <input id ="lName" type="text" name="lastName" placeholder="Last Name">
+                    <input id="Email" type = "email" name="email" placeholder="Email">
+                    <input id="Password" type="password" name="password" placeholder="Password" required pattern=".{8,}">
+                    <input id="ConPassword" type="password" name="conPassword" placeholder="Confirm Password" required pattern=".{8,}">
+                    <input id="register" class="button" type="submit" value="Register" >
+                    <input id="cancel" class="button" type="button" value="Cancel" >
                 </form>
             </div>
         </header>
@@ -33,18 +52,22 @@
             <div id="menuWrapper">
                 <div id="menu">
                     <ul>
-                        <li>Favorites
-                            <ul>
-                                <!--Populate with api calls -->
-                                <li><a href="">Favorite #1</a></li>
-                            </ul>
-                        </li>
-                        <li>Recommended
-                            <ul>
-                                <!--Populate with api calls -->
-                                <li><a href="">Recommended #1</a></li>
-                            </ul>
-                        </li>                       
+                        <div id="favorites">
+                            <li><p>Favorites</p>
+                                <ul>
+                                    <!--Populate with api calls -->
+                                    <li><a href="">Favorite #1</a></li>
+                                </ul>
+                            </li>
+                        </div>
+                        <div id="recommended">
+                            <li><p>Recommended</p>
+                                <ul>
+                                    <!--Populate with api calls -->
+                                    <li><a href="">Recommended #1</a></li>
+                                </ul>
+                            </li>  
+                        <div>                     
                     </ul>
                 </div>
             </div>
