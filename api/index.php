@@ -166,6 +166,18 @@ $app->post('/logout', function()  {
     session_destroy();
 });
 
+$app->post('/getCoordinates', function(){
+
+});
+
+$app->post('/getClasses', function() {
+
+});
+
+$app->post('/addClass', function() {
+
+});
+
 
 
 $app->run();
