@@ -23,7 +23,7 @@ $(document).ready(function () {
     });
 
     //Form Submit
-    var signIn = document.getElementById("signInArea");
+    var signIn = document.getElementById("login_form");
     var register = document.getElementById("registerArea");
     signIn.addEventListener('submit', login, false);
     register.addEventListener('submit', register, false);
@@ -92,23 +92,17 @@ $(function() {
 });
 
 $(document).ready(function() {
-    $( '.favs_title' ).hover(
-        function(){
-            $(this).children('.favs_list').slideDown(200);
-        },
-        function(){
-            $(this).children('.favs_list').slideUp(200);
-        }
-    );
-}); // end ready
+    // Hide submenus
+    $(".favs_title").click(function() {
+        $(".favs_list").slideToggle(300);
+        $(this).toggleClass('close');
+    });
+});
 
 $(document).ready(function() {
-    $( '.recomms_title' ).hover(
-        function(){
-            $(this).children('.recomms_list').slideDown(200);
-        },
-        function(){
-            $(this).children('.recomms_list').slideUp(200);
-        }
-    );
-}); 
+    // Hide submenus
+    $(".recomms_title").click(function() {
+        $(".recomms_list").slideToggle(300);
+        $(this).toggleClass('close');
+    });
+});
