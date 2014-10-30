@@ -29,6 +29,11 @@ INSERT INTO Classes(User_idUser, classTime, day, Location_idLocation) VALUES
 	(2,'9999-12-31 23:59:59','MWF',3),
 	(2,'9999-12-31 23:59:59','TH',4),
 	(2,'9999-12-31 23:59:59','MW',5);
-
+INSERT INTO Event(Location_idLocation, name, description, eventDateTime) VALUES
+	(1,'Meeting','codejam will be having their weakly meeting', '9999-12-31 23:59:59'),
+	(2,'Food','Someone is giving free food', '9999-12-31 23:59:59'),
+	(3,'Tour','Tour of our school is occuring', '9999-12-31 23:59:59'),
+	(4,'Meeting','codejam will be having their weakly meeting', '9999-12-31 23:59:59'),
+	(5,'Tour','Something else that\'s going on', '9999-12-31 23:59:59');
 
 
