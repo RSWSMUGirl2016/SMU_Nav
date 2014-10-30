@@ -41,7 +41,7 @@ function login(event) {
         },
         success: function (result) {
             $("#login_form").css('display', 'none');
-            $("#SignedIn").css('display', 'none');
+            $("#SignedIn").css('display', 'inline');
         }
     });
 }
@@ -71,7 +71,7 @@ function register(event) {
                 },
                 success: function (result) {
                     $("#login_form").css('display', 'none');
-                    $("#SignedIn").css('display', 'none');
+                    $("#SignedIn").css('display', 'inline');
                 }
             });
         }
