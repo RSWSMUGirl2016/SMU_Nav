@@ -79,13 +79,14 @@ $app->post('/loginUser', function(){
     global $mysqli;
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $encryption = ['cost' => saltCost(), 'salt' => mcrypt_create_iv(25,MCRYPT_DEV_URANDOM)];
+    $encryption = ['cost' => saltCost(), 'salt' => mcrypt_create_iv(25,MCRYPT_DEV_URANDOM),];
+	echo "encrypt";
     try {
     $sql = "SELECT idUser FROM User WHERE email=(?)";
     $stmt = $mysqli -> prepare($sql);
         $stmt -> bind_param('ss', $email);
     $username_test = $stmt -> fetch_assoc();
-        
+
     if(($username_test === NULL)) {
         $JSONarray = array(
             'status'=>'Failure', 
