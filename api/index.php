@@ -84,7 +84,7 @@ $app->post('/loginUser', function(){
         return json_encode($JSONarray);
     }
     else{
-        $sql = "SELECT password FROM passwords p, idUser u WHERE p.idUser=u.idUser AND email='$email'";
+        $sql = "SELECT password FROM User WHERE email='$email'";
         $stmt = $mysqli -> prepare($sql);
         $stmt -> bind_param('ss', $email);
         $passwordVal = $stmt -> fetch_assoc();
