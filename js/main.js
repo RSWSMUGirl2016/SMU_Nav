@@ -23,7 +23,7 @@ $(document).ready(function () {
     });
 
     //Form Submit
-    var signIn = document.getElementById("signInArea");
+    var signIn = document.getElementById("login_form");
     var register = document.getElementById("registerArea");
     signIn.addEventListener('submit', login, false);
     register.addEventListener('submit', register, false);
@@ -79,3 +79,35 @@ function register(event) {
 }
 
 
+//Menu jquery and js
+//Hide these if user is not logged in
+/*$(function() {
+    $('#favorites, #recommended')
+        .hide();
+});*/
+
+$(function() {
+    $('#dir_title', '#directions')
+        .hide();
+});
+
+$(document).ready(function(){
+  $('.favs_list').hide();
+  $('.recomms_list').hide();
+});
+
+$(document).ready(function() {
+    // Hide submenus
+    $(".favs_title").click(function() {
+        $(".favs_list").slideToggle(300);
+        $(this).toggleClass('close');
+    });
+});
+
+$(document).ready(function() {
+    // Hide submenus
+    $(".recomms_title").click(function() {
+        $(".recomms_list").slideToggle(300);
+        $(this).toggleClass('close');
+    });
+});

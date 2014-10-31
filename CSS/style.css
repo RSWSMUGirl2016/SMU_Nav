@@ -1,10 +1,11 @@
 body {
 	background-color: #c9e4ec;
+	margin: 0;
+	padding: 0;
 }
 
 header {
-	left: -.4%;
-	width: 100.8%;
+	margin-top: -2em;
 	position: relative;
 	background-color: #163B8C;
 	background-image: url("../img/MastheadGradientBG.jpg");
@@ -87,9 +88,13 @@ footer {
 	float: left;
 	width: 19%;
 	margin-right: 1%;
+	background-color: black;
+	position: relative;
+	left: -1em;
 }
 
 #menu {
+	width: 90%;
 	/*background-color: #777;
 	height: 10em;*/
 	/*border-right: 1px solid #000;*/
@@ -98,6 +103,8 @@ footer {
 	font-size: 1.25em;
 	/*background-color: #90bade;*/
 	color: #333;
+	/*border: 2px solid #000;
+	border-radius: 10px;*/
 	/* Height should be removed once elements are added so it auto resizes */
 }
 
@@ -111,6 +118,7 @@ footer {
 }
 
 #menu li {
+
 	border-bottom: 1px solid #90bade;
 	margin: 0;
 	list-style: none;
@@ -147,6 +155,17 @@ html>body #menu li a, html>body #menu li p {
 
 #favorites{
 	margin-bottom: 2em;
+}
+
+#dir_title {
+	color: white;
+	margin: 10px;
+	border: 2px solid #000;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+#directions div {
 }
 
 /*#menu > ul > li > ul {
