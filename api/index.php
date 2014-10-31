@@ -62,26 +62,12 @@ $app->post('/createUserAccount', function () {
 	echo json_encode($outputJSON);
 });
 
-function saltCost(){
-    $timeTarget = 0.05;  
-    $cost = 8;
-    do {
-        $cost++;
-        $start = microtime(true);
-        password_hash("test", PASSWORD_BCRYPT, ["cost" => $cost]);
-        $end = microtime(true);
-    } while (($end - $start) < $timeTarget);
-    return $cost;
-    
-}
-
 $app->post('/loginUser', function(){
     session_start();
     global $mysqli;
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $encryption = ['cost' => saltCost(), 'salt' => mcrypt_create_iv(25,MCRYPT_DEV_URANDOM),];
-	echo "encrypt";
+    
     try {
     $sql = "SELECT idUser FROM User WHERE email=(?)";
     $stmt = $mysqli -> prepare($sql);
@@ -99,13 +85,11 @@ $app->post('/loginUser', function(){
     }
     else{
         $sql = "SELECT password FROM passwords p, idUser u WHERE p.idUser=u.idUser AND email='$email'";
-                $stmt = $mysqli -> prepare($sql);
-                $stmt -> bind_param('ss', $email);
+        $stmt = $mysqli -> prepare($sql);
+        $stmt -> bind_param('ss', $email);
         $passwordVal = $stmt -> fetch_assoc();
-                $hashedPassword = password_hash($passwordVal, PASSWORD_BCRYPT, $encryption);
-                
-                //Potential Problems, Test to see
-        $hashedPassword = $hashedPassword['password'];
+        
+        $hashedPassword = $passwordVal['password'];
         if($hashedPassword === NULL) {
                 $JSONarray = array(
                 'status'=>'Failure', 
