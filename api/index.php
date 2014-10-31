@@ -176,12 +176,13 @@ $app->post('/getCoordinates', function(){
 $app->post('/getClasses', function() {
     global $mysqli;
     $userID = $_POST['userID'];
+    $day = $_POST['day'];
     $outputJSON = array();
-    if($userID === "")
+    if($userID === "" || $day === "")
 	$outputJSON = array('Status'=>'Failure');
     else{
 	array_push($outputJSON, array('Status'=>'Success'));
-	$classQuery = $mysqli->query("SELECT * FROM Classes NATURAL JOIN Location NATURAL JOIN Coordinates WHERE User_idUser = $userID");
+	$classQuery = $mysqli->query("SELECT * FROM Classes NATURAL JOIN Location NATURAL JOIN Coordinates WHERE User_idUser = $userID AND day = '$day'");
 	$counter = 0;
 	while(true){
 	    $classOutput = array();
@@ -189,7 +190,6 @@ $app->post('/getClasses', function() {
 	    if($classList === NULL)
 		break;
 	    $classOutput["classTime"] = $classList["classTime"]; //array("classTime" => $classList["classTime"]));
-	    $classOutput["day"] = $classList["day"]; //array_push($classOutput, array("day" => $classList["day"]));
 	    $classOutput["buildingName"] = $classList["buildingName"]; //array_push($classOutput, array("buildingName" => $classList["buildingName"]));
 	    $classOutput["roomName"] = $classList["roomName"]; //array_push($classOutput, array("roomName" => $classList["roomName"]));
 	    $classOutput["roomNumber"] = $classList["roomNumber"]; //array_push($classOutput, array("roomNumber" => $classList["roomNumber"]));
