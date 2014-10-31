@@ -74,6 +74,7 @@ function saltCost(){
     return $cost;
     
 }
+/*
 $app->post('/loginUser', function(){
     session_start();
     global $mysqli;
@@ -154,7 +155,8 @@ $app->post('/loginUser', function(){
     } catch(exception $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }
-});     
+});
+*/     
 $app->post('/logout', function()  { 
     $_SESSION = array(); 
     if (ini_get("session.use_cookies")) {
@@ -176,6 +178,61 @@ $app->post('/getClasses', function() {
 });
 
 $app->post('/addClass', function() {
+    global $mysqli;
+    $userID = $_POST['userID'];
+    $time = $_POST['time'];
+    $day = $_POST['day'];
+    $building = $_POST['building'];
+    $roomNumber = $_POST['roomNumber'];
+    $roomName = $_POST['roomName'];
+    if($building === "")
+	$outputJSON = array('Status'=>'Failure');
+    else if($roomNumber === "" && $roomName === ""){
+	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' LIMIT 1");
+	    $locationRow = $locationQuery->fetch_assoc();
+	    if($locationRow === NULL)
+		$outputJSON = array('Status'=>'Failure');
+	    else{
+		$location = $locationRow['idLocation'];
+		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($time, '$day', $location, $userID)");
+		$outputJSON = array('Status'=>'Success');
+		}
+	}
+	else if($roomNumber === ""){
+	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName '$roomName' LIMIT 1");
+	    $locationRow = $locationQuery->fetch_assoc();
+	    if($locationRow === NULL)
+		$outputJSON = array('Status'=>'Failure');
+	    else{
+		$location = $locationRow['idLocation'];
+		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($time, '$day', $location, $userID)");
+		$outputJSON = array('Status'=>'Success');
+		}
+	}
+	else if($roomName === ""){
+	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber' LIMIT 1");
+	    $locationRow = $locationQuery->fetch_assoc();
+	    if($locationRow === NULL)
+		$outputJSON = array('Status'=>'Failure');
+	    else{
+		$location = $locationRow['idLocation'];
+		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($time, '$day', $location, $userID)");
+		$outputJSON = array('Status'=>'Success');
+		}
+	}
+	else{
+	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber' LIMIT 1");
+	    $locationRow = $locationQuery->fetch_assoc();
+	    if($locationRow === NULL)
+		$outputJSON = array('Status'=>'Failure');
+	    else{
+		$location = $locationRow['idLocation'];
+		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($time, '$day', $location, $userID)");
+		$outputJSON = array('Status'=>'Success');
+		}
+	}
+	    
+	echo json_encode($outputJSON);
 
 });
 
