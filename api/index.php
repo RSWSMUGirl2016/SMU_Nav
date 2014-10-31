@@ -210,7 +210,7 @@ $app->post('/addClass', function() {
 		$outputJSON = array('Status'=>'Failure');
 	    else{
 		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($userID, '$time', '$day', $location)");
+		$insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
 		$outputJSON = array('Status'=>'Success');
 		}
 	}
@@ -221,7 +221,7 @@ $app->post('/addClass', function() {
 		$outputJSON = array('Status'=>'Failure');
 	    else{
 		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($userID, '$time', '$day', $location)");
+		$insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
 		$outputJSON = array('Status'=>'Success');
 		}
 	}
@@ -232,7 +232,7 @@ $app->post('/addClass', function() {
 		$outputJSON = array('Status'=>'Failure');
 	    else{
 		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($userID, '$time', '$day', $location)");
+		$insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
 		$outputJSON = array('Status'=>'Success');
 		}
 	}
@@ -243,7 +243,7 @@ $app->post('/addClass', function() {
 		$outputJSON = array('Status'=>'Failure');
 	    else{
 		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($userID, '$time', '$day', $location)");
+		$insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
 		$outputJSON = array('Status'=>'Success');
 		}
 	}
