@@ -181,13 +181,22 @@ $app->post('/getClasses', function() {
 	$outputJSON = array('Status'=>'Failure');
     else{
 	array_push($outputJSON, array('Status'=>'Success'));
-	$classQuery = $mysqli->query("SELECT * FROM Classes NATURAL JOIN Location WHERE User_idUser = $userID");
+	$classQuery = $mysqli->query("SELECT * FROM Classes NATURAL JOIN Location NATURAL JOIN Coordinates WHERE User_idUser = $userID");
 	$counter = 0;
 	while(true){
+	    $classOutput = array();
 	    $classList = $classQuery->fetch_assoc();
 	    if($classList === NULL)
 		break;
-	    array_push($outputJSON, array($counter+=1 => $classList));
+	    $classOutput["classTime"] = $classList["classTime"]; //array("classTime" => $classList["classTime"]));
+	    $classOutput["day"] = $classList["day"]; //array_push($classOutput, array("day" => $classList["day"]));
+	    $classOutput["buildingName"] = $classList["buildingName"]; //array_push($classOutput, array("buildingName" => $classList["buildingName"]));
+	    $classOutput["roomName"] = $classList["roomName"]; //array_push($classOutput, array("roomName" => $classList["roomName"]));
+	    $classOutput["roomNumber"] = $classList["roomNumber"]; //array_push($classOutput, array("roomNumber" => $classList["roomNumber"]));
+	    $classOutput["x"] = $classList["x"]; //array_push($classOutput, array("x" => $classList["x"]));
+	    $classOutput["y"] = $classList["y"]; //array_push($classOutput, array("y" => $classList["y"]));
+	    $classOutput["z"] = $classList["y"]; //array_push($classOutput, array("z" => $classList["z"]));
+	    $outputJSON[$counter+=1] = $classOutput;
 	}
     echo json_encode($outputJSON);
     }
