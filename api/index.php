@@ -174,7 +174,23 @@ $app->post('/getCoordinates', function(){
 });
 
 $app->post('/getClasses', function() {
-
+    global $mysqli;
+    $userID = $_POST['userID'];
+    $outputJSON = array();
+    if($userID === "")
+	$outputJSON = array('Status'=>'Failure');
+    else{
+	array_push($outputJSON, array('Status'=>'Success'));
+	$classQuery = $mysqli->query("SELECT * FROM Classes NATURAL JOIN Location WHERE User_idUser = $userID");
+	$counter = 0;
+	while(true){
+	    $classList = $classQuery->fetch_assoc();
+	    if($classList === NULL)
+		break;
+	    array_push($outputJSON, array($counter+=1 => $classList));
+	}
+    echo json_encode($outputJSON);
+    }
 });
 
 $app->post('/addClass', function() {
