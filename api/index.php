@@ -74,7 +74,7 @@ function saltCost(){
     return $cost;
     
 }
-/*
+
 $app->post('/loginUser', function(){
     session_start();
     global $mysqli;
@@ -156,7 +156,7 @@ $app->post('/loginUser', function(){
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }
 });
-*/     
+
 $app->post('/logout', function()  { 
     $_SESSION = array(); 
     if (ini_get("session.use_cookies")) {
@@ -194,7 +194,7 @@ $app->post('/addClass', function() {
 		$outputJSON = array('Status'=>'Failure');
 	    else{
 		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($time, '$day', $location, $userID)");
+		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($userID, '$time', '$day', $location)");
 		$outputJSON = array('Status'=>'Success');
 		}
 	}
@@ -205,7 +205,7 @@ $app->post('/addClass', function() {
 		$outputJSON = array('Status'=>'Failure');
 	    else{
 		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($time, '$day', $location, $userID)");
+		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($userID, '$time', '$day', $location)");
 		$outputJSON = array('Status'=>'Success');
 		}
 	}
@@ -216,7 +216,7 @@ $app->post('/addClass', function() {
 		$outputJSON = array('Status'=>'Failure');
 	    else{
 		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($time, '$day', $location, $userID)");
+		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($userID, '$time', '$day', $location)");
 		$outputJSON = array('Status'=>'Success');
 		}
 	}
@@ -227,7 +227,7 @@ $app->post('/addClass', function() {
 		$outputJSON = array('Status'=>'Failure');
 	    else{
 		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($time, '$day', $location, $userID)");
+		$insertion = $mysqli->query("INSERT INTO Classes VALUES ($userID, '$time', '$day', $location)");
 		$outputJSON = array('Status'=>'Success');
 		}
 	}
