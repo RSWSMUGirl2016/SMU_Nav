@@ -23,7 +23,7 @@ $(document).ready(function () {
     });
 
     //Form Submit
-    var signIn = document.getElementById("login_form");
+    var signIn = document.getElementById("signInArea");
     var register = document.getElementById("registerArea");
     signIn.addEventListener('submit', login, false);
     register.addEventListener('submit', register, false);
@@ -32,13 +32,11 @@ $(document).ready(function () {
 
 function login(event) {
     event.preventDefault();
+    var loginInfo = {email: $("#Email").val(), password: $("#Password").val()};
     $.ajax({
         type: "POST",
-        url: "api/loginUser",
-        data: {
-            email: $("#Email").val(),
-            password: $("#Password").val()
-        },
+        url: "./api/loginUser",
+        data: JSON.stringify(loginInfo),
         success: function (result) {
             $("#login_form").css('display', 'none');
             $("#SignedIn").css('display', 'inline');
@@ -48,16 +46,15 @@ function login(event) {
 
 function register(event) {
     event.preventDefault();
+    var registerInfo = {firstname: $("#fname").val(), 
+        lastname: $("#lname").val(),
+        email: $("#email").val(),
+        password: $("#password").val()};
     $.ajax({
         type: "POST",
         url: "api/createUserAccount",
         datatype: "json",
-        data: {
-            firstname: $("#fname").val(),
-            lastname: $("#lname").val(),
-            email: $("#email").val(),
-            password: $("#password").val()
-        },
+        data: JSON.stringify(registerInfo),
         success: function (result) {
             if (result === "error_email") {
                 return;
