@@ -31,36 +31,37 @@ $app->get('/getEvents', function () {
     echo json_encode(json_decode($dummyData, true));
 });
 
-$app->post('/createUserAccount', function () {
+$app->post('/getCoordinates', function (){
     global $mysqli;
-    $fName = $_POST['fName'];
-    $lName = $_POST['lName'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    if($fName === "" || $lName === "" || $email === "" || $password === "")
-	$outputJSON = array ('u_id'=>-2);
-    else{
-	$dupCheck = $mysqli->query("SELECT email FROM User WHERE email = '$email' LIMIT 1");
-	$checkResults = $dupCheck->fetch_assoc();
-	    if(!($checkResults === NULL))
-		$outputJSON = array ('u_id'=>-1);
-	    else{
-			$prevUser = $mysqli->query("SELECT idUser FROM User ORDER BY idUser DESC LIMIT 1");
-			$row = $prevUser->fetch_assoc();
-			if($row === NULL){
-			    $outputJSON = array ('u_id'=>1);
-			    $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES (1, '$fName', '$lName', '$email', '$password')");
-			}
-			else{
-			    $newID = $row['idUser']+1;
-			    $outputJSON = array ('u_id'=>$newID);
-			    $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES ($newID, '$fName', '$lName', '$email', '$password')");
-		    }
-                }
-            }
-	
-	echo json_encode($outputJSON);
+    $bName = $_POST['buildingName'];
+    $rName = $_POST['roomName'];
+    $rNum = $_POST['roomNumber'];
+
+    if($rName!=null){    //getCoordinates by room name
+        #echo "Its a wonderful day!";
+        $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates WHERE idCoordinates=
+            (SELECT Coordinates_idCoordinates FROM Location WHERE roomName='$rName')");
+
+        $firstResult=$firstQuery->fetch_assoc();
+        echo json_encode($firstResult);
+    }else if($bName!=null && $rName==null && $rNum==null){  //getCoordinates by building name
+        $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates INNER JOIN Location ON 
+            Coordinates.idCoordinates= Location.Coordinates_idCoordinates WHERE buildingName='$bName' 
+            AND roomName IS NULL AND roomNumber IS NULL");
+
+        $firstResult=$firstQuery->fetch_assoc();
+        echo json_encode($firstResult);
+    }else if($bName!=null && $rName==null && $rNum!=null){  //getCoordinates by buildingName and roomNumber
+        $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates WHERE idCoordinates=
+            (SELECT Coordinates_idCoordinates FROM Location WHERE buildingName='$bName' AND 
+            roomNumber='$rNum')");
+
+        $firstResult=$firstQuery->fetch_assoc();
+        echo json_encode($firstResult);
+    }
 });
+
+
 
 $app->post('/loginUser', function(){
     session_start();
@@ -154,7 +155,34 @@ $app->post('/logout', function()  {
 });
 
 $app->post('/getCoordinates', function(){
-
+    global $mysqli;
+    $fName = $_POST['fName'];
+    $lName = $_POST['lName'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    if($fName === "" || $lName === "" || $email === "" || $password === "")
+    $outputJSON = array ('u_id'=>-2);
+    else{
+    $dupCheck = $mysqli->query("SELECT email FROM User WHERE email = '$email' LIMIT 1");
+    $checkResults = $dupCheck->fetch_assoc();
+        if(!($checkResults === NULL))
+        $outputJSON = array ('u_id'=>-1);
+        else{
+            $prevUser = $mysqli->query("SELECT idUser FROM User ORDER BY idUser DESC LIMIT 1");
+            $row = $prevUser->fetch_assoc();
+            if($row === NULL){
+                $outputJSON = array ('u_id'=>1);
+                $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES (1, '$fName', '$lName', '$email', '$password')");
+            }
+            else{
+                $newID = $row['idUser']+1;
+                $outputJSON = array ('u_id'=>$newID);
+                $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES ($newID, '$fName', '$lName', '$email', '$password')");
+            }
+                }
+            }
+    
+    echo json_encode($outputJSON);
 });
 
 $app->post('/getClasses', function() {
