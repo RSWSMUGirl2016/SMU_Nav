@@ -72,7 +72,7 @@ $app->post('/loginUser', function(){
     try {
     $sql = "SELECT idUser FROM User WHERE email=(?)";
     $stmt = $mysqli -> prepare($sql);
-        $stmt -> bind_param('s', $email);
+        $stmt -> bind_param('ss', $email);
     $username_test = $stmt -> fetch_assoc();
 
     if(($username_test === NULL)) {
@@ -85,9 +85,9 @@ $app->post('/loginUser', function(){
         return json_encode($JSONarray);
     }
     else{
-        $sql = "SELECT password FROM User WHERE email=(?)";
+        $sql = "SELECT password FROM User WHERE email='$email'";
         $stmt = $mysqli -> prepare($sql);
-        $stmt -> bind_param('s', $email);
+        $stmt -> bind_param('ss', $email);
         $passwordVal = $stmt -> fetch_assoc();
         
         $hashedPassword = $passwordVal['password'];
@@ -105,7 +105,7 @@ $app->post('/loginUser', function(){
             $_SESSION['loggedin'] = true;
             $query = "SELECT idUser FROM User WHERE email=(?)";
                         $stmt2 = $mysqli -> prepare($query);
-                        $stmt2 -> bind_param('s', $email);         
+                        $stmt2 -> bind_param('ss', $email);         
             $temp = $stmt2 -> fetch_assoc();    
             $_SESSION['userId'] = $temp['idUser'];
             $_SESSION['email'] = $email;    
@@ -113,7 +113,7 @@ $app->post('/loginUser', function(){
     
             $components = "SELECT * FROM User WHERE email=(?)";
             $returnValue = $mysqli -> prepare($components);
-            $returnValue -> bind_param('s', $email);
+                        $returnValue -> bind_param('ss', $email);
             $iteration = $returnValue -> fetch_assoc();
             $JSONarray = array(
                 'status'=>$statusFlg,
@@ -142,6 +142,17 @@ $app->post('/loginUser', function(){
     }
 });
 
+$app->post('/logout', function()  { 
+    $_SESSION = array(); 
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+    session_destroy();
+});
 
 $app->post('/createUserAccount', function(){
     global $mysqli;
