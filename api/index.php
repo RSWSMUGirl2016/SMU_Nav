@@ -2,7 +2,7 @@
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
 
-$mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
+$mysqli = new mysqli("localhost", "root", "root", "mydb");
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 
@@ -154,7 +154,7 @@ $app->post('/logout', function()  {
     session_destroy();
 });
 
-$app->post('/getCoordinates', function(){
+$app->post('/createUserAccount', function(){
     global $mysqli;
     $fName = $_POST['fName'];
     $lName = $_POST['lName'];
@@ -179,8 +179,8 @@ $app->post('/getCoordinates', function(){
                 $outputJSON = array ('u_id'=>$newID);
                 $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES ($newID, '$fName', '$lName', '$email', '$password')");
             }
-                }
-            }
+        }
+    }
     
     echo json_encode($outputJSON);
 });
