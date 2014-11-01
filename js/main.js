@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var map;
+	var map;
     function initializeMap() {
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
@@ -8,8 +8,23 @@ $(document).ready(function () {
 
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
     }
-
 	google.maps.event.addDomListener(window, 'load', initializeMap);
+
+	$("#menu_button").click(function(){
+        if($("#menuWrapper").attr("collapsed") == "true") {
+            $("#menuWrapper").animate({
+                'left': '-2em'
+            }, function() {
+                $("#menuWrapper").attr("collapsed", "false");
+            });
+        } else {
+            $("#menuWrapper").animate({
+                'left': '-16em'
+            }, function() {
+                $("#menuWrapper").attr("collapsed", "true");
+            });
+        }
+    });
 	
     //Registration Popup
     $("#register_form").dialog({
