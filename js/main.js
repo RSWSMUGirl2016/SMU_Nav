@@ -123,3 +123,27 @@ $(document).ready(function() {
         $(this).toggleClass('close');
     });
 });*/
+
+$(document).ready(function() {
+    // Hide submenus
+    $("#print").click(function() {
+        var prtTitle = document.getElementById("dir_title");
+        var prtDirections = document.getElementsByName("printable");
+        var print = '';
+        var styleTitle = '<style>p{font-weight: bold;}</style>';
+        print += styleTitle;
+        print += prtTitle.innerHTML;
+        for(var i = 0; i < prtDirections.length; i++){
+            print += prtDirections[i].innerHTML;
+            print += '<br></br>';
+        }
+        console.log(styleTitle);
+        console.log(print);
+        var WinPrint = window.open('', '', 'letf=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        WinPrint.document.write(print);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    });
+});
