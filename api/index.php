@@ -2,7 +2,9 @@
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
 
+
 $mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
+
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 
@@ -72,8 +74,9 @@ $app->post('/loginUser', function(){
     try {
     $sql = "SELECT idUser FROM User WHERE email=(?)";
     $stmt = $mysqli -> prepare($sql);
-        $stmt -> bind_param('ss', $email);
-    $username_test = $stmt -> fetch_assoc();
+    $stmt -> bind_param('s', $email);
+    $stmt -> execute();
+    $username_test = $stmt -> fetch();
 
     if(($username_test === NULL)) {
         $JSONarray = array(
@@ -81,39 +84,41 @@ $app->post('/loginUser', function(){
             'user_id'=>NULL,
             'fName'=>NULL,
             'lName'=>NULL,
-                        'email'=>NULL);
+            'email'=>NULL);
+        echo "Finish1";
         return json_encode($JSONarray);
     }
     else{
-        $sql = "SELECT password FROM User WHERE email='$email'";
+        $sql = "SELECT password FROM User WHERE email=(?)";
         $stmt = $mysqli -> prepare($sql);
-        $stmt -> bind_param('ss', $email);
-        $passwordVal = $stmt -> fetch_assoc();
+        $stmt -> bind_param('s', $email);
+        $stmt -> execute();
         
-        $hashedPassword = $passwordVal['password'];
-        if($hashedPassword === NULL) {
-                $JSONarray = array(
-                'status'=>'Failure', 
-                'user_id'=>NULL,
-                'fName'=>NULL,
-                'lName'=>NULL,
-                'email'=>NULL);
+        $passwordVal = $stmt -> fetch();
+       
+        if($passwordVal === NULL) {
+            $JSONarray = array(
+            'status'=>'Failure', 
+            'user_id'=>NULL,
+            'fName'=>NULL,
+            'lName'=>NULL,
+            'email'=>NULL);
+            echo "Finish2";
             return json_encode($JSONarray);
         } 
     
-        else if($password === $hashedPassword) {                
+        else if($password === $passwordVal) {                
             $_SESSION['loggedin'] = true;
             $query = "SELECT idUser FROM User WHERE email=(?)";
-                        $stmt2 = $mysqli -> prepare($query);
-                        $stmt2 -> bind_param('ss', $email);         
-            $temp = $stmt2 -> fetch_assoc();    
-            $_SESSION['userId'] = $temp['idUser'];
+            $stmt2 = $mysqli -> prepare($query);
+            $stmt2 -> bind_param('s', $email);         
+            $temp = $stmt2 -> fetch();    
+            $_SESSION['userId'] = $temp;
             $_SESSION['email'] = $email;    
             $statusFlg = 'Succeed';
     
-            $components = "SELECT * FROM User WHERE email=(?)";
-            $returnValue = $mysqli -> prepare($components);
-                        $returnValue -> bind_param('ss', $email);
+            $components = "SELECT * FROM User WHERE email='$email'";
+            $returnValue = $mysqli -> query($components);
             $iteration = $returnValue -> fetch_assoc();
             $JSONarray = array(
                 'status'=>$statusFlg,
@@ -121,7 +126,7 @@ $app->post('/loginUser', function(){
                 'fName'=>$iteration['fName'],
                 'lName'=>$iteration['lName'],
                 'email'=>$iteration['email']);
-            
+            echo "Finish3";
             return json_encode($JSONarray); 
         } 
         //verifies password
@@ -132,6 +137,7 @@ $app->post('/loginUser', function(){
                 'fName'=>NULL,
                 'lName'=>NULL,
                 'email'=>NULL);
+            echo "Finish4";
             return json_encode($JSONarray);
         }
     }
@@ -140,6 +146,7 @@ $app->post('/loginUser', function(){
     } catch(exception $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }
+    echo "Finish5";
 });
 
 $app->post('/logout', function()  { 

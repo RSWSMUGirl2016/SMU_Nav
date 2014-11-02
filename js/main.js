@@ -88,16 +88,14 @@ $(document).ready(function () {
     });
 
     //Form Submit
-    var signIn = document.getElementById("signInArea");
-    var register = document.getElementById("registerArea");
-    signIn.addEventListener('submit', login, false);
-    register.addEventListener('submit', register, false);
+    $("#login").click(login);
+    $("#register").click(register);
 });
 
 
 function login(event) {
     event.preventDefault();
-    var loginInfo = {email: $("#Email").val(), password: $("#Password").val()};
+    var loginInfo = {email: $("#SignInEmail").val(), password: $("#SignInPassword").val()};
     $.ajax({
         type: "POST",
         url: "./api/loginUser",
@@ -121,9 +119,6 @@ function register(event) {
         datatype: "json",
         data: JSON.stringify(registerInfo),
         success: function (result) {
-            if (result === "error_email") {
-                return;
-            }
             $.ajax({
                 type: "POST",
                 url: "api/loginUser",
