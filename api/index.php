@@ -33,7 +33,6 @@ $app->post('/getCoordinates', function (){
     $rName = $_POST['roomName'];
     $rNum = $_POST['roomNumber'];
     if($rName!=null){    //getCoordinates by room name
-        #echo "Its a wonderful day!";
         $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates WHERE idCoordinates=
             (SELECT Coordinates_idCoordinates FROM Location WHERE roomName='$rName')");
         $firstResult=$firstQuery->fetch_assoc();
