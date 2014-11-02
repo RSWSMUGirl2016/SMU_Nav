@@ -103,7 +103,7 @@ function register(event) {
         .hide();
 });*/
 
-$(document).ready(function(){
+/*$(document).ready(function(){
   $('.favs_list').hide();
   $('.recomms_list').hide();
 });
@@ -122,4 +122,4 @@ $(document).ready(function() {
         $(".recomms_list").slideToggle(300);
         $(this).toggleClass('close');
     });
-});
+});*/

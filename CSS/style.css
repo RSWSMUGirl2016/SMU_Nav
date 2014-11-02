@@ -174,19 +174,47 @@ html>body #menu li a, html>body #menu li p {
 }
 
 #dir_title {
-	color: white;
-	margin: 10px;
-	border: 2px solid #000;
+	margin-bottom: -1px;
+	margin-left: 1em;
+	margin-right: -2.5em;
+	border: 1.75px solid #959595;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
+	background-color: #DCDCDC;
 }
 
-#directions div {
-	color: white;
-	margin: 10px;
-	border: 2px solid #000;
+#dir_title p {
+	font-weight: bold;
+	color: #163B8C;
+	margin-left: 5%;
+}
+
+#directions {
+	margin-top: 0px;
+	margin-bottom: 1em;
+	margin-left: 1em;
+	margin-right: -2.5em;
+	border: 1.75px solid #959595;
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
+	background-color: #DCDCDC;
+}
+
+#directions p {
+	color: #163B8C;
+	margin-left: 15%;
+}
+
+#directionsWrapper {
+	margin-top: 3em;
+}
+
+#print {
+	float: left;
+}
+
+#cancel_direcs {
+	float: right;
 }
 
 /*#menu > ul > li > ul {
