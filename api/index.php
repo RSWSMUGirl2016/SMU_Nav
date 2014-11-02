@@ -2,7 +2,11 @@
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
 
+<<<<<<< HEAD
+$mysqli = new mysqli("localhost", "root", "Music007", "mydb");
+=======
 $mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
+>>>>>>> origin/master
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 
@@ -31,62 +35,55 @@ $app->get('/getEvents', function () {
     echo json_encode(json_decode($dummyData, true));
 });
 
-$app->post('/createUserAccount', function () {
+$app->post('/getCoordinates', function (){
     global $mysqli;
-    $fName = $_POST['fName'];
-    $lName = $_POST['lName'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    if($fName === "" || $lName === "" || $email === "" || $password === "")
-	$outputJSON = array ('u_id'=>-2);
-    else{
-	$dupCheck = $mysqli->query("SELECT email FROM User WHERE email = '$email' LIMIT 1");
-	$checkResults = $dupCheck->fetch_assoc();
-	    if(!($checkResults === NULL))
-		$outputJSON = array ('u_id'=>-1);
-	    else{
-			$prevUser = $mysqli->query("SELECT idUser FROM User ORDER BY idUser DESC LIMIT 1");
-			$row = $prevUser->fetch_assoc();
-			if($row === NULL){
-			    $outputJSON = array ('u_id'=>1);
-			    $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES (1, '$fName', '$lName', '$email', '$password')");
-			}
-			else{
-			    $newID = $row['idUser']+1;
-			    $outputJSON = array ('u_id'=>$newID);
-			    $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES ($newID, '$fName', '$lName', '$email', '$password')");
-		    }
-                }
-            }
-	
-	echo json_encode($outputJSON);
+    $bName = $_POST['buildingName'];
+    $rName = $_POST['roomName'];
+    $rNum = $_POST['roomNumber'];
+
+    if($rName!=null){    //getCoordinates by room name
+        #echo "Its a wonderful day!";
+        $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates WHERE idCoordinates=
+            (SELECT Coordinates_idCoordinates FROM Location WHERE roomName='$rName')");
+
+        $firstResult=$firstQuery->fetch_assoc();
+        echo json_encode($firstResult);
+    }else if($bName!=null && $rName==null && $rNum==null){  //getCoordinates by building name
+        $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates INNER JOIN Location ON 
+            Coordinates.idCoordinates= Location.Coordinates_idCoordinates WHERE buildingName='$bName' 
+            AND roomName IS NULL AND roomNumber IS NULL");
+
+        $firstResult=$firstQuery->fetch_assoc();
+        echo json_encode($firstResult);
+    }else if($bName!=null && $rName==null && $rNum!=null){  //getCoordinates by buildingName and roomNumber
+        $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates WHERE idCoordinates=
+            (SELECT Coordinates_idCoordinates FROM Location WHERE buildingName='$bName' AND 
+            roomNumber='$rNum')");
+
+        $firstResult=$firstQuery->fetch_assoc();
+        echo json_encode($firstResult);
+    }
 });
 
-function saltCost(){
-    $timeTarget = 0.05;  
-    $cost = 8;
-    do {
-        $cost++;
-        $start = microtime(true);
-        password_hash("test", PASSWORD_BCRYPT, ["cost" => $cost]);
-        $end = microtime(true);
-    } while (($end - $start) < $timeTarget);
-    return $cost;
-    
-}
+
 
 $app->post('/loginUser', function(){
     session_start();
     global $mysqli;
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $encryption = ['cost' => saltCost(), 'salt' => mcrypt_create_iv(25,MCRYPT_DEV_URANDOM),];
-	echo "encrypt";
+    
     try {
     $sql = "SELECT idUser FROM User WHERE email=(?)";
     $stmt = $mysqli -> prepare($sql);
+<<<<<<< HEAD
+    $stmt -> bind_param('s', $email);
+    $stmt -> execute();
+    $username_test = $stmt -> fetch();
+=======
         $stmt -> bind_param('ss', $email);
     $username_test = $stmt -> fetch_assoc();
+>>>>>>> origin/master
 
     if(($username_test === NULL)) {
         $JSONarray = array(
@@ -94,33 +91,44 @@ $app->post('/loginUser', function(){
             'user_id'=>NULL,
             'fName'=>NULL,
             'lName'=>NULL,
-                        'email'=>NULL);
+            'email'=>NULL);
+        echo "Finish1";
         return json_encode($JSONarray);
     }
     else{
-        $sql = "SELECT password FROM passwords p, idUser u WHERE p.idUser=u.idUser AND email='$email'";
-                $stmt = $mysqli -> prepare($sql);
-                $stmt -> bind_param('ss', $email);
+        $sql = "SELECT password FROM User WHERE email='$email'";
+        $stmt = $mysqli -> prepare($sql);
+<<<<<<< HEAD
+        $stmt -> bind_param('s', $email);
+        $stmt -> execute();
+=======
+        $stmt -> bind_param('ss', $email);
         $passwordVal = $stmt -> fetch_assoc();
-                $hashedPassword = password_hash($passwordVal, PASSWORD_BCRYPT, $encryption);
-                
-                //Potential Problems, Test to see
-        $hashedPassword = $hashedPassword['password'];
+>>>>>>> origin/master
+        
+        $passwordVal = $stmt -> fetch();
+       
         if($hashedPassword === NULL) {
-                $JSONarray = array(
-                'status'=>'Failure', 
-                'user_id'=>NULL,
-                'fName'=>NULL,
-                'lName'=>NULL,
-                'email'=>NULL);
+            $JSONarray = array(
+            'status'=>'Failure', 
+            'user_id'=>NULL,
+            'fName'=>NULL,
+            'lName'=>NULL,
+            'email'=>NULL);
+            echo "Finish2";
             return json_encode($JSONarray);
         } 
     
-        else if($password === $hashedPassword) {                
+        else if($password === $passwordVal) {                
             $_SESSION['loggedin'] = true;
             $query = "SELECT idUser FROM User WHERE email=(?)";
+<<<<<<< HEAD
+            $stmt2 = $mysqli -> prepare($query);
+            $stmt2 -> bind_param('s', $email);         
+=======
                         $stmt2 = $mysqli -> prepare($query);
                         $stmt2 -> bind_param('ss', $email);         
+>>>>>>> origin/master
             $temp = $stmt2 -> fetch_assoc();    
             $_SESSION['userId'] = $temp['idUser'];
             $_SESSION['email'] = $email;    
@@ -136,7 +144,7 @@ $app->post('/loginUser', function(){
                 'fName'=>$iteration['fName'],
                 'lName'=>$iteration['lName'],
                 'email'=>$iteration['email']);
-            
+            echo "Finish3";
             return json_encode($JSONarray); 
         } 
         //verifies password
@@ -147,6 +155,7 @@ $app->post('/loginUser', function(){
                 'fName'=>NULL,
                 'lName'=>NULL,
                 'email'=>NULL);
+            echo "Finish4";
             return json_encode($JSONarray);
         }
     }
@@ -155,6 +164,7 @@ $app->post('/loginUser', function(){
     } catch(exception $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }
+    echo "Finish5";
 });
 
 $app->post('/logout', function()  { 
@@ -169,8 +179,35 @@ $app->post('/logout', function()  {
     session_destroy();
 });
 
-$app->post('/getCoordinates', function(){
-
+$app->post('/createUserAccount', function(){
+    global $mysqli;
+    $fName = $_POST['fName'];
+    $lName = $_POST['lName'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    if($fName === "" || $lName === "" || $email === "" || $password === "")
+    $outputJSON = array ('u_id'=>-2);
+    else{
+    $dupCheck = $mysqli->query("SELECT email FROM User WHERE email = '$email' LIMIT 1");
+    $checkResults = $dupCheck->fetch_assoc();
+        if(!($checkResults === NULL))
+        $outputJSON = array ('u_id'=>-1);
+        else{
+            $prevUser = $mysqli->query("SELECT idUser FROM User ORDER BY idUser DESC LIMIT 1");
+            $row = $prevUser->fetch_assoc();
+            if($row === NULL){
+                $outputJSON = array ('u_id'=>1);
+                $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES (1, '$fName', '$lName', '$email', '$password')");
+            }
+            else{
+                $newID = $row['idUser']+1;
+                $outputJSON = array ('u_id'=>$newID);
+                $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES ($newID, '$fName', '$lName', '$email', '$password')");
+            }
+        }
+    }
+    
+    echo json_encode($outputJSON);
 });
 
 $app->post('/getClasses', function() {

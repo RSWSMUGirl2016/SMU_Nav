@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var map;
+	var map;
     function initializeMap() {
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
@@ -8,8 +8,23 @@ $(document).ready(function () {
 
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
     }
-
 	google.maps.event.addDomListener(window, 'load', initializeMap);
+
+	$("#menu_button").click(function(){
+        if($("#menuWrapper").attr("collapsed") == "true") {
+            $("#menuWrapper").animate({
+                'left': '-2em'
+            }, function() {
+                $("#menuWrapper").attr("collapsed", "false");
+            });
+        } else {
+            $("#menuWrapper").animate({
+                'left': '-16em'
+            }, function() {
+                $("#menuWrapper").attr("collapsed", "true");
+            });
+        }
+    });
 	
     //Registration Popup
     $("#register_form").dialog({
@@ -23,22 +38,18 @@ $(document).ready(function () {
     });
 
     //Form Submit
-    var signIn = document.getElementById("login_form");
-    var register = document.getElementById("registerArea");
-    signIn.addEventListener('submit', login, false);
-    register.addEventListener('submit', register, false);
+    $("#login").click(login);
+    $("#register").click(register);
 });
 
 
 function login(event) {
     event.preventDefault();
+    var loginInfo = {email: $("#Email").val(), password: $("#Password").val()};
     $.ajax({
         type: "POST",
-        url: "api/loginUser",
-        data: {
-            email: $("#Email").val(),
-            password: $("#Password").val()
-        },
+        url: "./api/loginUser",
+        data: JSON.stringify(loginInfo),
         success: function (result) {
             $("#login_form").css('display', 'none');
             $("#SignedIn").css('display', 'inline');
@@ -48,20 +59,17 @@ function login(event) {
 
 function register(event) {
     event.preventDefault();
+    console.log("hello world");
+    var registerInfo = {firstname: $("#fname").val(), 
+        lastname: $("#lname").val(),
+        email: $("#email").val(),
+        password: $("#password").val()};
     $.ajax({
         type: "POST",
         url: "api/createUserAccount",
         datatype: "json",
-        data: {
-            firstname: $("#fname").val(),
-            lastname: $("#lname").val(),
-            email: $("#email").val(),
-            password: $("#password").val()
-        },
+        data: JSON.stringify(registerInfo),
         success: function (result) {
-            if (result === "error_email") {
-                return;
-            }
             $.ajax({
                 type: "POST",
                 url: "api/loginUser",
@@ -86,12 +94,12 @@ function register(event) {
         .hide();
 });*/
 
-$(function() {
+/*$(function() {
     $('#dir_title', '#directions')
         .hide();
-});
+});*/
 
-$(document).ready(function(){
+/*$(document).ready(function(){
   $('.favs_list').hide();
   $('.recomms_list').hide();
 });
@@ -109,5 +117,36 @@ $(document).ready(function() {
     $(".recomms_title").click(function() {
         $(".recomms_list").slideToggle(300);
         $(this).toggleClass('close');
+    });
+});*/
+
+$(document).ready(function() {
+    // Hide submenus
+    $("#print").click(function() {
+        var prtTitle = document.getElementById("dir_title");
+        var prtDirections = document.getElementsByName("printable");
+        var print = '';
+        var styleTitle = '<style>p{font-weight: bold;}</style>';
+        print += styleTitle;
+        print += prtTitle.innerHTML;
+        for(var i = 0; i < prtDirections.length; i++){
+            print += prtDirections[i].innerHTML;
+            print += '<br></br>';
+        }
+        console.log(styleTitle);
+        console.log(print);
+        var WinPrint = window.open('', '', 'letf=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        WinPrint.document.write(print);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    });
+});
+
+$(document).ready(function() {
+    // Hide submenus
+    $("#cancel_direcs").click(function() {
+        $('#directionsWrapper').hide();
     });
 });

@@ -33,6 +33,9 @@
             
             <div id ="SignedIn">
                 <p id ="welcome"></p>
+                <form id="signOutArea" action ="index.html" method="POST">
+                   <input id="logout" class="button" type="submit" value="Logout"> 
+                </form>
             </div>
             
             <div id="register_form" title="Registration Form">
@@ -49,14 +52,20 @@
         </header>
 
         <div id="body">
-            <div id="menuWrapper">
+            <div id="menuWrapper" collapsed="false">
                 <div id="menu">
                     <ul>
-                        <!--div id="dir_title">
-                            <p>Location Name from Map</p>
+                        <div id="directionsWrapper">
+                            <div id="dir_title">
+                                <p>Location Name from Map</p>
+                            </div>
+                            <div id="directions">
+                                <p name="printable">1. Direction </p>
+                                <p name="printable">2. Direction </p>
+                                <button id="print">Print</button>
+                                <button id="cancel_direcs">Cancel</button>
+                            </div>                            
                         </div>
-                        <div id="directions">
-                        </div> -->
                         <div id="favorites">
                             <li class="favs_title"><p>Favorites</p>
                                 <ul class="favs_list">
@@ -75,6 +84,7 @@
                         <div>                     
                     </ul>
                 </div>
+                <button id="menu_button"></button>
             </div>
             <div id="mapWrapper">
                 <div id="map">
