@@ -174,14 +174,91 @@ html>body #menu li a, html>body #menu li p {
 }
 
 #dir_title {
-	color: white;
-	margin: 10px;
-	border: 2px solid #000;
+	margin-bottom: -1px;
+	margin-left: 1em;
+	margin-right: -2.5em;
+	border: 1.75px solid #959595;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
+	background-color: #DCDCDC;
 }
 
-#directions div {
+#dir_title p {
+	font-weight: bold;
+	color: #163B8C;
+	margin-left: 5%;
+}
+
+#directions {
+	margin-top: 0px;
+	margin-bottom: 1em;
+	margin-left: 1em;
+	margin-right: -2.5em;
+	border: 1.75px solid #959595;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	background-color: #DCDCDC;
+}
+
+#directions p {
+	color: #163B8C;
+	margin-left: 15%;
+}
+
+#directionsWrapper {
+	margin-top: 3em;
+	margin-bottom: 2em;
+}
+
+#print {
+	border-top: 1px solid #96d1f8;
+    background: #65a9d7;
+    background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+    background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+    background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+    background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+    background: -o-linear-gradient(top, #3e779d, #65a9d7);
+    padding: 5px 10px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: white;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+	margin-left: 15%;
+	margin-bottom: 2em;
+}
+
+#cancel_direcs {
+	border-top: 1px solid #96d1f8;
+    background: #65a9d7;
+    background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+    background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+    background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+    background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+    background: -o-linear-gradient(top, #3e779d, #65a9d7);
+    padding: 5px 10px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: white;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+    margin-left: 15%;
+	margin-right: 2.5em;
+	margin-bottom: 2em;
 }
 
 /*#menu > ul > li > ul {
