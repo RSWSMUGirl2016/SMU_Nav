@@ -147,3 +147,10 @@ $(document).ready(function() {
         WinPrint.close();
     });
 });
+
+$(document).ready(function() {
+    // Hide submenus
+    $("#cancel_direcs").click(function() {
+        $('#directionsWrapper').hide();
+    });
+});
