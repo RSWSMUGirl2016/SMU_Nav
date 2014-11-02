@@ -182,7 +182,7 @@ $app->post('/getClasses', function() {
 	$outputJSON = array('Status'=>'Failure');
     else{
 	array_push($outputJSON, array('Status'=>'Success'));
-	$classQuery = $mysqli->query("SELECT * FROM Classes NATURAL JOIN Location NATURAL JOIN Coordinates WHERE User_idUser = $userID AND day = '$day'");
+	$classQuery = $mysqli->query("SELECT * FROM Classes INNER JOIN Location ON Classes.Location_idLocation = Location.idLocation INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates WHERE User_idUser = $userID AND day = '$day'");
 	$counter = 0;
 	while(true){
 	    $classOutput = array();
