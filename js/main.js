@@ -45,7 +45,7 @@ $(document).ready(function () {
 
 function login(event) {
     event.preventDefault();
-    var loginInfo = {email: $("#Email").val(), password: $("#Password").val()};
+    var loginInfo = {email: $("#SignInEmail").val(), password: $("#SignInPassword").val()};
     $.ajax({
         type: "POST",
         url: "./api/loginUser",
@@ -59,7 +59,6 @@ function login(event) {
 
 function register(event) {
     event.preventDefault();
-    console.log("hello world");
     var registerInfo = {firstname: $("#fname").val(), 
         lastname: $("#lname").val(),
         email: $("#email").val(),
