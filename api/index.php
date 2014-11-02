@@ -1,13 +1,9 @@
 <?php
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
-
-
 $mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
-
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
-
 $app->get('/getEvents', function () {
    $dummyData = '{
         "1": {
@@ -29,42 +25,33 @@ $app->get('/getEvents', function () {
             "eventDateTime": "9999-12-31 23:59:59"
         }
     }'; 
-
     echo json_encode(json_decode($dummyData, true));
 });
-
 $app->post('/getCoordinates', function (){
     global $mysqli;
     $bName = $_POST['buildingName'];
     $rName = $_POST['roomName'];
     $rNum = $_POST['roomNumber'];
-
     if($rName!=null){    //getCoordinates by room name
         #echo "Its a wonderful day!";
         $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates WHERE idCoordinates=
             (SELECT Coordinates_idCoordinates FROM Location WHERE roomName='$rName')");
-
         $firstResult=$firstQuery->fetch_assoc();
         echo json_encode($firstResult);
     }else if($bName!=null && $rName==null && $rNum==null){  //getCoordinates by building name
         $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates INNER JOIN Location ON 
             Coordinates.idCoordinates= Location.Coordinates_idCoordinates WHERE buildingName='$bName' 
             AND roomName IS NULL AND roomNumber IS NULL");
-
         $firstResult=$firstQuery->fetch_assoc();
         echo json_encode($firstResult);
     }else if($bName!=null && $rName==null && $rNum!=null){  //getCoordinates by buildingName and roomNumber
         $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates WHERE idCoordinates=
             (SELECT Coordinates_idCoordinates FROM Location WHERE buildingName='$bName' AND 
             roomNumber='$rNum')");
-
         $firstResult=$firstQuery->fetch_assoc();
         echo json_encode($firstResult);
     }
 });
-
-
-
 $app->post('/loginUser', function(){
     session_start();
     global $mysqli;
@@ -74,12 +61,9 @@ $app->post('/loginUser', function(){
     try {
     $sql = "SELECT idUser FROM User WHERE email=(?)";
     $stmt = $mysqli -> prepare($sql);
-
     $stmt -> bind_param('s', $email);
     $stmt -> execute();
     $username_test = $stmt -> fetch();
-
-
     if(($username_test === NULL)) {
         $JSONarray = array(
             'status'=>'Failure', 
@@ -91,14 +75,14 @@ $app->post('/loginUser', function(){
         return json_encode($JSONarray);
     }
     else{
-        $sql = "SELECT password FROM User WHERE email='$email'";
+        $sql = "SELECT password FROM User WHERE email=(?)";
         $stmt = $mysqli -> prepare($sql);
         $stmt -> bind_param('s', $email);
         $stmt -> execute();
         
         $passwordVal = $stmt -> fetch();
        
-        if($hashedPassword === NULL) {
+        if($passwordVal === NULL) {
             $JSONarray = array(
             'status'=>'Failure', 
             'user_id'=>NULL,
@@ -114,14 +98,13 @@ $app->post('/loginUser', function(){
             $query = "SELECT idUser FROM User WHERE email=(?)";
             $stmt2 = $mysqli -> prepare($query);
             $stmt2 -> bind_param('s', $email);         
-            $temp = $stmt2 -> fetch_assoc();    
-            $_SESSION['userId'] = $temp['idUser'];
+            $temp = $stmt2 -> fetch();    
+            $_SESSION['userId'] = $temp;
             $_SESSION['email'] = $email;    
             $statusFlg = 'Succeed';
     
-            $components = "SELECT * FROM User WHERE email=(?)";
-            $returnValue = $mysqli -> prepare($components);
-                        $returnValue -> bind_param('ss', $email);
+            $components = "SELECT * FROM User WHERE email='$email'";
+            $returnValue = $mysqli -> query($components);
             $iteration = $returnValue -> fetch_assoc();
             $JSONarray = array(
                 'status'=>$statusFlg,
@@ -151,7 +134,6 @@ $app->post('/loginUser', function(){
     }
     echo "Finish5";
 });
-
 $app->post('/logout', function()  { 
     $_SESSION = array(); 
     if (ini_get("session.use_cookies")) {
@@ -163,7 +145,6 @@ $app->post('/logout', function()  {
     }
     session_destroy();
 });
-
 $app->post('/createUserAccount', function(){
     global $mysqli;
     $fName = $_POST['fName'];
@@ -223,7 +204,6 @@ $app->post('/getClasses', function() {
     echo json_encode($outputJSON);
     }
 });
-
 $app->post('/addClass', function() {
     global $mysqli;
     $userID = $_POST['userID'];
@@ -280,10 +260,8 @@ $app->post('/addClass', function() {
 	}
 	    
 	echo json_encode($outputJSON);
-
 });
-
-
-
 $app->run();
 ?>
+
+
