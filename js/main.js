@@ -38,10 +38,8 @@ $(document).ready(function () {
     });
 
     //Form Submit
-    var signIn = document.getElementById("signInArea");
-    var register = document.getElementById("registerArea");
-    signIn.addEventListener('submit', login, false);
-    register.addEventListener('submit', register, false);
+    $("#login").click(login);
+    $("#register").click(register);
 });
 
 
@@ -61,6 +59,7 @@ function login(event) {
 
 function register(event) {
     event.preventDefault();
+    console.log("hello world");
     var registerInfo = {firstname: $("#fname").val(), 
         lastname: $("#lname").val(),
         email: $("#email").val(),
@@ -71,9 +70,6 @@ function register(event) {
         datatype: "json",
         data: JSON.stringify(registerInfo),
         success: function (result) {
-            if (result === "error_email") {
-                return;
-            }
             $.ajax({
                 type: "POST",
                 url: "api/loginUser",
