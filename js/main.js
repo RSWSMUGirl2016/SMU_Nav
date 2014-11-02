@@ -98,10 +98,10 @@ function register(event) {
         .hide();
 });*/
 
-$(function() {
+/*$(function() {
     $('#dir_title', '#directions')
         .hide();
-});
+});*/
 
 $(document).ready(function(){
   $('.favs_list').hide();
