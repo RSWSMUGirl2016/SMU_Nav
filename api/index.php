@@ -2,11 +2,9 @@
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
 
-<<<<<<< HEAD
-$mysqli = new mysqli("localhost", "root", "Music007", "mydb");
-=======
+
 $mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
->>>>>>> origin/master
+
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 
@@ -76,14 +74,9 @@ $app->post('/loginUser', function(){
     try {
     $sql = "SELECT idUser FROM User WHERE email=(?)";
     $stmt = $mysqli -> prepare($sql);
-<<<<<<< HEAD
     $stmt -> bind_param('s', $email);
     $stmt -> execute();
     $username_test = $stmt -> fetch();
-=======
-        $stmt -> bind_param('ss', $email);
-    $username_test = $stmt -> fetch_assoc();
->>>>>>> origin/master
 
     if(($username_test === NULL)) {
         $JSONarray = array(
@@ -96,19 +89,14 @@ $app->post('/loginUser', function(){
         return json_encode($JSONarray);
     }
     else{
-        $sql = "SELECT password FROM User WHERE email='$email'";
+        $sql = "SELECT password FROM User WHERE email=(?)";
         $stmt = $mysqli -> prepare($sql);
-<<<<<<< HEAD
         $stmt -> bind_param('s', $email);
         $stmt -> execute();
-=======
-        $stmt -> bind_param('ss', $email);
-        $passwordVal = $stmt -> fetch_assoc();
->>>>>>> origin/master
         
         $passwordVal = $stmt -> fetch();
        
-        if($hashedPassword === NULL) {
+        if($passwordVal === NULL) {
             $JSONarray = array(
             'status'=>'Failure', 
             'user_id'=>NULL,
@@ -122,21 +110,15 @@ $app->post('/loginUser', function(){
         else if($password === $passwordVal) {                
             $_SESSION['loggedin'] = true;
             $query = "SELECT idUser FROM User WHERE email=(?)";
-<<<<<<< HEAD
             $stmt2 = $mysqli -> prepare($query);
             $stmt2 -> bind_param('s', $email);         
-=======
-                        $stmt2 = $mysqli -> prepare($query);
-                        $stmt2 -> bind_param('ss', $email);         
->>>>>>> origin/master
-            $temp = $stmt2 -> fetch_assoc();    
-            $_SESSION['userId'] = $temp['idUser'];
+            $temp = $stmt2 -> fetch();    
+            $_SESSION['userId'] = $temp;
             $_SESSION['email'] = $email;    
             $statusFlg = 'Succeed';
     
-            $components = "SELECT * FROM User WHERE email=(?)";
-            $returnValue = $mysqli -> prepare($components);
-                        $returnValue -> bind_param('ss', $email);
+            $components = "SELECT * FROM User WHERE email='$email'";
+            $returnValue = $mysqli -> query($components);
             $iteration = $returnValue -> fetch_assoc();
             $JSONarray = array(
                 'status'=>$statusFlg,
