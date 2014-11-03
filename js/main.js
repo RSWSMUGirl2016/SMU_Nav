@@ -99,23 +99,28 @@ $(document).ready(function () {
     //Form Submit
     $("#login").click(login);
     $("#register").click(register);
+    //$("#logout").click(logout);
 });
 
 
 function login(event) {
     event.preventDefault();
     var loginInfo = {email: $("#SignInEmail").val(), password: $("#SignInPassword").val()};
-    console.log(loginInfo);
     $.ajax({
         type: "POST",
         url: "./api/index.php/loginUser",
         datatype: "json",
         data: loginInfo,
         success: function (result) {
-            
-            console.log(result);
-            $("#login_form").css('display', 'none');
-            $("#SignedIn").css('display', 'inline');
+            var statusJson = JSON.parse(result);
+            if(statusJson.status === "Failure"){
+                window.alert("Incorrect Password or Email");
+            }
+            else{
+                $("#login_form").css('display', 'none');
+                $("#SignedIn").css('display', 'inline');
+                $("#welcome").text("Welcome!!");
+            }
         }
     });
 }
@@ -145,11 +150,26 @@ function register(event) {
                 success: function (result) {
                     $("#login_form").css('display', 'none');
                     $("#SignedIn").css('display', 'inline');
+                    $("#register_form" ).dialog( "close" );
+                    $("#welcome").text("Welcome!!");
                 }
             });
         }
     });
             
+}
+
+function logout(event){
+    event.preventDefault();
+    $.ajax({
+       type: "POST",
+       url: "api/index.php/logout",
+       success: function(result){
+           $("#login_form").css('display', 'inline');
+           $("#SignedIn").css('display', 'none');
+       }
+    });
+    
 }
 
 

@@ -69,11 +69,22 @@ footer {
 }
 
 #SignedIn{
+    color:white;
     position: absolute;
     top:1em;
-    right:3em;
+    right: 2em;
     padding:10px;
     display:none;
+}
+
+#welcome{
+    position: relative;
+    right: 4em;
+}
+
+#logout{
+    position: relative;
+    bottom: 4em;
 }
 
 #register_form{
