@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
-$mysqli = new mysqli("localhost", "root", "root", "mydb");
+$mysqli = new mysqli("localhost", "root", "halomasterchief", "mydb");
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 $app->get('/getEvents', function () {
@@ -69,7 +69,8 @@ $app->post('/loginUser', function(){
             'fName'=>NULL,
             'lName'=>NULL,
             'email'=>NULL);
-        return json_encode($JSONarray);
+        echo json_encode($JSONarray);
+        return;
     }
     else{
         $stmt->close();
@@ -89,7 +90,8 @@ $app->post('/loginUser', function(){
             'fName'=>NULL,
             'lName'=>NULL,
             'email'=>NULL);
-            return json_encode($JSONarray);
+            echo json_encode($JSONarray);
+            return;
         } 
     
         else if($password === $passwordVal) { 
@@ -115,7 +117,8 @@ $app->post('/loginUser', function(){
                 'firstName'=>$iteration['firstName'],
                 'lastName'=>$iteration['lastName'],
                 'email'=>$iteration['email']);
-            return json_encode($JSONarray); 
+            echo json_encode($JSONarray);
+            return;
         } 
         //verifies password
         else {
@@ -125,7 +128,8 @@ $app->post('/loginUser', function(){
                 'fName'=>NULL,
                 'lName'=>NULL,
                 'email'=>NULL);
-            return json_encode($JSONarray);
+            echo json_encode($JSONarray);
+            return;
         }
     }
     //returns null when password is wrong
