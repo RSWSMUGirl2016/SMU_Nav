@@ -1,5 +1,7 @@
 $(document).ready(function () {
-	var map;
+	
+    var markers = [];
+    var map;
     function initializeMap() {
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
