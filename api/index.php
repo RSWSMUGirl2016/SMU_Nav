@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
-$mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
+$mysqli = new mysqli("localhost", "root", "halomasterchief", "mydb");
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 $app->get('/getEvents', function () {
@@ -33,7 +33,6 @@ $app->post('/getCoordinates', function (){
     $rName = $_POST['roomName'];
     $rNum = $_POST['roomNumber'];
     if($rName!=null){    //getCoordinates by room name
-        #echo "Its a wonderful day!";
         $firstQuery=$mysqli->query("SELECT x, y, z FROM Coordinates WHERE idCoordinates=
             (SELECT Coordinates_idCoordinates FROM Location WHERE roomName='$rName')");
         $firstResult=$firstQuery->fetch_assoc();
@@ -57,7 +56,6 @@ $app->post('/loginUser', function(){
     global $mysqli;
     $email = $_POST['email'];
     $password = $_POST['password'];
-    
     try {
     $sql = "SELECT idUser FROM User WHERE email=(?)";
     $stmt = $mysqli -> prepare($sql);
@@ -71,16 +69,19 @@ $app->post('/loginUser', function(){
             'fName'=>NULL,
             'lName'=>NULL,
             'email'=>NULL);
-        echo "Finish1";
-        return json_encode($JSONarray);
+        echo json_encode($JSONarray);
+        return;
     }
     else{
+        $stmt->close();
+
         $sql = "SELECT password FROM User WHERE email=(?)";
-        $stmt = $mysqli -> prepare($sql);
-        $stmt -> bind_param('s', $email);
-        $stmt -> execute();
+        $stmt1 = $mysqli -> prepare($sql);
+        $stmt1 -> bind_param('s', $email);
+        $stmt1 -> execute();
         
-        $passwordVal = $stmt -> fetch();
+        $stmt1->bind_result($passwordVal);
+        $stmt1 -> fetch();
        
         if($passwordVal === NULL) {
             $JSONarray = array(
@@ -89,31 +90,35 @@ $app->post('/loginUser', function(){
             'fName'=>NULL,
             'lName'=>NULL,
             'email'=>NULL);
-            echo "Finish2";
-            return json_encode($JSONarray);
+            echo json_encode($JSONarray);
+            return;
         } 
     
-        else if($password === $passwordVal) {                
+        else if($password === $passwordVal) { 
+            $stmt1->close();              
             $_SESSION['loggedin'] = true;
             $query = "SELECT idUser FROM User WHERE email=(?)";
             $stmt2 = $mysqli -> prepare($query);
-            $stmt2 -> bind_param('s', $email);         
-            $temp = $stmt2 -> fetch();    
+            $stmt2 -> bind_param('s', $email);
+            $stmt2 -> execute();
+            $stmt2->bind_result($temp);         
+            $stmt2 -> fetch();    
             $_SESSION['userId'] = $temp;
             $_SESSION['email'] = $email;    
             $statusFlg = 'Succeed';
-    
+            $stmt2->close();
+
             $components = "SELECT * FROM User WHERE email='$email'";
             $returnValue = $mysqli -> query($components);
             $iteration = $returnValue -> fetch_assoc();
             $JSONarray = array(
                 'status'=>$statusFlg,
                 'user_id'=>$iteration['idUser'],
-                'fName'=>$iteration['fName'],
-                'lName'=>$iteration['lName'],
+                'firstName'=>$iteration['firstName'],
+                'lastName'=>$iteration['lastName'],
                 'email'=>$iteration['email']);
-            echo "Finish3";
-            return json_encode($JSONarray); 
+            echo json_encode($JSONarray);
+            return;
         } 
         //verifies password
         else {
@@ -123,8 +128,8 @@ $app->post('/loginUser', function(){
                 'fName'=>NULL,
                 'lName'=>NULL,
                 'email'=>NULL);
-            echo "Finish4";
-            return json_encode($JSONarray);
+            echo json_encode($JSONarray);
+            return;
         }
     }
     //returns null when password is wrong

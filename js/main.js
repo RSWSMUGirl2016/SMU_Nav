@@ -100,50 +100,77 @@ $(document).ready(function () {
     //Form Submit
     $("#login").click(login);
     $("#register").click(register);
+    //$("#logout").click(logout);
 });
 
 
 function login(event) {
     event.preventDefault();
-    var loginInfo = {email: $("#Email").val(), password: $("#Password").val()};
+    var loginInfo = {email: $("#SignInEmail").val(), password: $("#SignInPassword").val()};
     $.ajax({
         type: "POST",
-        url: "./api/loginUser",
-        data: JSON.stringify(loginInfo),
+        url: "./api/index.php/loginUser",
+        datatype: "json",
+        data: loginInfo,
         success: function (result) {
-            $("#login_form").css('display', 'none');
-            $("#SignedIn").css('display', 'inline');
+            var statusJson = JSON.parse(result);
+            if(statusJson.status === "Failure"){
+                window.alert("Incorrect Password or Email");
+            }
+            else{
+                $("#login_form").css('display', 'none');
+                $("#SignedIn").css('display', 'inline');
+                $("#welcome").text("Welcome!!");
+            }
         }
     });
 }
 
 function register(event) {
     event.preventDefault();
-    console.log("hello world");
-    var registerInfo = {firstname: $("#fname").val(), 
-        lastname: $("#lname").val(),
-        email: $("#email").val(),
-        password: $("#password").val()};
+    var registerInfo = {"fName": $("#fName").val(), 
+        "lName": $("#lName").val(),
+        "email": $("#Email").val(),
+        "password": $("#Password").val()};
+    
+    console.log(registerInfo);
     $.ajax({
         type: "POST",
-        url: "api/createUserAccount",
+        url: "api/index.php/createUserAccount",
         datatype: "json",
-        data: JSON.stringify(registerInfo),
+        data: registerInfo,
         success: function (result) {
+            var loginInfo = {"email": $("#Email").val(),
+                "password": $("#Password").val()}; 
+            console.log(loginInfo);
             $.ajax({
                 type: "POST",
-                url: "api/loginUser",
-                data: {
-                    email: $("#Email").val(),
-                    password: $("#Password").val()
-                },
+                url: "api/index.php/loginUser",
+                datatype: "json",
+                data: loginInfo,
                 success: function (result) {
                     $("#login_form").css('display', 'none');
                     $("#SignedIn").css('display', 'inline');
+                    $("#register_form" ).dialog( "close" );
+                    $("#welcome").text("Welcome!!");
                 }
             });
         }
     });
+            
+}
+
+function logout(event){
+    event.preventDefault();
+    $.ajax({
+       type: "POST",
+       url: "api/index.php/logout",
+       success: function(result){
+           $("#login_form").css('display', 'inline');
+           $("#SignedIn").css('display', 'none');
+       }
+    });
+    
 }
 
 
