@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 $app = new \Slim\Slim();
-$mysqli = new mysqli("localhost", "root", "halomasterchief", "mydb");
+$mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 $app->get('/getEvents', function () {
