@@ -3,7 +3,8 @@ $(document).ready(function () {
     function initializeMap() {
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
-            zoom: 15
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
