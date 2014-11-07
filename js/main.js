@@ -231,6 +231,7 @@ $(document).ready(function() {
         WinPrint.print();
         WinPrint.close();
     });
+    $("emailButton").click(sendEmail);
 });
 
 $(document).ready(function() {
@@ -239,3 +240,7 @@ $(document).ready(function() {
         $('#directionsWrapper').hide();
     });
 });
+
+function sendEmail(event){
+    console.log("email sent");
+}
