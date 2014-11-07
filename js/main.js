@@ -98,7 +98,9 @@ $(document).ready(function () {
     //Form Submit
     $("#login").click(login);
     $("#register").click(register);
-    //$("#logout").click(logout);
+    $("#logout").click(logout);
+    
+    
 });
 
 
