@@ -9,15 +9,13 @@ $(document).ready(function () {
 
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
 
-        var markers = [];
+          //var markers = [];
 
           // Create the search box and link it to the UI element.
-          var input = /** @type {HTMLInputElement} */(
-              document.getElementById('map-input'));
+          var input = (document.getElementById('map-input'));
           map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-          var searchBox = new google.maps.places.SearchBox(
-            /** @type {HTMLInputElement} */(input));
+          var searchBox = new google.maps.places.SearchBox(input);
 
           // [START region_getplaces]
           // Listen for the event fired when the user selects an item from the
@@ -79,7 +77,7 @@ $(document).ready(function () {
             });
         } else {
             $("#menuWrapper").animate({
-                'left': '-16em'
+                'left': '-20em'
             }, function() {
                 $("#menuWrapper").attr("collapsed", "true");
             });
