@@ -65,8 +65,11 @@ $(document).ready(function () {
               var contentString = '<div id="content">'+
                   '<div id="siteNotice">'+
                   '</div>'+
-                  '<h1 id="firstHeading" class="firstHeading">Add to Favorites</h1>'+
                   '<div id="bodyContent">'+
+                  '<h6 id="favoritesHeading" class="favoritesHeading">Add to Favorites</h6>'+
+                  '<button id="favorites_bttn">Add</button>'+
+                  '<h6 id="getDirectionsHeading" class="directionsHeading">Start Directions</h6>'+
+                  '<button id="getDirections_bttn">Start</button>'+                  
                   '</div>'+
                   '</div>';
 
