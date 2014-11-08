@@ -54,6 +54,32 @@ $(document).ready(function () {
 
               markers.push(marker);
 
+              google.maps.event.addListener(map, 'center_changed', function() {
+                // 3 seconds after the center of the map has changed, pan back to the
+                // marker.
+                window.setTimeout(function() {
+                  map.panTo(marker.getPosition());
+                }, 3000);
+              });
+
+              var contentString = '<div id="content">'+
+                  '<div id="siteNotice">'+
+                  '</div>'+
+                  '<h1 id="firstHeading" class="firstHeading">Add to Favorites</h1>'+
+                  '<div id="bodyContent">'+
+                  '</div>'+
+                  '</div>';
+
+              var infowindow = new google.maps.InfoWindow({
+                  content: contentString
+              });
+
+              google.maps.event.addListener(marker, 'click', function() {
+                //map.setZoom(8);
+                //map.setCenter(marker.getPosition());
+                infowindow.open(map, marker);
+              });
+
               bounds.extend(place.geometry.location);
             }
 
