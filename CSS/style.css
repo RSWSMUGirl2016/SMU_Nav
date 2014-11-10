@@ -125,7 +125,7 @@ footer {
 	height: 3em;
 	width: 3em;
 	margin-top: 1em;
-	margin-right: 1.3em;
+	margin-right: .7em;
 }
 
 #menu  ul {
@@ -173,9 +173,13 @@ html>body #menu li a, html>body #menu li p {
 	width: 100%; 
 }
 
+/* Favorites */
+
 #favorites{
 	margin-bottom: 2em;
 }
+
+/* Directions */
 
 #dir_title {
 	margin-bottom: -1px;
@@ -255,7 +259,6 @@ ul li:hover ul {
 #mapWrapper {
 	z-index: -1;
 	width: 100%;
-	margin-left: 1%;
 	height: 40em;
 }
 
