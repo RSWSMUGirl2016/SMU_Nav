@@ -97,30 +97,23 @@ footer {
 
 #menuWrapper {
 	float: left;
-	width: 22em;
+	width: 18em;
 	margin-top: 3px;
 	background-color: rgba(22, 59, 140, 0.5);
 	box-shadow: -1px -1px 1px 2px #000;
 	border-radius: 25px;
-	position: relative;
+	position: absolute;
 	left: -2em;
 	padding-left: 1em;
 }
 
 #menu {
 	float: left;
-	width: 80%;
-	/*background-color: #777;
-	height: 10em;*/
-	/*border-right: 1px solid #000;*/
+	width: 75%;
 	padding: 1em 0 0 0;
 	margin-bottom: 1em;
 	font-size: 1.25em;
-	/*background-color: #90bade;*/
 	color: #333;
-	/*border: 2px solid #000;
-	border-radius: 10px;*/
-	/* Height should be removed once elements are added so it auto resizes */
 }
 
 #menu_button {
@@ -260,8 +253,8 @@ ul li:hover ul {
 /* Map */
 
 #mapWrapper {
-	float: left;
-	width: 79%;
+	z-index: -1;
+	width: 100%;
 	margin-left: 1%;
 	height: 40em;
 }
