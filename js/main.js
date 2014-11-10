@@ -107,8 +107,11 @@ $(document).ready(function () {
                 $("#menuWrapper").attr("collapsed", "false");
             });
         } else {
+            var collapseWidth = $("#menuWrapper").width()
+            collapseWidth -= ($("#menu_button").outerWidth(true) - $("#menu_button").width())/3 + $("#menu_button").width();
             $("#menuWrapper").animate({
-                'left': '-20em'
+
+                'left': -(collapseWidth)
             }, function() {
                 $("#menuWrapper").attr("collapsed", "true");
             });
