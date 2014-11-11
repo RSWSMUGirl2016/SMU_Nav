@@ -325,6 +325,34 @@ $app->post('/addFavorite', function() {
     
 });
 
+
+$app->post('/getFavorites', function() {
+    global $mysqli;
+    $userID = $_POST['userID'];
+    $outputJSON = array();
+    if($userID === "")
+	$outputJSON = array('Status'=>'Failure');
+    else{
+	array_push($outputJSON, array('Status'=>'Success'));
+	$classQuery = $mysqli->query("SELECT * FROM Favorites INNER JOIN Location ON Favorites.Location_idLocation = Location.idLocation INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates WHERE User_idUser = $userID");
+	$counter = 0;
+	while(true){
+	    $classOutput = array();
+	    $classList = $classQuery->fetch_assoc();
+	    if($classList === NULL)
+		break;
+	    $classOutput["buildingName"] = $classList["buildingName"]; //array_push($classOutput, array("buildingName" => $classList["buildingName"]));
+	    $classOutput["roomName"] = $classList["roomName"]; //array_push($classOutput, array("roomName" => $classList["roomName"]));
+	    $classOutput["roomNumber"] = $classList["roomNumber"]; //array_push($classOutput, array("roomNumber" => $classList["roomNumber"]));
+	    $classOutput["x"] = $classList["x"]; //array_push($classOutput, array("x" => $classList["x"]));
+	    $classOutput["y"] = $classList["y"]; //array_push($classOutput, array("y" => $classList["y"]));
+	    $classOutput["z"] = $classList["y"]; //array_push($classOutput, array("z" => $classList["z"]));
+	    $outputJSON[$counter+=1] = $classOutput;
+	}
+    echo json_encode($outputJSON);
+    }
+});
+
 $app->run();
 ?>
 
