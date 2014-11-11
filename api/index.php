@@ -267,6 +267,64 @@ $app->post('/addClass', function() {
 	    
 	echo json_encode($outputJSON);
 });
+
+$app->post('/addFavorite', function() {
+    global $mysqli;
+    $userID = $_POST['userID'];
+    $building = $_POST['building'];
+    $roomNumber = $_POST['roomNumber'];
+    $roomName = $_POST['roomName'];
+    if($building === "")
+	$outputJSON = array('Status'=>'Failure');
+    else if($roomNumber === "" && $roomName === ""){
+	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' LIMIT 1");
+	    $locationRow = $locationQuery->fetch_assoc();
+	    if($locationRow === NULL)
+		$outputJSON = array('Status'=>'Failure');
+	    else{
+		$location = $locationRow['idLocation'];
+		$insertion = $mysqli->query("INSERT INTO Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
+		$outputJSON = array('Status'=>'Success');
+		}
+	}
+	else if($roomNumber === ""){
+	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName '$roomName' LIMIT 1");
+	    $locationRow = $locationQuery->fetch_assoc();
+	    if($locationRow === NULL)
+		$outputJSON = array('Status'=>'Failure');
+	    else{
+		$location = $locationRow['idLocation'];
+		$insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
+		$outputJSON = array('Status'=>'Success');
+		}
+	}
+	else if($roomName === ""){
+	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber' LIMIT 1");
+	    $locationRow = $locationQuery->fetch_assoc();
+	    if($locationRow === NULL)
+		$outputJSON = array('Status'=>'Failure');
+	    else{
+		$location = $locationRow['idLocation'];
+		$insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
+		$outputJSON = array('Status'=>'Success');
+		}
+	}
+	else{
+	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber' LIMIT 1");
+	    $locationRow = $locationQuery->fetch_assoc();
+	    if($locationRow === NULL)
+		$outputJSON = array('Status'=>'Failure');
+	    else{
+		$location = $locationRow['idLocation'];
+		$insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
+		$outputJSON = array('Status'=>'Success');
+		}
+	}
+	    
+	echo json_encode($outputJSON);
+    
+});
+
 $app->run();
 ?>
 
