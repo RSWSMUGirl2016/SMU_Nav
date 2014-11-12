@@ -263,7 +263,7 @@ $(document).ready(function() {
         WinPrint.print();
         WinPrint.close();
     });
-    $("emailButton").click(sendEmail);
+    $("#emailButton").click(sendEmail);
 });
 
 $(document).ready(function() {
@@ -275,4 +275,14 @@ $(document).ready(function() {
 
 function sendEmail(event){
     console.log("email sent");
+}
+
+function getFavorites(){
+    $.ajax({
+       type: "POST",
+       url: "api/index.php/getFavorites",
+       success: function(result){
+           
+       }
+    });
 }
