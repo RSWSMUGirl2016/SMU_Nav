@@ -15,6 +15,7 @@
         <script type="text/javascript" src="js/main.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYQFQZrHScITrdvdYilzjSuJIE4gjHXB8">
             </script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     </head>
     <body>
         <header>
@@ -62,8 +63,9 @@
                             <div id="directions">
                                 <p name="printable">1. Direction </p>
                                 <p name="printable">2. Direction </p>
-                                <button id="print">Print</button>
-                                <button id="cancel_direcs">Cancel</button>
+                                <button class="direc_bttn" id="print">Print</button>
+                                <button class="direc_bttn" id="cancel_direcs">Cancel</button>
+                                <button id="emailButton" class="direc_bttn">Send to Email</button>
                             </div>                            
                         </div>
                         <div id="favorites">
@@ -91,7 +93,6 @@
                 </div>
             </div>
         </div>
-        
         <input id="map-input" class="controls" type="text" placeholder="Search Box">
         <footer>
             <p>Copyright &copy; 2014 Compass Studios. All Rights Reserved.</p>

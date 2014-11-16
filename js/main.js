@@ -1,22 +1,23 @@
 $(document).ready(function () {
-	var map;
+	
+    var markers = [];
+    var map;
     function initializeMap() {
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
-            zoom: 15
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
 
-        var markers = [];
+          //var markers = [];
 
           // Create the search box and link it to the UI element.
-          var input = /** @type {HTMLInputElement} */(
-              document.getElementById('map-input'));
+          var input = (document.getElementById('map-input'));
           map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-          var searchBox = new google.maps.places.SearchBox(
-            /** @type {HTMLInputElement} */(input));
+          var searchBox = new google.maps.places.SearchBox(input);
 
           // [START region_getplaces]
           // Listen for the event fired when the user selects an item from the
@@ -53,6 +54,32 @@ $(document).ready(function () {
 
               markers.push(marker);
 
+              google.maps.event.addListener(map, 'center_changed', function() {
+                // 3 seconds after the center of the map has changed, pan back to the
+                // marker.
+                window.setTimeout(function() {
+                  map.panTo(marker.getPosition());
+                }, 3000);
+              });
+
+              var contentString = '<div id="content">'+
+                  '<div id="siteNotice">'+
+                  '</div>'+
+                  '<h1 id="firstHeading" class="firstHeading">Add to Favorites</h1>'+
+                  '<div id="bodyContent">'+
+                  '</div>'+
+                  '</div>';
+
+              var infowindow = new google.maps.InfoWindow({
+                  content: contentString
+              });
+
+              google.maps.event.addListener(marker, 'click', function() {
+                //map.setZoom(8);
+                //map.setCenter(marker.getPosition());
+                infowindow.open(map, marker);
+              });
+
               bounds.extend(place.geometry.location);
             }
 
@@ -77,8 +104,11 @@ $(document).ready(function () {
                 $("#menuWrapper").attr("collapsed", "false");
             });
         } else {
+            var collapseWidth = $("#menuWrapper").width()
+            collapseWidth -= ($("#menu_button").outerWidth(true) - $("#menu_button").width())/2 + $("#menu_button").width();
             $("#menuWrapper").animate({
-                'left': '-16em'
+
+                'left': -(collapseWidth)
             }, function() {
                 $("#menuWrapper").attr("collapsed", "true");
             });
@@ -99,7 +129,9 @@ $(document).ready(function () {
     //Form Submit
     $("#login").click(login);
     $("#register").click(register);
-    //$("#logout").click(logout);
+    $("#logout").click(logout);
+    
+    
 });
 
 
@@ -228,6 +260,7 @@ $(document).ready(function() {
         WinPrint.print();
         WinPrint.close();
     });
+    $("#emailButton").click(sendEmail);
 });
 
 $(document).ready(function() {
@@ -236,3 +269,17 @@ $(document).ready(function() {
         $('#directionsWrapper').hide();
     });
 });
+
+function sendEmail(event){
+    console.log("email sent");
+}
+
+function getFavorites(){
+    $.ajax({
+       type: "POST",
+       url: "api/index.php/getFavorites",
+       success: function(result){
+           
+       }
+    });
+}
