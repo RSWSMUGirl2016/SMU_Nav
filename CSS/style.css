@@ -97,7 +97,7 @@ footer {
 
 #menuWrapper {
 	float: left;
-	width: 22em;
+	width: 18em;
 	margin-top: 3px;
 	background-color: rgba(22, 59, 140, 0.5);
 	box-shadow: -1px -1px 1px 2px #000;
@@ -109,18 +109,11 @@ footer {
 
 #menu {
 	float: left;
-	width: 80%;
-	/*background-color: #777;
-	height: 10em;*/
-	/*border-right: 1px solid #000;*/
+	width: 75%;
 	padding: 1em 0 0 0;
 	margin-bottom: 1em;
 	font-size: 1.25em;
-	/*background-color: #90bade;*/
 	color: #333;
-	/*border: 2px solid #000;
-	border-radius: 10px;*/
-	/* Height should be removed once elements are added so it auto resizes */
 }
 
 #menu_button {
@@ -132,7 +125,7 @@ footer {
 	height: 3em;
 	width: 3em;
 	margin-top: 1em;
-	margin-right: 1.3em;
+	margin-right: .7em;
 }
 
 #menu  ul {
@@ -180,9 +173,13 @@ html>body #menu li a, html>body #menu li p {
 	width: 100%; 
 }
 
+/* Favorites */
+
 #favorites{
 	margin-bottom: 2em;
 }
+
+/* Directions */
 
 #dir_title {
 	margin-bottom: -1px;

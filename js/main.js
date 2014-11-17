@@ -65,11 +65,8 @@ $(document).ready(function () {
               var contentString = '<div id="content">'+
                   '<div id="siteNotice">'+
                   '</div>'+
+                  '<h1 id="firstHeading" class="firstHeading">Add to Favorites</h1>'+
                   '<div id="bodyContent">'+
-                  '<h6 id="favoritesHeading" class="favoritesHeading">Add to Favorites</h6>'+
-                  '<button id="favorites_bttn">Add</button>'+
-                  '<h6 id="getDirectionsHeading" class="directionsHeading">Start Directions</h6>'+
-                  '<button id="getDirections_bttn">Start</button>'+                  
                   '</div>'+
                   '</div>';
 
@@ -107,9 +104,16 @@ $(document).ready(function () {
                 $("#menuWrapper").attr("collapsed", "false");
             });
         } else {
+<<<<<<< HEAD
             var collapseWidth = $("#menuWrapper").width();
             collapseWidth -= ($("#menu_button").outerWidth(true) - $("#menu_button").width())/2 + $("menu_button").width();
             $("#menuWrapper").animate({
+=======
+            var collapseWidth = $("#menuWrapper").width()
+            collapseWidth -= ($("#menu_button").outerWidth(true) - $("#menu_button").width())/2 + $("#menu_button").width();
+            $("#menuWrapper").animate({
+
+>>>>>>> 566591a6e42c69ee3b57880501d6c042f90ad712
                 'left': -(collapseWidth)
             }, function() {
                 $("#menuWrapper").attr("collapsed", "true");
