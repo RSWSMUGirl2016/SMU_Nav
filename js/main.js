@@ -15,7 +15,7 @@ $(document).ready(function () {
 
           // Create the search box and link it to the UI element.
           var input = (document.getElementById('map-input'));
-          map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+          map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
 
           var searchBox = new google.maps.places.SearchBox(input);
 
@@ -107,8 +107,10 @@ $(document).ready(function () {
                 $("#menuWrapper").attr("collapsed", "false");
             });
         } else {
+            var collapseWidth = $("#menuWrapper").width();
+            collapseWidth -= ($("#menu_button").outerWidth(true) - $("#menu_button").width())/2 + $("menu_button").width();
             $("#menuWrapper").animate({
-                'left': '-20em'
+                'left': -(collapseWidth)
             }, function() {
                 $("#menuWrapper").attr("collapsed", "true");
             });
@@ -260,7 +262,7 @@ $(document).ready(function() {
         WinPrint.print();
         WinPrint.close();
     });
-    $("emailButton").click(sendEmail);
+    $("#emailButton").click(sendEmail);
 });
 
 $(document).ready(function() {
@@ -272,4 +274,14 @@ $(document).ready(function() {
 
 function sendEmail(event){
     console.log("email sent");
+}
+
+function getFavorites(){
+    $.ajax({
+       type: "POST",
+       url: "api/index.php/getFavorites",
+       success: function(result){
+           
+       }
+    });
 }
