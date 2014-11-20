@@ -66,7 +66,7 @@ $(document).ready(function () {
                   '<div id="bodyContent">'+
                   '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>'+
                   '<button id="favorites_bttn">Add</button>'+
-                  '<h6 id="getDirectionsHeading" class="firstHeading">Add to Favorites</h6>'+
+                  '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>'+
                   '<button id="getDirections_bttn">Start</button>'+
                   '</div>'+
                   '</div>';
