@@ -1,7 +1,8 @@
 <?php
 require 'vendor/autoload.php';
+require 'SendGrid/vendor/autoload.php';
 $app = new \Slim\Slim();
-$mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
+$mysqli = new mysqli("localhost", "root", "root", "mydb");
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 $app->get('/getEvents', function () {
@@ -27,6 +28,27 @@ $app->get('/getEvents', function () {
     }'; 
     echo json_encode(json_decode($dummyData, true));
 });
+
+$app->post('/sendEmail', function (){
+
+    $to = $_POST['to'];
+    $html = $_POST['html'];
+    //perhaps add destination field for subjects
+    
+    $sendgrid = new SendGrid("oxymo", "compassstudios", array("turn_off_ssl_verification" => false));
+
+    $email = new SendGrid\Email();
+    $email->setFrom('compassstudios@gmail.com')->
+            setSubject('SMU Nav Directions')->
+            setHtml($html)->
+            addTo($to);
+
+    $response1 = $sendgrid->send($email);
+    //echo $response1;
+    //$this->assertEquals("Bad username / password", $response->errors[0]);
+    echo "Success probably!";
+});
+
 $app->post('/getCoordinates', function (){
     global $mysqli;
     $bName = $_POST['buildingName'];

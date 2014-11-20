@@ -128,10 +128,12 @@ $(document).ready(function () {
     $("#login").click(login);
     $("#register").click(register);
     $("#logout").click(logout);
-    
-    
 });
 
+var userId;
+var email;
+var firstName;
+var lastName;
 
 function login(event) {
     event.preventDefault();
@@ -150,6 +152,10 @@ function login(event) {
                 $("#login_form").css('display', 'none');
                 $("#SignedIn").css('display', 'inline');
                 $("#welcome").text("Welcome!!");
+                userId = statusJson.user_id;
+                email = statusJson.email;
+                firstName = statusJson.firstName;
+                lastName = statusJson.lastName;
             }
         }
     });
@@ -182,6 +188,10 @@ function register(event) {
                     $("#SignedIn").css('display', 'inline');
                     $("#register_form" ).dialog( "close" );
                     $("#welcome").text("Welcome!!");
+                    userId = statusJson.user_id;
+                    email = statusJson.email;
+                    firstName = statusJson.firstName;
+                    lastName = statusJson.lastName;
                 }
             });
         }
@@ -259,6 +269,7 @@ $(document).ready(function() {
         WinPrint.close();
     });
     $("#emailButton").click(sendEmail);
+    $("#favorites_bttn").click(addFavorites);
 });
 
 $(document).ready(function() {
@@ -273,11 +284,30 @@ function sendEmail(event){
 }
 
 function getFavorites(){
+    var Id = {"userId": userId}; 
     $.ajax({
        type: "POST",
+       datatype: "json",
+       data: Id,
        url: "api/index.php/getFavorites",
-       success: function(result){
-           
+       success: function(result){           
        }
     });
+}
+
+function addFavorites(){
+    var favoriteInfo;
+    //var favoriteInfo = {"userId": userId,
+        //"building": ,
+        //"roomNumber": ,
+        //"roomName":};
+    $.ajax({
+        type: "POST",
+        datatype: "json",
+        data: favoriteInfo,
+        url: "api/index.php/addFavorites",
+        sucess: function(result){
+            
+        }
+    })
 }
