@@ -11,11 +11,9 @@ $(document).ready(function () {
 
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
 
-          //var markers = [];
-
           // Create the search box and link it to the UI element.
           var input = (document.getElementById('map-input'));
-          map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+          map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
 
           var searchBox = new google.maps.places.SearchBox(input);
 
@@ -65,8 +63,11 @@ $(document).ready(function () {
               var contentString = '<div id="content">'+
                   '<div id="siteNotice">'+
                   '</div>'+
-                  '<h1 id="firstHeading" class="firstHeading">Add to Favorites</h1>'+
                   '<div id="bodyContent">'+
+                  '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>'+
+                  '<button id="favorites_bttn">Add</button>'+
+                  '<h6 id="getDirectionsHeading" class="firstHeading">Add to Favorites</h6>'+
+                  '<button id="getDirections_bttn">Start</button>'+
                   '</div>'+
                   '</div>';
 
@@ -104,11 +105,8 @@ $(document).ready(function () {
                 $("#menuWrapper").attr("collapsed", "false");
             });
         } else {
-            var collapseWidth = $("#menuWrapper").width()
-            collapseWidth -= ($("#menu_button").outerWidth(true) - $("#menu_button").width())/2 + $("#menu_button").width();
             $("#menuWrapper").animate({
-
-                'left': -(collapseWidth)
+                'left': '-20em'
             }, function() {
                 $("#menuWrapper").attr("collapsed", "true");
             });
@@ -130,10 +128,12 @@ $(document).ready(function () {
     $("#login").click(login);
     $("#register").click(register);
     $("#logout").click(logout);
-    
-    
 });
 
+var userId;
+var email;
+var firstName;
+var lastName;
 
 function login(event) {
     event.preventDefault();
@@ -152,6 +152,10 @@ function login(event) {
                 $("#login_form").css('display', 'none');
                 $("#SignedIn").css('display', 'inline');
                 $("#welcome").text("Welcome!!");
+                userId = statusJson.user_id;
+                email = statusJson.email;
+                firstName = statusJson.firstName;
+                lastName = statusJson.lastName;
             }
         }
     });
@@ -184,6 +188,10 @@ function register(event) {
                     $("#SignedIn").css('display', 'inline');
                     $("#register_form" ).dialog( "close" );
                     $("#welcome").text("Welcome!!");
+                    userId = statusJson.user_id;
+                    email = statusJson.email;
+                    firstName = statusJson.firstName;
+                    lastName = statusJson.lastName;
                 }
             });
         }
@@ -261,6 +269,7 @@ $(document).ready(function() {
         WinPrint.close();
     });
     $("#emailButton").click(sendEmail);
+    $("#favorites_bttn").click(addFavorites);
 });
 
 $(document).ready(function() {
@@ -275,11 +284,30 @@ function sendEmail(event){
 }
 
 function getFavorites(){
+    var Id = {"userId": userId}; 
     $.ajax({
        type: "POST",
+       datatype: "json",
+       data: Id,
        url: "api/index.php/getFavorites",
-       success: function(result){
-           
+       success: function(result){           
        }
     });
+}
+
+function addFavorites(){
+    var favoriteInfo;
+    //var favoriteInfo = {"userId": userId,
+        //"building": ,
+        //"roomNumber": ,
+        //"roomName":};
+    $.ajax({
+        type: "POST",
+        datatype: "json",
+        data: favoriteInfo,
+        url: "api/index.php/addFavorites",
+        sucess: function(result){
+            
+        }
+    })
 }
