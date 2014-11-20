@@ -42,6 +42,7 @@ footer {
 	padding: .5em;
 	font-size: 3em;
 	color: #FFFFFF;
+        font-family: 'Roboto', sans-serif;
    	text-shadow: -1px 0 0 #96001B, 1px 1px 0 #96001B,
            2px -1px 0 #96001B, 3px 0 0 #96001B;
 
