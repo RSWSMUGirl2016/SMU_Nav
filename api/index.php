@@ -2,31 +2,30 @@
 require 'vendor/autoload.php';
 require 'SendGrid/vendor/autoload.php';
 $app = new \Slim\Slim();
-$mysqli = new mysqli("localhost", "root", "root", "mydb");
+$mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
+
+
 $app->get('/getEvents', function () {
-   $dummyData = '{
-        "1": {
-            "name": "event_name",
-            "location": [
-                3.1234,
-                4.1234
-            ],
-            "description": "Event description",
-            "eventDateTime": "9999-12-31 23:59:59"
-        },
-        "2": {
-            "name": "event_name",
-            "location": [
-                3.1234,
-                4.1234
-            ],
-            "description": "Event description",
-            "eventDateTime": "9999-12-31 23:59:59"
-        }
-    }'; 
-    echo json_encode(json_decode($dummyData, true));
+    global $mysqli;
+    $outputJSON = array();
+    $classQuery = $mysqli->query("SELECT * FROM Event INNER JOIN Location ON Event.Location_idLocation = Location.idLocation INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates");
+    $counter = 0;
+    while(true){
+	$classOutput = array();
+	$classList = $classQuery->fetch_assoc();
+	if($classList === NULL)
+	    break;
+	$classOutput["name"] = $classList["name"];
+	$classOutput["description"] = $classList["description"];
+	$classOutput["time"] = $classList["eventDateTime"]; 
+	$classOutput["x"] = $classList["x"]; 
+	$classOutput["y"] = $classList["y"]; 
+	$classOutput["z"] = $classList["z"]; 
+	$outputJSON[$counter+=1] = $classOutput;
+	}
+    echo json_encode($outputJSON);
 });
 
 $app->post('/sendEmail', function (){
@@ -220,17 +219,17 @@ $app->post('/getClasses', function() {
 	    $classList = $classQuery->fetch_assoc();
 	    if($classList === NULL)
 		break;
-	    $classOutput["classTime"] = $classList["classTime"]; //array("classTime" => $classList["classTime"]));
-	    $classOutput["buildingName"] = $classList["buildingName"]; //array_push($classOutput, array("buildingName" => $classList["buildingName"]));
-	    $classOutput["roomName"] = $classList["roomName"]; //array_push($classOutput, array("roomName" => $classList["roomName"]));
-	    $classOutput["roomNumber"] = $classList["roomNumber"]; //array_push($classOutput, array("roomNumber" => $classList["roomNumber"]));
-	    $classOutput["x"] = $classList["x"]; //array_push($classOutput, array("x" => $classList["x"]));
-	    $classOutput["y"] = $classList["y"]; //array_push($classOutput, array("y" => $classList["y"]));
-	    $classOutput["z"] = $classList["y"]; //array_push($classOutput, array("z" => $classList["z"]));
+	    $classOutput["classTime"] = $classList["classTime"]; 
+	    $classOutput["buildingName"] = $classList["buildingName"];
+	    $classOutput["roomName"] = $classList["roomName"]; 
+	    $classOutput["roomNumber"] = $classList["roomNumber"];
+	    $classOutput["x"] = $classList["x"]; 
+	    $classOutput["y"] = $classList["y"]; 
+	    $classOutput["z"] = $classList["z"]; 
 	    $outputJSON[$counter+=1] = $classOutput;
 	}
-    echo json_encode($outputJSON);
     }
+    echo json_encode($outputJSON);
 });
 $app->post('/addClass', function() {
     global $mysqli;
@@ -368,7 +367,7 @@ $app->post('/getFavorites', function() {
 	    $classOutput["roomNumber"] = $classList["roomNumber"]; //array_push($classOutput, array("roomNumber" => $classList["roomNumber"]));
 	    $classOutput["x"] = $classList["x"]; //array_push($classOutput, array("x" => $classList["x"]));
 	    $classOutput["y"] = $classList["y"]; //array_push($classOutput, array("y" => $classList["y"]));
-	    $classOutput["z"] = $classList["y"]; //array_push($classOutput, array("z" => $classList["z"]));
+	    $classOutput["z"] = $classList["z"]; //array_push($classOutput, array("z" => $classList["z"]));
 	    $outputJSON[$counter+=1] = $classOutput;
 	}
     echo json_encode($outputJSON);

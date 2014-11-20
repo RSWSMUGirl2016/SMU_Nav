@@ -98,7 +98,7 @@ $(document).ready(function () {
 	google.maps.event.addDomListener(window, 'load', initializeMap);
 
 	$("#menu_button").click(function(){
-        if($("#menuWrapper").attr("collapsed") == "true") {
+        if($("#menuWrapper").attr("collapsed") === "true") {
             $("#menuWrapper").animate({
                 'left': '-2em'
             }, function() {
@@ -280,7 +280,19 @@ $(document).ready(function() {
 });
 
 function sendEmail(event){
-    console.log("email sent");
+    event.preventDefault();
+    var emailMssg = {"to": email, 
+        "html":"SMU NAV"};
+    $.ajax({
+       type: "POST",
+       datatype:"json",
+       data: emailMssg,
+       url: "api/index.php/sendEmail",
+       success: function(result){
+           window.alert("Email sent");
+       }
+    });
+    
 }
 
 function getFavorites(){
@@ -309,5 +321,5 @@ function addFavorites(){
         sucess: function(result){
             
         }
-    })
+    });
 }
