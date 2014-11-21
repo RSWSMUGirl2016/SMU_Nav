@@ -98,20 +98,15 @@ $(document).ready(function () {
 	google.maps.event.addDomListener(window, 'load', initializeMap);
 
 	$("#menu_button").click(function(){
-        if($("#menuWrapper").attr("collapsed") === "true") {
-            $("#menuWrapper").animate({
-                'left': '-2em'
-            }, function() {
-                $("#menuWrapper").attr("collapsed", "false");
-            });
-        } else {
-            $("#menuWrapper").animate({
-                'left': '-20em'
-            }, function() {
-                $("#menuWrapper").attr("collapsed", "true");
-            });
-        }
-    });
+    if($("#menuWrapper").attr("collapsed") === "true") {
+      // Expand Menu
+      toggleMenu('show');
+    } else {
+      // Collapse Menu
+      toggleMenu('hide');
+    }
+    //$('#menuWrapper').slideToggle('slow', {direction:'left'});
+  });
 	
     //Registration Popup
     $("#register_form").dialog({
@@ -210,6 +205,39 @@ function logout(event){
        }
     });
     
+}
+
+function toggleMenu(action) {
+    if (action == 'show') {
+        $('#menuWrapper').delay(300).show("slide", { direction: "left" }, 300);
+        $("#menuWrapper").attr("collapsed", "false");
+
+        // Shrink Map
+        toggleMap('shrink');
+    } else if (action == 'hide') {
+        $('#menuWrapper').hide("slide", { direction: "left" }, 300);
+        $("#menuWrapper").attr("collapsed", "true");
+
+        // Grow Map
+        toggleMap('grow');
+        
+    } else {
+        console.log('Invalid parameter: toggleMenu(' + action + ')');
+    }
+}
+
+function toggleMap(action) {
+  if (action == 'grow') {
+      $('#mapWrapper').delay(300).animate({
+        width: '98%'
+      }, 300);
+  } else if (action == 'shrink') {
+      $('#mapWrapper').animate({
+        width: '82.8%'
+      }, 300);
+  } else {
+      console.log('Invalid parameter: toggleMap(' + action + ')');
+  }
 }
 
 
