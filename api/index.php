@@ -29,224 +29,54 @@ $app->get('/getEvents', function () {
 });
 
 $app->get('/getBuildingNames', function () {
-    $buildings = '{ "buildings": 
-    [
-"Annette Caldwell Simmons Hall",
-"Armstrong Commons",
-"Arnold Dining Commons",
-"Beta Theta Pi",
-"Binkley Parking Center",
-"Blanton Student Services Building",
-"Boaz Commons",
-"Bridwell Library",
-"Cafe 100",
-"Camps: Conference Services",
-"Carr Collins Hall",
-"Caruth Hall",
-"Chi Omega",
-"Chick-fil-a",
-"Clements Hall",
-"Cockrell-McIntosh Commons",
-"Collins Center (Crum Auditorium)",
-"Conference Services",
-"Copy Services",
-"Crow Building",
-"Crum Basketball Center",
-"Crum Commons",
-"Dallas Hall",
-"Daniel II",
-"Daniel Parking Center",
-"Data Center",
-"Dawson Service Center",
-"Dedman Center for Lifetime Sports",
-"Dedman Life Sciences Building",
-"Delta Delta Delta",
-"Delta Gamma",
-"Dining Hall @ Umphrey Lee",
-"Direct Mail",
-"Einstein Bros. Bagels",
-"Embrey Engineering Building",
-"Expressway Tower",
-"Fincher Building",
-"Florence Hall",
-"Fondren Library Center (DeGolyer Library)",
-"Fondren Science Building",
-"Ford Stadium",
-"Future Development",
-"Gamma Phi Beta",
-"Gates Restaurant",
-"George W. Bush Presidential Center",
-"Giddy-Up Security Escort Service",
-"Greer Garson Theatre",
-"Hamon Arts Library",
-"Harold Clark Simmons Hall",
-"Hawk Hall",
-"Health Center (Temporary Location)",
-"Heroy Science Hall",
-"Highland Park United Methodist Church",
-"Hillcrest Manor",
-"Hughes-Trigg Student Center (Centennial Hall)",
-"Hyer Hall",
-"ID Card Services",
-"Images",
-"Junkins Engineering Building",
-"Kappa Alpha Order",
-"Kappa Alpha Theta",
-"Kappa Kappa Gamma",
-"Kappa Sigma",
-"Kathy Crow Commons",
-"Kirby Hall"
-    ]
-     }';
-    echo json_encode(json_decode($buildings, true));
+    global $mysqli;
+    $outputJSON = array();
+    $buildings = array();
+    $roomNameQuery = $mysqli->query("SELECT DISTINCT buildingName FROM Location WHERE buildingName IS NOT NULL");
+    while(true){
+        $buildingName = $roomNameQuery->fetch_assoc();
+        if($buildingName === NULL)
+            break; 
+        array_push($buildings, $buildingName["buildingName"]); 
+    }
+    $outputJSON["buildings"] = $buildings; 
+    echo json_encode($outputJSON);
+    return;
+  
 });
 
 
 $app->get('/getRoomNames', function () {
-    $rooms = '{ "rooms": 
-    [
-"Janitor\'s Closet",
-"Conference Room",
-"Break Room",
-"Stairs",
-"Elevator",
-"Systems of Engineering Office",
-"Electrical Closet",
-"Lyle Graduate School Office",
-"Cullum Conference Room",
-"EMIS office",
-"Control Room",
-"TA/RA",
-"Stairs",
-"I.D.F.",
-"TA/RA",
-"Chair Storage",
-"Mark Fontenot Office",
-"Tyler Moore Office",
-Don Evans Office",
-"Suku Nair Office",
-"Maryanne Anderson Office",
-"Jeff Tian Office ",
-"LiGuo Huang Office",
-"Fred Chnag Office",
-"Ira Greenber Office",
-"Eric Larson Office",
-"Todd Wright Office",
-"David Matula Office",
-"Frank Coyle Office",
-"Daniel Engels Office",
-"Doug Tucker Office",
-"Merlin Wilkerson Office",
-"Theodore Manikas Office",
-"Jennifer Dworak Office",
-"Mitch Thornton Office",
-"Steve Szygenda Office",
-"Lab",
-"Lab",
-"Offices",
-"Janitor\'s Closet",
-"Innovation Gym",
-"Vester-Hughes",
-"Mary Alice and Mark Sheperd Jr. Atrium",
-"Hart Center",
-"Hunt Institute for Eng. and Humanity"
-    ]
-     }';
-    echo json_encode(json_decode($rooms, true));
+    global $mysqli;
+    $outputJSON = array();
+    $classes = array();
+    $roomNameQuery = $mysqli->query("SELECT DISTINCT roomName FROM Location WHERE roomName IS NOT NULL");
+    while(true){
+        $roomName = $roomNameQuery->fetch_assoc();
+        if($roomName === NULL)
+            break; 
+        array_push($classes, $roomName["roomName"]); 
+    }
+    $outputJSON["rooms"] = $classes; 
+    echo json_encode($outputJSON);
+    return;
 });
 
 
 $app->get('/getRoomNumbers', function () {
-    $roomNumbers = '{ "roomNumbers": 
-    [
-314,
-308,
-312,
-306,
-320,
-303,
-301,
-999,
-999,
-353,
-347,
-337,
-369,
-373,
-302,
-374,
-372,
-384,
-383,
-379,
-406,
-412,
-441,
-439,
-435,
-433,
-431,
-425,
-421,
-419,
-549,
-451,
-455,
-457,
-459,
-461,
-467,
-473,
-477,
-479,
-481,
-483,
-485,
-484,
-472,
-469,
-400,
-120,
-116,
-106,
-136,
-135,
-147,
-157,
-156,
-159,
-161,
-176,
-183,
-184,
-266,
-256,
-999,
-999,
-239,
-235,
-233,
-231,
-221,
-219,
-999,
-251,
-255,
-257,
-259,
-261,
-267,
-269,
-271,
-273,
-279,
-270,
-268,
-284,
-272
-    ]
-     }';
-    echo json_encode(json_decode($roomNumbers, true));
+    global $mysqli;
+    $outputJSON = array();
+    $classes = array();
+    $roomNumberQuery = $mysqli->query("SELECT DISTINCT roomNumber FROM Location WHERE roomNumber IS NOT NULL");
+    while(true){
+        $roomNumber = $roomNumberQuery->fetch_assoc();
+        if($roomNumber === NULL)
+            break; 
+        array_push($classes, $roomNumber["roomNumber"]); 
+    }
+    $outputJSON["roomNumbers"] = $classes; 
+    echo json_encode($outputJSON);
+    return;
 });
 
 $app->post('/sendEmail', function (){
