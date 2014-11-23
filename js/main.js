@@ -35,15 +35,31 @@ $(document).ready(function () {
 
                 var bounds = new google.maps.LatLngBounds();
                 marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(x, y),
+                    position: new google.maps.LatLng(x, -1*y),
                     title: "Testing!"
                 });
                 map.setCenter(marker.getPosition());
                 marker.setMap(map);
+                var contentString = '<div id="content">' +
+                                    '<div id="siteNotice">' +
+                                    '</div>' +
+                                    '<div id="bodyContent">' +
+                                    '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>' +
+                                    '<button id="favorites_bttn">Add</button>' +
+                                    '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>' +
+                                    '<button id="getDirections_bttn">Start</button>' +
+                                    '</div>' +
+                                    '</div>';
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                    
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.open(map, marker);
+                });
             }
         });
-    });    
-   
+    });
 
     /*var bounds = new google.maps.LatLngBounds();
     for (var i = 0, place; place = places[i]; i++) {
@@ -296,6 +312,11 @@ function toggleMap(action) {
  });
  });*/
 
+
+$(function() {
+ $('#directionsWrapper').hide();
+});
+
 $(document).ready(function () {
 // Hide submenus
     $("#print").click(function () {
@@ -370,29 +391,3 @@ function addFavorites() {
         }
     });
 }
-
-/*function getCoordinates(event){
-    event.preventDefault();
-    var coordinates;
-    var coordinatesInfo = {"buildingName": $("#buildingName").val(), 
-                           "roomName": $("#roomName").val(),
-                           "roomNumber": $("#roomNumber").val()};
-    $.ajax({
-        type: "POST",
-        datatype: "json",
-        data: coordinatesInfo,
-        url: "api/index.php/getCoordinates",
-        success: function (result) {
-            $("#buildingName").val("");
-            $("#roomName").val("");
-            $("#roomNumber").val("");
-            var json = JSON.parse(result);
-            var x = json.x;
-            var y = json.y;
-            var z = json.z;
-            coordinates = [x, y, z];
-        }
-    });
-
-    return coordinates;
-}*/
