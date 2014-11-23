@@ -15,6 +15,7 @@ $(document).ready(function () {
         };
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
         directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('directions'));
     }
 
     //Use the getCoordinats API call and push marker onto map
@@ -74,69 +75,11 @@ $(document).ready(function () {
                         });
 
                     }, function() {
-                        handleNoGeolocation(browserSupportFlag);
+                        console.log("geolocation not working");
                     });
 
                   }
-                });
-                /*map.setCenter(marker.getPosition());
-                marker.setMap(map);
-                if(userId === undefined){
-                    var contentString = '<div id="content">' +
-                                        '<div id="siteNotice">' +
-                                        '</div>' +
-                                        '<div id="bodyContent">' +
-                                        '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>' +
-                                        '<input id="getDirections_bttn" type="submit" class="button" value="Start">' +
-                                        '</div>' +
-                                        '</div>';
-                } else {
-                    var contentString = '<div id="content">' +
-                                        '<div id="siteNotice">' +
-                                        '</div>' +
-                                        '<div id="bodyContent">' +
-                                        '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>' +
-                                        '<input id="favorites_bttn" type="submit" class="button" value="Add">' +
-                                        '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>' +
-                                        '<input id="getDirections_bttn" type="submit" class="button" value="Start">' +
-                                        '</div>' +
-                                        '</div>';
-                }
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });                    
-                google.maps.event.addListener(marker, 'click', function () {
-                    infowindow.open(map, marker);
-                });
-                $("#favorites_bttn").click(addFavorites);*/
-
-                //$("#getDirections_bttn").click(function() {
-                    //window.alert("Entered");
-                    /*directionsService = new google.maps.DirectionsService();
-                    var rendererOptions = {
-                        map: map
-                    }
-                    directionsDisplay = new google.maps.DirectionsRenderer(rendererOtpions);
-                    stepDisplay = new google.maps.InfoWindow();
-
-                    var start = navigator.geolocation.getCurrentPosition(function (position) {
-                                var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    });
-                    var end = marker.getPosition();
-                    var request = {
-                        origin: start,
-                        destination: end,
-                        travelmode: google.maps.TravelMode.WALKING
-                    };
-                    directionsService.route(request, function(response, status){
-                        if (status == google.maps.DirectionsStatus.OK) {
-                            var warnings = document.getElementById('warnings_panel');
-                            warnings.innerHTML = '<b>' + response.routes[0].warnings + '</b>';
-                            directionsDisplay.setDirections(response);
-                            showSteps(response);
-                        }
-                    });*/
-                //});        
+                });     
             }
         });
     });
