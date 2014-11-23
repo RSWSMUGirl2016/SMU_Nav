@@ -284,7 +284,7 @@ $(function() {
 $(document).ready(function () {
 // Hide submenus
     $("#print").click(function () {
-        var prtTitle = document.getElementById("dir_title");
+        /*var prtTitle = document.getElementById("dir_title");
         var prtDirections = document.getElementsByName("printable");
         var print = '';
         var styleTitle = '<style>p{font-weight: bold;}</style>';
@@ -298,6 +298,13 @@ $(document).ready(function () {
         console.log(print);
         var WinPrint = window.open('', '', 'letf=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
         WinPrint.document.write(print);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();*/
+        var contents = window.opener.document.getElementById("mapWrapper");
+        var WinPrint = window.open('', '', 'letf=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        WinPrint.document.write(contents.innerHTML);
         WinPrint.document.close();
         WinPrint.focus();
         WinPrint.print();
