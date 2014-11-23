@@ -124,13 +124,18 @@ $(document).ready(function () {
             var pos = new google.maps.LatLng(position.coords.latitude,
                     position.coords.longitude);
 
-            var infowindow = new google.maps.InfoWindow({
+            var currPosMarker = new google.maps.Marker({
                 map: map,
-                position: pos,
-                content: 'My Location.'
+                position: pos
+            });
+            var contentString = '<p id="myLoc">My Location</p>';
+            google.maps.event.addListener(currPosMarker, 'click', function () {
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                infowindow.open(map,currPosMarker);
             });
 
-            map.setCenter(pos);
         }, function () {
             console.log("geolocation not working");
         });
