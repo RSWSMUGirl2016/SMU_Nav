@@ -15,12 +15,12 @@ header {
 }
 
 div#body {
+	margin: -1em 0 1.3em 0;
 	padding-top: 0;
 	overflow: hidden;
 }
 
 footer {
-	margin: 1%;
 	box-shadow: -1px -1px 1px 2px #000;
 	background-color: #96001B;
 	text-shadow: -1px -1px 1px #000;
@@ -97,13 +97,13 @@ footer {
 
 #menuWrapper {
 	float: left;
-	width: 15%;
-	background-color: rgba(22, 59, 140, 0.5);
+	width: 16%;
+	background-color: #DCDCDC;
 	border: 2px solid;
 	border-left: none;
 	border-top-right-radius: 25px;
 	border-bottom-right-radius: 25px;
-	position: relative;
+	position: absolute;
 	left: -1em;
 }
 
@@ -112,7 +112,6 @@ footer {
 	width: 85%;
 	margin-bottom: 1em;
 	font-size: 1.25em;
-	color: #333;
 }
 
 #menu_button {
@@ -182,11 +181,10 @@ html>body #menu li a, html>body #menu li p {
 
 #dir_title {
 	margin-bottom: -1px;
-	margin-left: 1em;
+	padding-left: 1em;
 	border: 1.75px solid #959595;
 	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
-	background-color: #DCDCDC;
+	border-bottom-right-radius: 10px;
 }
 
 #dir_title p {
@@ -198,16 +196,11 @@ html>body #menu li a, html>body #menu li p {
 #directions {
 	margin-top: 0px;
 	margin-bottom: 1em;
-	margin-left: 1em;
-	border: 1.75px solid #959595;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
-	background-color: #DCDCDC;
+	padding-left: 1.5em;
 }
 
 #directions p {
 	color: #163B8C;
-	margin-left: 15%;
 }
 
 #directionsWrapper {
@@ -256,7 +249,7 @@ ul li:hover ul {
 
 #mapWrapper {
 	float: right;
-	width: 82.5%;
+	width: 83%;
 	height: 40em;
 	margin: 0 1% 0 1%;
 }
