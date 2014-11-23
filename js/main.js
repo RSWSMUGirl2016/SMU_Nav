@@ -143,6 +143,14 @@ $(document).ready(function () {
 
     var coordinates = $("#submitSearch").click(getCoordinates);
 
+    var myLatlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
+
+    marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title: "Testing!"
+    });
+
 });
 
 var userId;
@@ -355,24 +363,24 @@ function addFavorites() {
         datatype: "json",
         data: favoriteInfo,
         url: "api/index.php/addFavorites",
-        sucess: function (result) {
+        success: function (result) {
 
         }
     });
 }
 
 function getCoordinates(event){
-    var coordinates;
     event.preventDefault();
-    var coordinatesInfo = {"buildingName": $("#buildingName").val(),
-                           "roomNumber": $("#roomNumber").val(), 
-                           "roomName": $("#roomName").val()};
+    var coordinates;
+    var coordinatesInfo = {"buildingName": $("#buildingName").val(), 
+                           "roomName": $("#roomName").val(),
+                           "roomNumber": $("#roomNumber").val()};
     $.ajax({
         type: "POST",
         datatype: "json",
         data: coordinatesInfo,
         url: "api/index.php/getCoordinates",
-        sucess: function (result) {
+        success: function (result) {
             window.alert("Result: " + result);
             $("#buildingName").val("");
             $("#roomName").val("");
@@ -384,7 +392,6 @@ function getCoordinates(event){
             coordinates = [x, y, z];
         }
     });
-    //alert("x: " + coordinates[0]);
 
     return coordinates;
 }
