@@ -123,7 +123,7 @@ $app->get('/getRoomNames', function () {
 "Chair Storage",
 "Mark Fontenot Office",
 "Tyler Moore Office",
-"Don Evans Office",
+Don Evans Office",
 "Suku Nair Office",
 "Maryanne Anderson Office",
 "Jeff Tian Office ",
@@ -248,8 +248,6 @@ $app->get('/getRoomNumbers', function () {
      }';
     echo json_encode(json_decode($roomNumbers, true));
 });
-
-
 
 $app->post('/sendEmail', function (){
 
