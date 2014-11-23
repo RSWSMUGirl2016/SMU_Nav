@@ -2,18 +2,14 @@ $(document).ready(function () {
 
     var marker;
     var map;
-    var directionsService = new google.maps.DirectionsService();
-    var directionsDisplay;
 
     function initializeMap() {
-        directionsDisplay = new google.maps.DirectionsRenderer();
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
-        directionsDisplay.setMap(map);
     }
 
     //Use the getCoordinats API call and push marker onto map
@@ -39,20 +35,16 @@ $(document).ready(function () {
                     title: "Testing!"
                 });
 
-                function calcRoute() {
-                    var start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    var end = marker.getPosition();
-                    var request = {
-                        origin: start,
-                        destination: end,
-                        travelMode: google.maps.TravelMode.WALKING
-                    };
-                    directionsService.route(request, function(response, status){
-                        if (status == google.maps.DirectionsStatus.OK) {
-                            directionsDisplay.setDirections(response);
-                        }
-                    });
-                }
+                map.setCenter(marker.getPosition());
+                marker.setMap(map);
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    if(userId === undefined){
+                        $("#favoritesHeading").hide();
+                        $("#favorites_bttn").hide();
+                    }
+                    $("#marker_form").dialog("open");                    
+                });
                 /*map.setCenter(marker.getPosition());
                 marker.setMap(map);
                 if(userId === undefined){
@@ -162,6 +154,11 @@ $(document).ready(function () {
     $("#register").click(register);
     $("#logout").click(logout);
 
+    //Marker Popup
+    $("#marker_form").dialog({
+        autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
+    });
+
     if(userId === undefined){
         $('#favorites').hide();
     } 
@@ -191,7 +188,9 @@ function login(event) {
                 $("#login_form").css('display', 'none');
                 $("#SignedIn").css('display', 'inline');
                 $("#welcome").text("Welcome!!");
-
+                $("#favorites").show();
+                $("#favoritesHeading").show();
+                $("#favorites_bttn").show();
                 userId = statusJson.user_id;
                 email = statusJson.email;
                 firstName = statusJson.firstName;
@@ -228,6 +227,8 @@ function register(event) {
                     $("#register_form").dialog("close");
                     $("#welcome").text("Welcome!!");
                     $("#favorites").show();
+                    $("#favoritesHeading").show();
+                    $("#favorites_bttn").show();
                     userId = statusJson.user_id;
                     email = statusJson.email;
                     firstName = statusJson.firstName;
