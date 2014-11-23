@@ -28,9 +28,6 @@ $(document).ready(function () {
             data: coordinatesInfo,
             url: "api/index.php/getCoordinates",
             success: function (result) {
-                $("#buildingName").val("");
-                $("#roomName").val("");
-                $("#roomNumber").val("");
                 var json = JSON.parse(result);
                 var x = json.x;
                 var y = json.y;
@@ -52,8 +49,33 @@ $(document).ready(function () {
                     $("#marker_form").dialog("open");                    
                 });
 
+                $("#favorites_bttn").click(function() {
+                    event.preventDefault();
+                    //$("#favoritesHeading").hide();
+                    //$("#favorites_bttn").hide();
+                    var favoriteInfo = {userID: userId, building: $("#buildingName").val(), roomNumber: $("#roomNumber").val(), roomName: $("#roomName").val()};
+                    $.ajax({
+                        type: "POST",
+                        datatype: "json",
+                        data: favoriteInfo,
+                        url: "api/index.php/addFavorite",
+                        success: function (result) {
+                            var statusJson = JSON.parse(result);
+                            if (statusJson.Status === "Failure") {
+                                window.alert("Error");
+                            }
+                            else {
+                                window.alert("Successfully added class");
+                            }
+                        }
+                    });
+                });
+
                 $("#getDirections_bttn").click(function() {                    
                     event.preventDefault();
+                    $("#buildingName").val("");
+                    $("#roomName").val("");
+                    $("#roomNumber").val("");
                     marker.setMap(null);
                     $('#directionsWrapper').show();
                     $("#marker_form").dialog("close");
@@ -140,6 +162,8 @@ $(document).ready(function () {
     if(userId === undefined){
         $('#favorites').hide();
     } 
+
+    $('#directionsWrapper').hide();
 
     getEvents();
 
@@ -276,11 +300,6 @@ function toggleMap(action) {
  });
  });*/
 
-
-$(function() {
-    $('#directionsWrapper').hide();
-});
-
 $(document).ready(function () {
 // Hide submenus
     $("#print").click(function () {
@@ -312,7 +331,6 @@ $(document).ready(function () {
         WinPrint.close();
     });
     $("#emailButton").click(sendEmail);
-    $("#favorites_bttn").click(addFavorites);
 });
 $(document).ready(function () {
     // Hide submenus
@@ -347,24 +365,6 @@ function getFavorites() {
     });
 }
 
-function addFavorites() {
-    window.alert("Adding");
-    var favoriteInfo;
-    //var favoriteInfo = {"userId": userId,
-    //"building": ,
-    //"roomNumber": ,
-    //"roomName":};
-    $.ajax({
-        type: "POST",
-        datatype: "json",
-        data: favoriteInfo,
-        url: "api/index.php/addFavorites",
-        success: function (result) {
-
-        }
-    });
-}
-
 function getEvents() {
     $.ajax({
         type: "GET",
@@ -374,7 +374,6 @@ function getEvents() {
             var json = JSON.parse(result);
             var html = '';
             $.each(json, function(key, value) {
-                //console.log(key, value, value.name);
                 var coords = value.x+","+value.y+","+value.z;
                 var rel = value.time+","+value.description;
                 html += '<li><a href="" coords="'+coords+'" rel="'+rel+'">'+value.name+'</a></li>';
