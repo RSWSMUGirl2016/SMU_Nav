@@ -183,11 +183,6 @@ html>body #menu li a, html>body #menu li p {
 	margin-top: 1em;
 }
 
-/* Searching Form*/
-#searchingForm {
-	margin-left: 300px;
-}
-
 /* Directions */
 
 #dir_title {
@@ -258,11 +253,20 @@ ul li:hover ul {
 
 /* Map */
 
-#mapWrapper {
+#mapContainer {
 	float: right;
 	width: 83%;
-	height: 40em;
 	margin: 0 1% 0 1%;
+}
+
+#mapWrapper {
+	
+	height: 40em;
+}
+
+/* Searching Form*/
+#searchingForm {
+	right: 0;
 }
 
 #marker_form{
