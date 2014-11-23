@@ -10,10 +10,13 @@ $(document).ready(function () {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
+    
+
+
     }
 
     //Use the getCoordinats API call and push marker onto map
-    /*$("#submitSearch").click(function () {
+    $("#submitSearch").click(function () {
         event.preventDefault();
         var coordinatesInfo = {buildingName: $("#buildingName").val(), roomNumber: $("#roomNumber").val(), roomName: $("#roomName").val()};
         $.ajax({
@@ -21,28 +24,25 @@ $(document).ready(function () {
             datatype: "json",
             data: coordinatesInfo,
             url: "api/index.php/getCoordinates",
-            sucess: function (result) {
-                window.alert(result);
-                //$("#buildingName").val("");
-                //$("#roomName").val("");
-                //$("#roomNumber").val("");
+            success: function (result) {
+                $("#buildingName").val("");
+                $("#roomName").val("");
+                $("#roomNumber").val("");
                 var json = JSON.parse(result);
                 var x = json.x;
                 var y = json.y;
                 var z = json.z;
 
-                var myLatlng = new google.maps.LatLng(x, y);
-
+                var bounds = new google.maps.LatLngBounds();
                 marker = new google.maps.Marker({
-                    position: myLatlng,
+                    position: new google.maps.LatLng(x, y),
                     title: "Testing!"
                 });
-
+                map.setCenter(marker.getPosition());
                 marker.setMap(map);
             }
         });
-    });*/
-    
+    });    
    
 
     /*var bounds = new google.maps.LatLngBounds();
@@ -141,7 +141,9 @@ $(document).ready(function () {
     $("#register").click(register);
     $("#logout").click(logout);
 
-    var coordinates = $("#submitSearch").click(getCoordinates);
+    /*var coordinates = $("#submitSearch").click(getCoordinates);
+
+    console.log(coordinates);
 
     var myLatlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
 
@@ -149,7 +151,7 @@ $(document).ready(function () {
         position: myLatlng,
         map: map,
         title: "Testing!"
-    });
+    });*/
 
 });
 
@@ -369,7 +371,7 @@ function addFavorites() {
     });
 }
 
-function getCoordinates(event){
+/*function getCoordinates(event){
     event.preventDefault();
     var coordinates;
     var coordinatesInfo = {"buildingName": $("#buildingName").val(), 
@@ -381,7 +383,6 @@ function getCoordinates(event){
         data: coordinatesInfo,
         url: "api/index.php/getCoordinates",
         success: function (result) {
-            window.alert("Result: " + result);
             $("#buildingName").val("");
             $("#roomName").val("");
             $("#roomNumber").val("");
@@ -394,4 +395,4 @@ function getCoordinates(event){
     });
 
     return coordinates;
-}
+}*/
