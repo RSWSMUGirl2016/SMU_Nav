@@ -183,6 +183,8 @@ $(document).ready(function () {
     getRoomNames();
     getRoomNumbers();
 
+    $('.campus_events').click(selectEvent);
+
 });
 
 var userId;
@@ -358,7 +360,7 @@ function getFavorites() {
                     //console.log(key, value);
                     var coords = value.x + "," + value.y + "," + value.z;
                     var rel = value.buildingName + "," + value.roomNumber;
-                    html += '<li><a href="" coords="' + coords + '" rel="' + rel + '">' + value.roomName + '</a></li>';
+                    html += '<li class="user_fav"><a href="" coords="' + coords + '" rel="' + rel + '">' + value.roomName + '</a></li>';
                 }
             });
             $(".favs_list").append(html);
@@ -377,7 +379,7 @@ function getEvents() {
             $.each(json, function (key, value) {
                 var coords = value.x + "," + value.y + "," + value.z;
                 var rel = value.time + "," + value.description;
-                html += '<li><a href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</a></li>';
+                html += '<li class="campus_events"><a href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</a></li>';
             });
             $(".events_list").append(html);
         }
@@ -394,7 +396,6 @@ function getBuildingNames() {
             var buildings = new Array();
             $.each(json, function(key, value) {
                 $.each(value, function(key2, value2) {
-                    console.log(value2);
                     buildings.push(value2);
                 });
                 
@@ -416,7 +417,6 @@ function getRoomNames() {
             var roomnames = new Array();
             $.each(json, function(key, value) {
                 $.each(value, function(key2, value2) {
-                    console.log(value2);
                     roomnames.push(value2);
                 });
                 
@@ -438,7 +438,6 @@ function getRoomNumbers() {
             var roomnumbers = new Array();
             $.each(json, function(key, value) {
                 $.each(value, function(key2, value2) {
-                    console.log(value2);
                     roomnumbers.push(value2);
                 });
                 
@@ -448,4 +447,10 @@ function getRoomNumbers() {
             });
         }
     });    
+}
+
+function selectEvent() {
+    event.preventDefault();
+    var html = this.innerHTML;
+    window.alert(html);
 }
