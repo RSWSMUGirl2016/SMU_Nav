@@ -29,103 +29,108 @@ $(document).ready(function () {
             url: "api/index.php/getCoordinates",
             success: function (result) {
                 var json = JSON.parse(result);
-                var x = json.x;
-                var y = json.y;
-                var z = json.z;
-                var bounds = new google.maps.LatLngBounds();
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(x, y),
-                    title: "Testing!"
-                });
+                if (json === null) {
+                    window.alert("Sorry the building doesn't exist in SMU or has not been mapped");
+                }
+                else {
+                    var x = json.x;
+                    var y = json.y;
+                    var z = json.z;
+                    var bounds = new google.maps.LatLngBounds();
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(x, y),
+                        title: "Testing!"
+                    });
 
-                map.setCenter(marker.getPosition());
-                marker.setMap(map);
+                    map.setCenter(marker.getPosition());
+                    marker.setMap(map);
 
-                google.maps.event.addListener(marker, 'click', function () {
-                    if(userId === undefined){
-                        $("#favoritesHeading").hide();
-                        $("#favorites_bttn").hide();
-                    }
-                    $("#marker_form").dialog("open");                    
-                });
-
-                $("#favorites_bttn").click(function() {
-                    event.preventDefault();
-                    $("#marker_form").dialog("close");
-                    //$("#favoritesHeading").hide();
-                    //$("#favorites_bttn").hide();
-                    var favoriteInfo = {userID: userId, building: $("#buildingName").val(), roomNumber: $("#roomNumber").val(), roomName: $("#roomName").val()};
-                    $.ajax({
-                        type: "POST",
-                        datatype: "json",
-                        data: favoriteInfo,
-                        url: "api/index.php/addFavorite",
-                        success: function (result) {
-                            var statusJson = JSON.parse(result);
-                            if (statusJson.Status === "Failure") {
-                                window.alert("Error");
-                            }
-                            else {
-                                window.alert("Successfully added class");
-                            }
+                    google.maps.event.addListener(marker, 'click', function () {
+                        if (userId === undefined) {
+                            $("#favoritesHeading").hide();
+                            $("#favorites_bttn").hide();
                         }
+                        $("#marker_form").dialog("open");
                     });
-                });
 
-                $("#getDirections_bttn").click(function() {                    
-                    event.preventDefault();
-                    $("#buildingName").val("");
-                    $("#roomName").val("");
-                    $("#roomNumber").val("");
-                    marker.setMap(null);
-                    $('#directionsWrapper').show();
-                    $("#marker_form").dialog("close");
-                    if(navigator.geolocation) {
-                        browserSupportFlag = true;
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-                        
-                        var start = initialLocation;
-                        var end = marker.getPosition();
-                        var request = {
-                            origin: start,
-                            destination: end,
-                            travelMode: google.maps.TravelMode.WALKING
-                        };
-                        directionsService.route(request, function(response, status) {
-                            if(status == google.maps.DirectionsStatus.OK) {
-                                directionsDisplay.setDirections(response);
+                    $("#favorites_bttn").click(function () {
+                        event.preventDefault();
+                        $("#marker_form").dialog("close");
+                        //$("#favoritesHeading").hide();
+                        //$("#favorites_bttn").hide();
+                        var favoriteInfo = {userID: userId, building: $("#buildingName").val(), roomNumber: $("#roomNumber").val(), roomName: $("#roomName").val()};
+                        $.ajax({
+                            type: "POST",
+                            datatype: "json",
+                            data: favoriteInfo,
+                            url: "api/index.php/addFavorite",
+                            success: function (result) {
+                                var statusJson = JSON.parse(result);
+                                if (statusJson.Status === "Failure") {
+                                    window.alert("Error");
+                                }
+                                else {
+                                    window.alert("Successfully added class");
+                                }
                             }
                         });
-                        $("#cancel_direcs").click(function () {
-                            $('#directionsWrapper').hide();
-                            directionsDisplay.setMap(null);
-                            directionsDisplay.setPanel(null);
-                        });
-
-                    }, function() {
-                        console.log("geolocation not working");
                     });
 
-                  }
+                    $("#getDirections_bttn").click(function () {
+                        event.preventDefault();
+                        $("#buildingName").val("");
+                        $("#roomName").val("");
+                        $("#roomNumber").val("");
+                        marker.setMap(null);
+                        $('#directionsWrapper').show();
+                        $("#marker_form").dialog("close");
+                        if (navigator.geolocation) {
+                            browserSupportFlag = true;
+                            navigator.geolocation.getCurrentPosition(function (position) {
+                                initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-                });     
+                                var start = initialLocation;
+                                var end = marker.getPosition();
+                                var request = {
+                                    origin: start,
+                                    destination: end,
+                                    travelMode: google.maps.TravelMode.WALKING
+                                };
+                                directionsService.route(request, function (response, status) {
+                                    if (status == google.maps.DirectionsStatus.OK) {
+                                        directionsDisplay.setDirections(response);
+                                    }
+                                });
+                                $("#cancel_direcs").click(function () {
+                                    $('#directionsWrapper').hide();
+                                    directionsDisplay.setMap(null);
+                                    directionsDisplay.setPanel(null);
+                                });
+
+                            }, function () {
+                                console.log("geolocation not working");
+                            });
+
+                        }
+
+                    });
+                }
             }
         });
     });
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-        var pos = new google.maps.LatLng(position.coords.latitude,
-                                         position.coords.longitude);
+            var pos = new google.maps.LatLng(position.coords.latitude,
+                    position.coords.longitude);
 
-        var infowindow = new google.maps.InfoWindow({
-            map: map,
-            position: pos,
-            content: 'My Location.'
-        });
+            var infowindow = new google.maps.InfoWindow({
+                map: map,
+                position: pos,
+                content: 'My Location.'
+            });
 
-        map.setCenter(pos);
+            map.setCenter(pos);
         }, function () {
             console.log("geolocation not working");
         });
@@ -167,9 +172,9 @@ $(document).ready(function () {
         autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
     });
 
-    if(userId === undefined){
+    if (userId === undefined) {
         $('#favorites').hide();
-    } 
+    }
 
     $('#directionsWrapper').hide();
 
@@ -267,35 +272,35 @@ function logout(event) {
 
 function toggleMenu(action) {
     if (action == 'show') {
-        $('#menuWrapper').show("slide", { direction: "left" }, 300);
+        $('#menuWrapper').show("slide", {direction: "left"}, 300);
         $("#menuWrapper").attr("collapsed", "false");
 
         // Shrink Map
         toggleMap('shrink');
     } else if (action == 'hide') {
-        $('#menuWrapper').hide("slide", { direction: "left" }, 300);
+        $('#menuWrapper').hide("slide", {direction: "left"}, 300);
         $("#menuWrapper").attr("collapsed", "true");
 
         // Grow Map
         toggleMap('grow');
-        
+
     } else {
         console.log('Invalid parameter: toggleMenu(' + action + ')');
     }
 }
 
 function toggleMap(action) {
-  if (action == 'grow') {
-      $('#mapWrapper').animate({
-        width: '98%'
-      }, 300);
-  } else if (action == 'shrink') {
-      $('#mapWrapper').animate({
-        width: '83%'
-      }, 300);
-  } else {
-      console.log('Invalid parameter: toggleMap(' + action + ')');
-  }
+    if (action == 'grow') {
+        $('#mapWrapper').animate({
+            width: '98%'
+        }, 300);
+    } else if (action == 'shrink') {
+        $('#mapWrapper').animate({
+            width: '83%'
+        }, 300);
+    } else {
+        console.log('Invalid parameter: toggleMap(' + action + ')');
+    }
 }
 
 $(document).ready(function () {
@@ -319,8 +324,9 @@ $(document).ready(function () {
 });
 function sendEmail(event) {
     event.preventDefault();
+    var directions = $("#directions").html();
     var emailMssg = {"to": email,
-        "html": "SMU NAV"};
+        "html": directions};
     $.ajax({
         type: "POST",
         datatype: "json",
@@ -343,16 +349,16 @@ function getFavorites() {
             //window.alert("Get favorites");
             var json = JSON.parse(result);
             var html = '';
-            $.each(json, function(key, value) {
+            $.each(json, function (key, value) {
                 if (value.Status === "Failure") {
                     window.alert("Incorrect Password or Email");
                 } else if (value.Status === "Success") {
 
                 } else {
                     //console.log(key, value);
-                    var coords = value.x+","+value.y+","+value.z;
-                    var rel = value.buildingName+","+value.roomNumber;
-                    html += '<li><a href="" coords="'+coords+'" rel="'+rel+'">'+value.roomName+'</a></li>';
+                    var coords = value.x + "," + value.y + "," + value.z;
+                    var rel = value.buildingName + "," + value.roomNumber;
+                    html += '<li><a href="" coords="' + coords + '" rel="' + rel + '">' + value.roomName + '</a></li>';
                 }
             });
             $(".favs_list").append(html);
@@ -368,10 +374,10 @@ function getEvents() {
         success: function (result) {
             var json = JSON.parse(result);
             var html = '';
-            $.each(json, function(key, value) {
-                var coords = value.x+","+value.y+","+value.z;
-                var rel = value.time+","+value.description;
-                html += '<li><a href="" coords="'+coords+'" rel="'+rel+'">'+value.name+'</a></li>';
+            $.each(json, function (key, value) {
+                var coords = value.x + "," + value.y + "," + value.z;
+                var rel = value.time + "," + value.description;
+                html += '<li><a href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</a></li>';
             });
             $(".events_list").append(html);
         }

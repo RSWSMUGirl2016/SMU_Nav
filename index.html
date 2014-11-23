@@ -80,28 +80,32 @@
                     </div>                    
                 </div>
             </div>
-            <div id="search_form">
-                <form id="searchingForm" action="index.html" method="POST">
-                    <input type="text" id="buildingName" placeholder="Building Name">
-                    <input type="text" id="roomName" placeholder="Room Name">
-                    <input type="text" id="roomNumber" placeholder="Room Number">
-                    <input type="submit" id="submitSearch" class="button" value="Search">
-                </form> 
-            </div>
-            
-            <div id="marker_form" title="Info Box">
-                <form id ="marker_area" action ="index.html" method="POST">
-                    <h3 id="favoritesHeading" class="favoritesHeading">Add to Favorites</h3>
-                    <input id="favorites_bttn" type="submit" class="button" value="Add">
-                    <h3 id="getDirectionsHeading" class="firstHeading">Get Directions</h3>
-                    <input id="getDirections_bttn" type="submit" class="button" value="Start">
-                </form>
-            </div>
+           
+            <div id="mapContainer" align="right">
+                 <div id="search_form">
+                    <form id="searchingForm" action="index.html" method="POST">
+                        <input type="text" id="buildingName" placeholder="Building Name">
+                        <input type="text" id="roomName" placeholder="Room Name">
+                        <input type="text" id="roomNumber" placeholder="Room Number">
+                        <input type="submit" id="submitSearch" class="button" value="Search">
+                    </form> 
+                </div>
+                
+                <div id="marker_form" title="Info Box">
+                    <form id ="marker_area" action ="index.html" method="POST">
+                        <h3 id="favoritesHeading" class="favoritesHeading">Add to Favorites</h3>
+                        <input id="favorites_bttn" type="submit" class="button" value="Add">
+                        <h3 id="getDirectionsHeading" class="firstHeading">Get Directions</h3>
+                        <input id="getDirections_bttn" type="submit" class="button" value="Start">
+                    </form>
+                </div>
 
-            <div id="mapWrapper">
-                <div id="map">
+                <div id="mapWrapper">
+                    <div id="map">
+                    </div>
                 </div>
             </div>
+            
         </div>      
         <footer>
             <p>Copyright &copy; 2014 Compass Studios. All Rights Reserved.</p>
