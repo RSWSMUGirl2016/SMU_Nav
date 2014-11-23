@@ -1,4 +1,4 @@
-USE 'mydb'; 
+USE mydb; 
 INSERT INTO User(firstName, lastName, email, password) VALUES
 	("Jane", "Doe", "jane@smu.edu", "mapple"),
 	("Bob", "Doe", "bob@smu.edu", "bacon"),
