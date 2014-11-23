@@ -50,6 +50,8 @@ $(document).ready(function () {
                             $("#favoritesHeading").hide();
                             $("#favorites_bttn").hide();
                         }
+                        var infoBoxTitle = $("#buildingName").val() + " " + $("#roomNumber").val() + " " + $("#roomName").val();
+                        $('#marker_form').dialog('option', 'title', infoBoxTitle);
                         $("#marker_form").dialog("open");
                     });
 
@@ -133,7 +135,7 @@ $(document).ready(function () {
                 var infowindow = new google.maps.InfoWindow({
                     content: contentString
                 });
-                infowindow.open(map,currPosMarker);
+                infowindow.open(map, currPosMarker);
             });
 
         }, function () {
@@ -295,17 +297,17 @@ function toggleMenu(action) {
 }
 
 function toggleMap(action) {
-  if (action == 'grow') {
-      $('#mapContainer').animate({
-        width: '98%'
-      }, 300);
-  } else if (action == 'shrink') {
-      $('#mapContainer').animate({
-        width: '83%'
-      }, 300);
-  } else {
-      console.log('Invalid parameter: toggleMap(' + action + ')');
-  }
+    if (action == 'grow') {
+        $('#mapContainer').animate({
+            width: '98%'
+        }, 300);
+    } else if (action == 'shrink') {
+        $('#mapContainer').animate({
+            width: '83%'
+        }, 300);
+    } else {
+        console.log('Invalid parameter: toggleMap(' + action + ')');
+    }
 }
 
 $(document).ready(function () {
@@ -397,18 +399,18 @@ function getBuildingNames() {
         success: function (result) {
             var json = JSON.parse(result);
             var buildings = new Array();
-            $.each(json, function(key, value) {
-                $.each(value, function(key2, value2) {
+            $.each(json, function (key, value) {
+                $.each(value, function (key2, value2) {
                     console.log(value2);
                     buildings.push(value2);
                 });
-                
+
             });
             $("#buildingName").autocomplete({
                 source: buildings
             });
         }
-    });    
+    });
 }
 
 function getRoomNames() {
@@ -419,18 +421,18 @@ function getRoomNames() {
         success: function (result) {
             var json = JSON.parse(result);
             var roomnames = new Array();
-            $.each(json, function(key, value) {
-                $.each(value, function(key2, value2) {
+            $.each(json, function (key, value) {
+                $.each(value, function (key2, value2) {
                     console.log(value2);
                     roomnames.push(value2);
                 });
-                
+
             });
             $("#roomName").autocomplete({
                 source: roomnames
             });
         }
-    });    
+    });
 }
 
 function getRoomNumbers() {
@@ -441,16 +443,16 @@ function getRoomNumbers() {
         success: function (result) {
             var json = JSON.parse(result);
             var roomnumbers = new Array();
-            $.each(json, function(key, value) {
-                $.each(value, function(key2, value2) {
+            $.each(json, function (key, value) {
+                $.each(value, function (key2, value2) {
                     console.log(value2);
                     roomnumbers.push(value2);
                 });
-                
+
             });
             $("#roomNumber").autocomplete({
                 source: roomnumbers
             });
         }
-    });    
+    });
 }
