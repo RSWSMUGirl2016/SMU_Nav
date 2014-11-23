@@ -15,13 +15,12 @@ header {
 }
 
 div#body {
-	padding: 1em;
+	margin: -1em 0 1.3em 0;
 	padding-top: 0;
 	overflow: hidden;
 }
 
 footer {
-	margin: 1%;
 	box-shadow: -1px -1px 1px 2px #000;
 	background-color: #96001B;
 	text-shadow: -1px -1px 1px #000;
@@ -42,6 +41,7 @@ footer {
 	padding: .5em;
 	font-size: 3em;
 	color: #FFFFFF;
+        font-family: 'Roboto', sans-serif;
    	text-shadow: -1px 0 0 #96001B, 1px 1px 0 #96001B,
            2px -1px 0 #96001B, 3px 0 0 #96001B;
 
@@ -97,35 +97,33 @@ footer {
 
 #menuWrapper {
 	float: left;
-	width: 22em;
-	margin-top: 3px;
-	background-color: rgba(22, 59, 140, 0.5);
-	box-shadow: -1px -1px 1px 2px #000;
-	border-radius: 25px;
-	position: relative;
-	left: -2em;
-	padding-left: 1em;
+	width: 16%;
+	background-color: #DCDCDC;
+	border: 2px solid;
+	border-left: none;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	position: absolute;
+	left: -1em;
 }
 
 #menu {
 	float: left;
-	width: 80%;
-	padding: 1em 0 0 0;
+	width: 85%;
 	margin-bottom: 1em;
 	font-size: 1.25em;
-	color: #333;
 }
 
 #menu_button {
-	float: right;
+	float: left;
 	background-image: url(../img/menu_icon.png);
 	background-color: transparent;
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	height: 3em;
 	width: 3em;
-	margin-top: 1em;
-	margin-right: 1.3em;
+	margin-top: 2.5em;
+	margin-left: 1.5em;
 }
 
 #menu  ul {
@@ -176,18 +174,28 @@ html>body #menu li a, html>body #menu li p {
 /* Favorites */
 
 #favorites{
-	margin-bottom: 2em;
+	margin-top: 1em;
+}
+
+/* Evets */
+
+#events{
+	margin-top: 1em;
+}
+
+/* Searching Form*/
+#searchingForm {
+	margin-left: 300px;
 }
 
 /* Directions */
 
 #dir_title {
 	margin-bottom: -1px;
-	margin-left: 1em;
+	padding-left: 1em;
 	border: 1.75px solid #959595;
 	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
-	background-color: #DCDCDC;
+	border-bottom-right-radius: 10px;
 }
 
 #dir_title p {
@@ -199,21 +207,15 @@ html>body #menu li a, html>body #menu li p {
 #directions {
 	margin-top: 0px;
 	margin-bottom: 1em;
-	margin-left: 1em;
-	border: 1.75px solid #959595;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
-	background-color: #DCDCDC;
+	padding-left: 1.5em;
 }
 
 #directions p {
 	color: #163B8C;
-	margin-left: 15%;
 }
 
 #directionsWrapper {
-	margin-top: 3em;
-	margin-bottom: 2em;
+	margin: 1em 0 1em 0em;
 }
 
 .direc_bttn {
@@ -257,27 +259,14 @@ ul li:hover ul {
 /* Map */
 
 #mapWrapper {
-	float: left;
-	width: 79%;
+	float: right;
+	width: 83%;
 	height: 40em;
-	margin-left: 1%;
+	margin: 0 1% 0 1%;
 }
 
-#map-input {
-    background-color: #fff;
-    padding: 0 11px 0 13px;
-    width: 400px;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    text-overflow: ellipsis;
-}
-
-#map-input:focus {
-    border-color: #4d90fe;
-    margin-left: -1px;
-    padding-left: 14px;  /* Regular padding-left + 1. */
-    width: 401px;
+#marker_form{
+    display: none;
 }
 
 /* --Footer Elements-- */

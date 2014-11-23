@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400italic,400' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="CSS/style.css">
         <script src="js/jquery-1.11.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
@@ -13,12 +14,11 @@
         <!--<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
             THIS CAUSES AN ERROR!!! (Chris) -->
         <script type="text/javascript" src="js/main.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYQFQZrHScITrdvdYilzjSuJIE4gjHXB8">
-            </script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYQFQZrHScITrdvdYilzjSuJIE4gjHXB8&libraries=places"></script>
     </head>
     <body>
         <header>
+            <button id="menu_button"></button>
             <img src="img/SMU_Nav_Logo2.png" id="logo">
             <h1 id="title">SMU NAV</h1>
 
@@ -76,25 +76,40 @@
                                 </ul>
                             </li>
                         </div>
-                        <div id="recommended">
-                            <li class="recomms_title"><p>Recommended</p>
-                                <ul class="recomms_list">
+                        <div id="events">
+                            <li class="events_title"><p>Events</p>
+                                <ul class="events_list">
                                     <!--Populate with api calls -->
-                                    <li><a href="">Recommended #1</a></li>
                                 </ul>
                             </li>  
                         <div>                     
                     </ul>
                 </div>
-                <button id="menu_button"></button>
             </div>
+            <div id="search_form">
+                <form id="searchingForm" action="index.html" method="POST">
+                    <input type="text" id="buildingName" placeholder="Building Name">
+                    <input type="text" id="roomName" placeholder="Room Name">
+                    <input type="text" id="roomNumber" placeholder="Room Number">
+                    <input type="submit" id="submitSearch" class="button" value="Search">
+                </form> 
+            </div>
+            
+            <div id="marker_form" title="Info Box">
+                <form id ="marker_area" action ="index.html" method="POST">
+                    <h3 id="favoritesHeading" class="favoritesHeading">Add to Favorites</h3>
+                    <input id="favorites_bttn" type="submit" class="button" value="Add">
+                    <h3 id="getDirectionsHeading" class="firstHeading">Get Directions</h3>
+                    <input id="getDirections_bttn" type="submit" class="button" value="Start">
+                </form>
+            </div>
+
             <div id="mapWrapper">
                 <div id="map">
                 </div>
 
             </div>
-        </div>
-        <input id="map-input" class="controls" type="text" placeholder="Search Box">        
+        </div>      
         <footer>
             <p>Copyright &copy; 2014 Compass Studios. All Rights Reserved.</p>
         </footer> 
