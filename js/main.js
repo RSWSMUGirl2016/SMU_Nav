@@ -173,9 +173,10 @@ $(document).ready(function () {
 
     $('#directionsWrapper').hide();
 
-
-
     getEvents();
+    getBuildingNames();
+    getRoomNames();
+    getRoomNumbers();
 
 });
 
@@ -297,43 +298,9 @@ function toggleMap(action) {
   }
 }
 
-
-//Menu jquery and js
-/*$(document).ready(function() {
- // Hide submenus
- $(".favs_title").click(function() {
- $(".favs_list").slideToggle(300);  $(this).toggleClass('close');
- });
- });  
- $(document).ready(function() {  // Hide submenus
- $(".recomms_title").click(function() {
- $(".recomms_list").slideToggle(300);
- $(this).toggleClass('close');
- });
- });*/
-
 $(document).ready(function () {
 // Hide submenus
     $("#print").click(function () {
-        /*var prtTitle = document.getElementById("dir_title");
-        var prtDirections = document.getElementsByName("printable");
-        var print = '';
-        var styleTitle = '<style>p{font-weight: bold;}</style>';
-        print += styleTitle;
-        print += prtTitle.innerHTML;
-        for (var i = 0; i < prtDirections.length; i++) {
-            print += prtDirections[i].innerHTML;
-            print += '<br></br>';
-        }
-        console.log(styleTitle);
-        console.log(print);
-        var WinPrint = window.open('', '', 'letf=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-        WinPrint.document.write(print);
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();*/
-        //window.alert("Entered");
         var contents = document.getElementById("directions");
         var WinPrint = window.open('', '', 'letf=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
         WinPrint.document.write(contents.innerHTML);
@@ -409,4 +376,70 @@ function getEvents() {
             $(".events_list").append(html);
         }
     });
+}
+
+function getBuildingNames() {
+    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: "api/index.php/getBuildingNames",
+        success: function (result) {
+            var json = JSON.parse(result);
+            var buildings = new Array();
+            $.each(json, function(key, value) {
+                $.each(value, function(key2, value2) {
+                    console.log(value2);
+                    buildings.push(value2);
+                });
+                
+            });
+            $("#buildingName").autocomplete({
+                source: buildings
+            });
+        }
+    });    
+}
+
+function getRoomNames() {
+    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: "api/index.php/getRoomNames",
+        success: function (result) {
+            var json = JSON.parse(result);
+            var roomnames = new Array();
+            $.each(json, function(key, value) {
+                $.each(value, function(key2, value2) {
+                    console.log(value2);
+                    roomnames.push(value2);
+                });
+                
+            });
+            $("#roomName").autocomplete({
+                source: roomnames
+            });
+        }
+    });    
+}
+
+function getRoomNumbers() {
+    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: "api/index.php/getRoomNumbers",
+        success: function (result) {
+            var json = JSON.parse(result);
+            var roomnumbers = new Array();
+            $.each(json, function(key, value) {
+                $.each(value, function(key2, value2) {
+                    console.log(value2);
+                    roomnumbers.push(value2);
+                });
+                
+            });
+            $("#roomNumber").autocomplete({
+                source: roomnumbers
+            });
+        }
+    });    
 }
