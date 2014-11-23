@@ -209,32 +209,35 @@ function logout(event) {
 
 function toggleMenu(action) {
     if (action == 'show') {
-        $('#menuWrapper').delay(300).show("slide", {direction: "left"}, 300);
+        $('#menuWrapper').show("slide", { direction: "left" }, 300);
         $("#menuWrapper").attr("collapsed", "false");
+
         // Shrink Map
         toggleMap('shrink');
     } else if (action == 'hide') {
-        $('#menuWrapper').hide("slide", {direction: "left"}, 300);
+        $('#menuWrapper').hide("slide", { direction: "left" }, 300);
         $("#menuWrapper").attr("collapsed", "true");
+
         // Grow Map
         toggleMap('grow');
+        
     } else {
         console.log('Invalid parameter: toggleMenu(' + action + ')');
     }
 }
 
 function toggleMap(action) {
-    if (action == 'grow') {
-        $('#mapWrapper').delay(300).animate({
-            width: '98%'
-        }, 300);
-    } else if (action == 'shrink') {
-        $('#mapWrapper').animate({
-            width: '82.8%'
-        }, 300);
-    } else {
-        console.log('Invalid parameter: toggleMap(' + action + ')');
-    }
+  if (action == 'grow') {
+      $('#mapWrapper').animate({
+        width: '98%'
+      }, 300);
+  } else if (action == 'shrink') {
+      $('#mapWrapper').animate({
+        width: '83%'
+      }, 300);
+  } else {
+      console.log('Invalid parameter: toggleMap(' + action + ')');
+  }
 }
 
 
