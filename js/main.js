@@ -292,17 +292,17 @@ function toggleMenu(action) {
 }
 
 function toggleMap(action) {
-    if (action == 'grow') {
-        $('#mapWrapper').animate({
-            width: '98%'
-        }, 300);
-    } else if (action == 'shrink') {
-        $('#mapWrapper').animate({
-            width: '83%'
-        }, 300);
-    } else {
-        console.log('Invalid parameter: toggleMap(' + action + ')');
-    }
+  if (action == 'grow') {
+      $('#mapContainer').animate({
+        width: '98%'
+      }, 300);
+  } else if (action == 'shrink') {
+      $('#mapContainer').animate({
+        width: '83%'
+      }, 300);
+  } else {
+      console.log('Invalid parameter: toggleMap(' + action + ')');
+  }
 }
 
 $(document).ready(function () {
