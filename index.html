@@ -87,12 +87,14 @@
                     </ul>
                 </div>
             </div>
-            <form action="demo_form.asp" autocomplete="on">
-              Building Name:<input type="text" id="buildingName">
-              Room Name: <input type="text" id="roomName">
-              Room Number: <input type="text" id="roomNumber">
-              <input type="submit" id="submitSearch">
-            </form> 
+            <div id="search_form">
+                <form id="searchingForm" action="index.html" method="POST">
+                    <input type="text" id="buildingName" placeholder="Building Name">
+                    <input type="text" id="roomName" placeholder="Room Name">
+                    <input type="text" id="roomNumber" placeholder="Room Number">
+                    <input type="submit" id="submitSearch" class="button" value="Search">
+                </form> 
+            </div>
             <div id="mapWrapper">
                 <div id="map">
                 </div>

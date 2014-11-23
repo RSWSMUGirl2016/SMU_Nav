@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     var marker;
     var map;
+
     function initializeMap() {
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
@@ -9,97 +10,102 @@ $(document).ready(function () {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
-
-        var buildingName;
-        var roomName;
-        var roomNumber;
-
     }
+
+    //Use the getCoordinats API call and push marker onto map
+    /*$("#submitSearch").click(function () {
+        event.preventDefault();
+        var coordinatesInfo = {buildingName: $("#buildingName").val(), roomNumber: $("#roomNumber").val(), roomName: $("#roomName").val()};
+        $.ajax({
+            type: "POST",
+            datatype: "json",
+            data: coordinatesInfo,
+            url: "api/index.php/getCoordinates",
+            sucess: function (result) {
+                window.alert(result);
+                //$("#buildingName").val("");
+                //$("#roomName").val("");
+                //$("#roomNumber").val("");
+                var json = JSON.parse(result);
+                var x = json.x;
+                var y = json.y;
+                var z = json.z;
+
+                var myLatlng = new google.maps.LatLng(x, y);
+
+                marker = new google.maps.Marker({
+                    position: myLatlng,
+                    title: "Testing!"
+                });
+
+                marker.setMap(map);
+            }
+        });
+    });*/
     
-    // Create the search box and link it to the UI element.
-    var input = (document.getElementById('map-input'));
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-    var searchBox = new google.maps.places.SearchBox(input);
-    // [START region_getplaces]
-    // Listen for the event fired when the user selects an item from the
-    // pick list. Retrieve the matching places for that item.
-    google.maps.event.addListener(searchBox, 'places_changed', function () {
-        var places = searchBox.getPlaces();
-        if (places.length == 0) {
-            return;
-        }
-        for (var i = 0, marker; marker = markers[i]; i++) {
-            marker.setMap(null);
-        }
+   
 
-        // For each place, get the icon, place name, and location.
-        marker = null;
-        var bounds = new google.maps.LatLngBounds();
-        for (var i = 0, place; place = places[i]; i++) {
-            var image = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-            };
-            // Create a marker for each place.
-            var marker = new google.maps.Marker({
-                map: map,
-                icon: image,
-                title: place.name,
-                position: place.geometry.location
-            });
-            markers.push(marker);
-            google.maps.event.addListener(map, 'center_changed', function () {
-                // 3 seconds after the center of the map has changed, pan back to the
-                // marker.
-                window.setTimeout(function () {
-                    map.panTo(marker.getPosition());
-                }, 3000);
-            });
-            var contentString = '<div id="content">' +
-                                '<div id="siteNotice">' +
-                                '</div>' +
-                                '<div id="bodyContent">' +
-                                '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>' +
-                                '<button id="favorites_bttn">Add</button>' +
-                                '<h6 id="getDirectionsHeading" class="firstHeading">Add to Favorites</h6>' +
-                                '<button id="getDirections_bttn">Start</button>' +
-                                '</div>' +
-                                '</div>';
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-            google.maps.event.addListener(marker, 'click', function () {
-                //map.setZoom(8);
-                //map.setCenter(marker.getPosition());
-                infowindow.open(map, marker);
-            });
-            bounds.extend(place.geometry.location);
-        }
-        map.fitBounds(bounds);
-    });
-    // [END region_getplaces]
+    /*var bounds = new google.maps.LatLngBounds();
+    for (var i = 0, place; place = places[i]; i++) {
+        var image = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+        };
+        // Create a marker for each place.
+        var marker = new google.maps.Marker({
+            map: map,
+            icon: image,
+            title: place.name,
+            position: place.geometry.location
+        });
+                
+        google.maps.event.addListener(map, 'center_changed', function () {
+            // 3 seconds after the center of the map has changed, pan back to the
+            // marker.
+            window.setTimeout(function () {
+                map.panTo(marker.getPosition());
+            }, 3000);
+        });
+        
+        var contentString = '<div id="content">' +
+                            '<div id="siteNotice">' +
+                            '</div>' +
+                            '<div id="bodyContent">' +
+                            '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>' +
+                            '<button id="favorites_bttn">Add</button>' +
+                            '<h6 id="getDirectionsHeading" class="firstHeading">Add to Favorites</h6>' +
+                            '<button id="getDirections_bttn">Start</button>' +
+                            '</div>' +
+                            '</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        
+        google.maps.event.addListener(marker, 'click', function () {
+            //map.setZoom(8);
+            //map.setCenter(marker.getPosition());
+            infowindow.open(map, marker);
+        });
+        bounds.extend(place.geometry.location);
+    }*/
 
-    // Bias the SearchBox results towards places that are within the bounds of the
-    // current map's viewport.
-    google.maps.event.addListener(map, 'bounds_changed', function () {
-        var bounds = map.getBounds();
-        searchBox.setBounds(bounds);
-    });
+    //map.fitBounds(bounds);
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = new google.maps.LatLng(position.coords.latitude,
-                                             position.coords.longitude);
+        var pos = new google.maps.LatLng(position.coords.latitude,
+                                         position.coords.longitude);
 
-            var infowindow = new google.maps.InfoWindow({
-                map: map,
-                position: pos,
-                content: 'My Location.'
-            });
+        var infowindow = new google.maps.InfoWindow({
+            map: map,
+            position: pos,
+            content: 'My Location.'
+        });
 
-            map.setCenter(pos);
+        map.setCenter(pos);
         }, function () {
             console.log("geolocation not working");
         });
@@ -107,7 +113,7 @@ $(document).ready(function () {
         // Browser doesn't support Geolocation
         console.log("You browser doesn't support geolocation");
     }
-        
+
 
     google.maps.event.addDomListener(window, 'load', initializeMap);
     $("#menu_button").click(function () {
@@ -134,6 +140,9 @@ $(document).ready(function () {
     $("#login").click(login);
     $("#register").click(register);
     $("#logout").click(logout);
+
+    var coordinates = $("#submitSearch").click(getCoordinates);
+
 });
 
 var userId;
@@ -299,14 +308,12 @@ $(document).ready(function () {
     $("#emailButton").click(sendEmail);
     $("#favorites_bttn").click(addFavorites);
 });
-
 $(document).ready(function () {
     // Hide submenus
     $("#cancel_direcs").click(function () {
         $('#directionsWrapper').hide();
     });
 });
-
 function sendEmail(event) {
     event.preventDefault();
     var emailMssg = {"to": email,
@@ -349,4 +356,32 @@ function addFavorites() {
 
         }
     });
+}
+
+function getCoordinates(event){
+    var coordinates;
+    event.preventDefault();
+    var coordinatesInfo = {"buildingName": $("#buildingName").val(),
+                           "roomNumber": $("#roomNumber").val(), 
+                           "roomName": $("#roomName").val()};
+    $.ajax({
+        type: "POST",
+        datatype: "json",
+        data: coordinatesInfo,
+        url: "api/index.php/getCoordinates",
+        sucess: function (result) {
+            window.alert("Result: " + result);
+            $("#buildingName").val("");
+            $("#roomName").val("");
+            $("#roomNumber").val("");
+            var json = JSON.parse(result);
+            var x = json.x;
+            var y = json.y;
+            var z = json.z;
+            coordinates = [x, y, z];
+        }
+    });
+    //alert("x: " + coordinates[0]);
+
+    return coordinates;
 }
