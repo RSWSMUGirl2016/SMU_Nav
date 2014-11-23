@@ -51,6 +51,7 @@ $(document).ready(function () {
 
                 $("#favorites_bttn").click(function() {
                     event.preventDefault();
+                    $("#marker_form").dialog("close");
                     //$("#favoritesHeading").hide();
                     //$("#favorites_bttn").hide();
                     var favoriteInfo = {userID: userId, building: $("#buildingName").val(), roomNumber: $("#roomNumber").val(), roomName: $("#roomName").val()};
@@ -96,12 +97,18 @@ $(document).ready(function () {
                                 directionsDisplay.setDirections(response);
                             }
                         });
+                        $("#cancel_direcs").click(function () {
+                            $('#directionsWrapper').hide();
+                            directionsDisplay.setMap(null);
+                            directionsDisplay.setPanel(null);
+                        });
 
                     }, function() {
                         console.log("geolocation not working");
                     });
 
                   }
+
                 });     
             }
         });
@@ -129,6 +136,7 @@ $(document).ready(function () {
 
 
     google.maps.event.addDomListener(window, 'load', initializeMap);
+
     $("#menu_button").click(function () {
         if ($("#menuWrapper").attr("collapsed") === "true") {
             // Expand Menu
@@ -164,6 +172,8 @@ $(document).ready(function () {
     } 
 
     $('#directionsWrapper').hide();
+
+
 
     getEvents();
 
@@ -370,7 +380,7 @@ function getFavorites() {
                 if (value.Status === "Failure") {
                     window.alert("Incorrect Password or Email");
                 } else if (value.Status === "Success") {
-                    
+
                 } else {
                     //console.log(key, value);
                     var coords = value.x+","+value.y+","+value.z;
