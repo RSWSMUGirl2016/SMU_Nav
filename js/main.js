@@ -37,7 +37,7 @@ $(document).ready(function () {
                 var z = json.z;
                 var bounds = new google.maps.LatLngBounds();
                 marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(x, -1*y),
+                    position: new google.maps.LatLng(x, y),
                     title: "Testing!"
                 });
 
@@ -52,9 +52,10 @@ $(document).ready(function () {
                     $("#marker_form").dialog("open");                    
                 });
 
-                $("#getDirections_bttn").click(function() {
-                    marker.setMap(null);
+                $("#getDirections_bttn").click(function() {                    
                     event.preventDefault();
+                    marker.setMap(null);
+                    $('#directionsWrapper').show();
                     $("#marker_form").dialog("close");
                     if(navigator.geolocation) {
                         browserSupportFlag = true;
@@ -277,7 +278,7 @@ function toggleMap(action) {
 
 
 $(function() {
- $('#directionsWrapper').hide();
+    $('#directionsWrapper').hide();
 });
 
 $(document).ready(function () {
