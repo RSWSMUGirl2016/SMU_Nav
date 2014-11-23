@@ -183,6 +183,11 @@ html>body #menu li a, html>body #menu li p {
 	margin-top: 1em;
 }
 
+/* Searching Form*/
+#searchingForm {
+	margin-left: 300px;
+}
+
 /* Directions */
 
 #dir_title {

@@ -119,6 +119,8 @@ $(document).ready(function () {
         $('#favorites').hide();
     } 
 
+    getEvents();
+
 });
 
 var userId;
@@ -142,7 +144,7 @@ function login(event) {
                 $("#login_form").css('display', 'none');
                 $("#SignedIn").css('display', 'inline');
                 $("#welcome").text("Welcome!!");
-                $("#favorites").show();
+
                 userId = statusJson.user_id;
                 email = statusJson.email;
                 firstName = statusJson.firstName;
@@ -235,23 +237,7 @@ function toggleMap(action) {
 
 
 //Menu jquery and js
-//Hide these if user is not logged in
-/*$(function() {
- $('#favorites, #recommended')
- .hide();
- });*/
-
-/*$(function() {
- $('#dir_title', '#directions')
- .hide();
- });*/
-
-/*$(document).ready(function(){
- $('.favs_list').hide();
- $('.recomms_list').hide();
- });
- 
- $(document).ready(function() {
+/*$(document).ready(function() {
  // Hide submenus
  $(".favs_title").click(function() {
  $(".favs_list").slideToggle(300);  $(this).toggleClass('close');
@@ -340,6 +326,25 @@ function addFavorites() {
         url: "api/index.php/addFavorites",
         success: function (result) {
 
+        }
+    });
+}
+
+function getEvents() {
+    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: "api/index.php/getEvents",
+        success: function (result) {
+            var json = JSON.parse(result);
+            var html = '';
+            $.each(json, function(key, value) {
+                //console.log(key, value, value.name);
+                var coords = value.x+","+value.y+","+value.z;
+                var rel = value.time+","+value.description;
+                html += '<li><a href="" coords="'+coords+'" rel="'+rel+'">'+value.name+'</a></li>';
+            });
+            $(".events_list").append(html);
         }
     });
 }
