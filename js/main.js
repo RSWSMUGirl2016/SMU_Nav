@@ -2,14 +2,18 @@ $(document).ready(function () {
 
     var marker;
     var map;
+    var directionsService = new google.maps.DirectionsService();
+    var directionsDisplay;
 
     function initializeMap() {
+        directionsDisplay = new google.maps.DirectionsRenderer();
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
+        directionsDisplay.setMap(map);
     }
 
     //Use the getCoordinats API call and push marker onto map
@@ -34,7 +38,22 @@ $(document).ready(function () {
                     position: new google.maps.LatLng(x, -1*y),
                     title: "Testing!"
                 });
-                map.setCenter(marker.getPosition());
+
+                function calcRoute() {
+                    var start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    var end = marker.getPosition();
+                    var request = {
+                        origin: start,
+                        destination: end,
+                        travelMode: google.maps.TravelMode.WALKING
+                    };
+                    directionsService.route(request, function(response, status){
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            directionsDisplay.setDirections(response);
+                        }
+                    });
+                }
+                /*map.setCenter(marker.getPosition());
                 marker.setMap(map);
                 if(userId === undefined){
                     var contentString = '<div id="content">' +
@@ -42,7 +61,7 @@ $(document).ready(function () {
                                         '</div>' +
                                         '<div id="bodyContent">' +
                                         '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>' +
-                                        '<button id="getDirections_bttn">Start</button>' +
+                                        '<input id="getDirections_bttn" type="submit" class="button" value="Start">' +
                                         '</div>' +
                                         '</div>';
                 } else {
@@ -51,9 +70,9 @@ $(document).ready(function () {
                                         '</div>' +
                                         '<div id="bodyContent">' +
                                         '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>' +
-                                        '<button id="favorites_bttn">Add</button>' +
+                                        '<input id="favorites_bttn" type="submit" class="button" value="Add">' +
                                         '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>' +
-                                        '<button id="getDirections_bttn">Start</button>' +
+                                        '<input id="getDirections_bttn" type="submit" class="button" value="Start">' +
                                         '</div>' +
                                         '</div>';
                 }
@@ -63,7 +82,35 @@ $(document).ready(function () {
                 google.maps.event.addListener(marker, 'click', function () {
                     infowindow.open(map, marker);
                 });
-                $("#favorites_bttn").click(addFavorites);
+                $("#favorites_bttn").click(addFavorites);*/
+
+                //$("#getDirections_bttn").click(function() {
+                    //window.alert("Entered");
+                    /*directionsService = new google.maps.DirectionsService();
+                    var rendererOptions = {
+                        map: map
+                    }
+                    directionsDisplay = new google.maps.DirectionsRenderer(rendererOtpions);
+                    stepDisplay = new google.maps.InfoWindow();
+
+                    var start = navigator.geolocation.getCurrentPosition(function (position) {
+                                var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    });
+                    var end = marker.getPosition();
+                    var request = {
+                        origin: start,
+                        destination: end,
+                        travelmode: google.maps.TravelMode.WALKING
+                    };
+                    directionsService.route(request, function(response, status){
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            var warnings = document.getElementById('warnings_panel');
+                            warnings.innerHTML = '<b>' + response.routes[0].warnings + '</b>';
+                            directionsDisplay.setDirections(response);
+                            showSteps(response);
+                        }
+                    });*/
+                //});        
             }
         });
     });
@@ -314,6 +361,7 @@ function getFavorites() {
 }
 
 function addFavorites() {
+    window.alert("Adding");
     var favoriteInfo;
     //var favoriteInfo = {"userId": userId,
     //"building": ,
