@@ -174,7 +174,13 @@ html>body #menu li a, html>body #menu li p {
 /* Favorites */
 
 #favorites{
-	margin-bottom: 2em;
+	margin-top: 1em;
+}
+
+/* Evets */
+
+#events{
+	margin-top: 1em;
 }
 
 /* Directions */

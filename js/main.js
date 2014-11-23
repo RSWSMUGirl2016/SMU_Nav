@@ -10,9 +10,6 @@ $(document).ready(function () {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
-    
-
-
     }
 
     //Use the getCoordinats API call and push marker onto map
@@ -32,7 +29,6 @@ $(document).ready(function () {
                 var x = json.x;
                 var y = json.y;
                 var z = json.z;
-
                 var bounds = new google.maps.LatLngBounds();
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(x, -1*y),
@@ -40,75 +36,37 @@ $(document).ready(function () {
                 });
                 map.setCenter(marker.getPosition());
                 marker.setMap(map);
-                var contentString = '<div id="content">' +
-                                    '<div id="siteNotice">' +
-                                    '</div>' +
-                                    '<div id="bodyContent">' +
-                                    '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>' +
-                                    '<button id="favorites_bttn">Add</button>' +
-                                    '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>' +
-                                    '<button id="getDirections_bttn">Start</button>' +
-                                    '</div>' +
-                                    '</div>';
+                if(userId === undefined){
+                    var contentString = '<div id="content">' +
+                                        '<div id="siteNotice">' +
+                                        '</div>' +
+                                        '<div id="bodyContent">' +
+                                        '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>' +
+                                        '<button id="getDirections_bttn">Start</button>' +
+                                        '</div>' +
+                                        '</div>';
+                } else {
+                    var contentString = '<div id="content">' +
+                                        '<div id="siteNotice">' +
+                                        '</div>' +
+                                        '<div id="bodyContent">' +
+                                        '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>' +
+                                        '<button id="favorites_bttn">Add</button>' +
+                                        '<h6 id="getDirectionsHeading" class="firstHeading">Get Directions</h6>' +
+                                        '<button id="getDirections_bttn">Start</button>' +
+                                        '</div>' +
+                                        '</div>';
+                }
                 var infowindow = new google.maps.InfoWindow({
                     content: contentString
-                });
-                    
+                });                    
                 google.maps.event.addListener(marker, 'click', function () {
                     infowindow.open(map, marker);
                 });
+                $("#favorites_bttn").click(addFavorites);
             }
         });
     });
-
-    /*var bounds = new google.maps.LatLngBounds();
-    for (var i = 0, place; place = places[i]; i++) {
-        var image = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-        };
-        // Create a marker for each place.
-        var marker = new google.maps.Marker({
-            map: map,
-            icon: image,
-            title: place.name,
-            position: place.geometry.location
-        });
-                
-        google.maps.event.addListener(map, 'center_changed', function () {
-            // 3 seconds after the center of the map has changed, pan back to the
-            // marker.
-            window.setTimeout(function () {
-                map.panTo(marker.getPosition());
-            }, 3000);
-        });
-        
-        var contentString = '<div id="content">' +
-                            '<div id="siteNotice">' +
-                            '</div>' +
-                            '<div id="bodyContent">' +
-                            '<h6 id="firstHeading" class="favoritesHeading">Add to Favorites</h6>' +
-                            '<button id="favorites_bttn">Add</button>' +
-                            '<h6 id="getDirectionsHeading" class="firstHeading">Add to Favorites</h6>' +
-                            '<button id="getDirections_bttn">Start</button>' +
-                            '</div>' +
-                            '</div>';
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-        
-        google.maps.event.addListener(marker, 'click', function () {
-            //map.setZoom(8);
-            //map.setCenter(marker.getPosition());
-            infowindow.open(map, marker);
-        });
-        bounds.extend(place.geometry.location);
-    }*/
-
-    //map.fitBounds(bounds);
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -157,17 +115,9 @@ $(document).ready(function () {
     $("#register").click(register);
     $("#logout").click(logout);
 
-    /*var coordinates = $("#submitSearch").click(getCoordinates);
-
-    console.log(coordinates);
-
-    var myLatlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
-
-    marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title: "Testing!"
-    });*/
+    if(userId === undefined){
+        $('#favorites').hide();
+    } 
 
 });
 
@@ -192,6 +142,7 @@ function login(event) {
                 $("#login_form").css('display', 'none');
                 $("#SignedIn").css('display', 'inline');
                 $("#welcome").text("Welcome!!");
+                $("#favorites").show();
                 userId = statusJson.user_id;
                 email = statusJson.email;
                 firstName = statusJson.firstName;
@@ -227,6 +178,7 @@ function register(event) {
                     $("#SignedIn").css('display', 'inline');
                     $("#register_form").dialog("close");
                     $("#welcome").text("Welcome!!");
+                    $("#favorites").show();
                     userId = statusJson.user_id;
                     email = statusJson.email;
                     firstName = statusJson.firstName;
