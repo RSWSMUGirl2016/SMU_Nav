@@ -2,14 +2,19 @@ $(document).ready(function () {
 
     var marker;
     var map;
+    var initialLocation;
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
 
     function initializeMap() {
+        directionsDisplay = new google.maps.DirectionsRenderer();
         var mapOptions = {
             center: {lat: 32.8406452, lng: -96.7831393},
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById('mapWrapper'), mapOptions);
+        directionsDisplay.setMap(map);
     }
 
     //Use the getCoordinats API call and push marker onto map
@@ -44,6 +49,35 @@ $(document).ready(function () {
                         $("#favorites_bttn").hide();
                     }
                     $("#marker_form").dialog("open");                    
+                });
+
+                $("#getDirections_bttn").click(function() {
+                    marker.setMap(null);
+                    event.preventDefault();
+                    $("#marker_form").dialog("close");
+                    if(navigator.geolocation) {
+                        browserSupportFlag = true;
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                        
+                        var start = initialLocation;
+                        var end = marker.getPosition();
+                        var request = {
+                            origin: start,
+                            destination: end,
+                            travelMode: google.maps.TravelMode.WALKING
+                        };
+                        directionsService.route(request, function(response, status) {
+                            if(status == google.maps.DirectionsStatus.OK) {
+                                directionsDisplay.setDirections(response);
+                            }
+                        });
+
+                    }, function() {
+                        handleNoGeolocation(browserSupportFlag);
+                    });
+
+                  }
                 });
                 /*map.setCenter(marker.getPosition());
                 marker.setMap(map);
