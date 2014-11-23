@@ -197,6 +197,7 @@ function login(event) {
                 email = statusJson.email;
                 firstName = statusJson.firstName;
                 lastName = statusJson.lastName;
+                getFavorites();
             }
         }
     });
@@ -235,6 +236,7 @@ function register(event) {
                     email = statusJson.email;
                     firstName = statusJson.firstName;
                     lastName = statusJson.lastName;
+                    getFavorites();
                 }});
         }
     });
@@ -354,13 +356,29 @@ function sendEmail(event) {
 }
 
 function getFavorites() {
-    var Id = {"userId": userId};
+    var Id = {"userID": userId};
     $.ajax({
         type: "POST",
         datatype: "json",
         data: Id,
         url: "api/index.php/getFavorites",
         success: function (result) {
+            //window.alert("Get favorites");
+            var json = JSON.parse(result);
+            var html = '';
+            $.each(json, function(key, value) {
+                if (value.Status === "Failure") {
+                    window.alert("Incorrect Password or Email");
+                } else if (value.Status === "Success") {
+                    
+                } else {
+                    //console.log(key, value);
+                    var coords = value.x+","+value.y+","+value.z;
+                    var rel = value.buildingName+","+value.roomNumber;
+                    html += '<li><a href="" coords="'+coords+'" rel="'+rel+'">'+value.roomName+'</a></li>';
+                }
+            });
+            $(".favs_list").append(html);
         }
     });
 }
