@@ -302,7 +302,8 @@ $(document).ready(function () {
         WinPrint.focus();
         WinPrint.print();
         WinPrint.close();*/
-        var contents = window.opener.document.getElementById("mapWrapper");
+        //window.alert("Entered");
+        var contents = document.getElementById("directions");
         var WinPrint = window.open('', '', 'letf=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
         WinPrint.document.write(contents.innerHTML);
         WinPrint.document.close();
