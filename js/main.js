@@ -379,7 +379,7 @@ function getEvents() {
             $.each(json, function (key, value) {
                 var coords = value.x + "," + value.y + "," + value.z;
                 var rel = value.time + "," + value.description;
-                html += '<li class="campus_events"><a href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</a></li>';
+                html += '<li><a class="campus_events" href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</a></li>';
             });
             $(".events_list").append(html);
         }
@@ -449,7 +449,7 @@ function getRoomNumbers() {
     });    
 }
 
-function selectEvent() {
+function selectEvent(event) {
     event.preventDefault();
     var html = this.innerHTML;
     window.alert(html);
