@@ -13,18 +13,18 @@ $app->get('/getEvents', function () {
     $classQuery = $mysqli->query("SELECT * FROM Event INNER JOIN Location ON Event.Location_idLocation = Location.idLocation INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates");
     $counter = 0;
     while(true){
-	$classOutput = array();
-	$classList = $classQuery->fetch_assoc();
-	if($classList === NULL)
-	    break;
-	$classOutput["name"] = $classList["name"];
-	$classOutput["description"] = $classList["description"];
-	$classOutput["time"] = $classList["eventDateTime"]; 
-	$classOutput["x"] = $classList["x"]; 
-	$classOutput["y"] = $classList["y"]; 
-	$classOutput["z"] = $classList["z"]; 
-	$outputJSON[$counter+=1] = $classOutput;
-	}
+    $classOutput = array();
+    $classList = $classQuery->fetch_assoc();
+    if($classList === NULL)
+        break;
+    $classOutput["name"] = $classList["name"];
+    $classOutput["description"] = $classList["description"];
+    $classOutput["time"] = $classList["eventDateTime"]; 
+    $classOutput["x"] = $classList["x"]; 
+    $classOutput["y"] = $classList["y"]; 
+    $classOutput["z"] = $classList["z"]; 
+    $outputJSON[$counter+=1] = $classOutput;
+    }
     echo json_encode($outputJSON);
 });
 
@@ -80,8 +80,6 @@ $app->get('/getRoomNumbers', function () {
 
 });
 
-
-
 $app->post('/sendEmail', function (){
 
     $to = $_POST['to'];
@@ -126,6 +124,88 @@ $app->post('/getCoordinates', function (){
         echo json_encode($firstResult);
     }
 });
+
+function create_hash($password)
+{
+    global $mysqli;
+    $salt = base64_encode(mcrypt_create_iv(PBKDF2_SALT_BYTE_SIZE, MCRYPT_DEV_URANDOM));
+    //$mysqli -> query("UPDATE saltValue SET saltValue='$salt' WHERE password='$password'");
+    return PBKDF2_HASH_ALGORITHM . ":" . PBKDF2_ITERATIONS . ":" .  $salt . ":" .
+        base64_encode(pbkdf2(
+            PBKDF2_HASH_ALGORITHM,
+            $password,
+            $salt,
+            PBKDF2_ITERATIONS,
+            PBKDF2_HASH_BYTE_SIZE,
+            true
+        ));
+}
+
+function validate_password($password, $correct_hash)
+{
+    $params = explode(":", $correct_hash);
+    if(count($params) < HASH_SECTIONS){
+    return false;}
+    $pbkdf2 = base64_decode($params[HASH_PBKDF2_INDEX]);
+    return slow_equals(
+        $pbkdf2,
+        pbkdf2(
+            $params[HASH_ALGORITHM_INDEX],
+            $password,
+            $params[HASH_SALT_INDEX],
+            (int)$params[HASH_ITERATION_INDEX],
+            strlen($pbkdf2),
+            true
+        )
+    );
+}
+
+function slow_equals($a, $b)
+{
+    $diff = strlen($a) ^ strlen($b);
+    for($i = 0; $i < strlen($a) && $i < strlen($b); $i++){
+        $diff |= ord($a[$i]) ^ ord($b[$i]);}
+    return $diff === 0;
+}
+
+function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output = false)
+{
+    $algorithm = strtolower($algorithm);
+    if(!in_array($algorithm, hash_algos(), true)){
+    trigger_error('PBKDF2 ERROR: Invalid hash algorithm.', E_USER_ERROR);}
+    if($count <= 0 || $key_length <= 0){
+    trigger_error('PBKDF2 ERROR: Invalid parameters.', E_USER_ERROR);}
+
+    if (function_exists("hash_pbkdf2")) {
+        // The output length is in NIBBLES (4-bits) if $raw_output is false!
+        if (!$raw_output) {
+            $key_length = $key_length * 2;
+        }
+        return hash_pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output);
+    }
+
+    $hash_length = strlen(hash($algorithm, "", true));
+    $block_count = ceil($key_length / $hash_length);
+
+    $output = "";
+    for($i = 1; $i <= $block_count; $i++) {
+        // $i encoded as 4 bytes, big endian.
+        $last = $salt . pack("N", $i);
+        // first iteration
+        $last = $xorsum = hash_hmac($algorithm, $last, $password, true);
+        // perform the other $count - 1 iterations
+        for ($j = 1; $j < $count; $j++) {
+            $xorsum ^= ($last = hash_hmac($algorithm, $last, $password, true));
+        }
+        $output .= $xorsum;
+    }
+
+    if($raw_output){
+    return substr($output, 0, $key_length);}
+    else{
+    return bin2hex(substr($output, 0, $key_length));}
+}
+
 $app->post('/loginUser', function(){
     session_start();
     global $mysqli;
@@ -169,7 +249,7 @@ $app->post('/loginUser', function(){
             return;
         } 
     
-        else if($password === $passwordVal) { 
+        else if(validate_password($password,$passwordVal)) { 
             $stmt1->close();              
             $_SESSION['loggedin'] = true;
             $query = "SELECT idUser FROM User WHERE email=(?)";
@@ -216,7 +296,7 @@ $app->post('/loginUser', function(){
 });
 $app->post('/logout', function()  { 
     session_start();
-	$_SESSION = array(); 
+    $_SESSION = array(); 
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 42000,
@@ -237,6 +317,7 @@ $app->post('/createUserAccount', function(){
     else{
     $dupCheck = $mysqli->query("SELECT email FROM User WHERE email = '$email' LIMIT 1");
     $checkResults = $dupCheck->fetch_assoc();
+    $hashedPassword = create_hash($password);
         if(!($checkResults === NULL))
         $outputJSON = array ('u_id'=>-1);
         else{
@@ -244,12 +325,12 @@ $app->post('/createUserAccount', function(){
             $row = $prevUser->fetch_assoc();
             if($row === NULL){
                 $outputJSON = array ('u_id'=>1);
-                $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES (1, '$fName', '$lName', '$email', '$password')");
+                $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password, saltValue) VALUES (1, '$fName', '$lName', '$email', '$password', '$hashedPassword')");
             }
             else{
                 $newID = $row['idUser']+1;
                 $outputJSON = array ('u_id'=>$newID);
-                $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password) VALUES ($newID, '$fName', '$lName', '$email', '$password')");
+                $insertion = $mysqli->query("INSERT INTO User (idUser, firstName, lastName, email, password, saltValue) VALUES ($newID, '$fName', '$lName', '$email', '$password', '$hashedPassword')");
             }
         }
     }
@@ -263,25 +344,25 @@ $app->post('/getClasses', function() {
     $day = $_POST['day'];
     $outputJSON = array();
     if($userID === "" || $day === "")
-	$outputJSON = array('Status'=>'Failure');
+    $outputJSON = array('Status'=>'Failure');
     else{
-	array_push($outputJSON, array('Status'=>'Success'));
-	$classQuery = $mysqli->query("SELECT * FROM Classes INNER JOIN Location ON Classes.Location_idLocation = Location.idLocation INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates WHERE User_idUser = $userID AND day = '$day'");
-	$counter = 0;
-	while(true){
-	    $classOutput = array();
-	    $classList = $classQuery->fetch_assoc();
-	    if($classList === NULL)
-		break;
-	    $classOutput["classTime"] = $classList["classTime"]; 
-	    $classOutput["buildingName"] = $classList["buildingName"];
-	    $classOutput["roomName"] = $classList["roomName"]; 
-	    $classOutput["roomNumber"] = $classList["roomNumber"];
-	    $classOutput["x"] = $classList["x"]; 
-	    $classOutput["y"] = $classList["y"]; 
-	    $classOutput["z"] = $classList["z"]; 
-	    $outputJSON[$counter+=1] = $classOutput;
-	}
+    array_push($outputJSON, array('Status'=>'Success'));
+    $classQuery = $mysqli->query("SELECT * FROM Classes INNER JOIN Location ON Classes.Location_idLocation = Location.idLocation INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates WHERE User_idUser = $userID AND day = '$day'");
+    $counter = 0;
+    while(true){
+        $classOutput = array();
+        $classList = $classQuery->fetch_assoc();
+        if($classList === NULL)
+        break;
+        $classOutput["classTime"] = $classList["classTime"]; 
+        $classOutput["buildingName"] = $classList["buildingName"];
+        $classOutput["roomName"] = $classList["roomName"]; 
+        $classOutput["roomNumber"] = $classList["roomNumber"];
+        $classOutput["x"] = $classList["x"]; 
+        $classOutput["y"] = $classList["y"]; 
+        $classOutput["z"] = $classList["z"]; 
+        $outputJSON[$counter+=1] = $classOutput;
+    }
     }
     echo json_encode($outputJSON);
 });
@@ -294,53 +375,53 @@ $app->post('/addClass', function() {
     $roomNumber = $_POST['roomNumber'];
     $roomName = $_POST['roomName'];
     if($building === "")
-	$outputJSON = array('Status'=>'Failure');
+    $outputJSON = array('Status'=>'Failure');
     else if($roomNumber === "" && $roomName === ""){
-	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' LIMIT 1");
-	    $locationRow = $locationQuery->fetch_assoc();
-	    if($locationRow === NULL)
-		$outputJSON = array('Status'=>'Failure');
-	    else{
-		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
-		$outputJSON = array('Status'=>'Success');
-		}
-	}
-	else if($roomNumber === ""){
-	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName '$roomName' LIMIT 1");
-	    $locationRow = $locationQuery->fetch_assoc();
-	    if($locationRow === NULL)
-		$outputJSON = array('Status'=>'Failure');
-	    else{
-		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
-		$outputJSON = array('Status'=>'Success');
-		}
-	}
-	else if($roomName === ""){
-	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber' LIMIT 1");
-	    $locationRow = $locationQuery->fetch_assoc();
-	    if($locationRow === NULL)
-		$outputJSON = array('Status'=>'Failure');
-	    else{
-		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
-		$outputJSON = array('Status'=>'Success');
-		}
-	}
-	else{
-	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber' LIMIT 1");
-	    $locationRow = $locationQuery->fetch_assoc();
-	    if($locationRow === NULL)
-		$outputJSON = array('Status'=>'Failure');
-	    else{
-		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
-		$outputJSON = array('Status'=>'Success');
-		}
-	}
-	    
-	echo json_encode($outputJSON);
+        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' LIMIT 1");
+        $locationRow = $locationQuery->fetch_assoc();
+        if($locationRow === NULL)
+        $outputJSON = array('Status'=>'Failure');
+        else{
+        $location = $locationRow['idLocation'];
+        $insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
+        $outputJSON = array('Status'=>'Success');
+        }
+    }
+    else if($roomNumber === ""){
+        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName '$roomName' LIMIT 1");
+        $locationRow = $locationQuery->fetch_assoc();
+        if($locationRow === NULL)
+        $outputJSON = array('Status'=>'Failure');
+        else{
+        $location = $locationRow['idLocation'];
+        $insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
+        $outputJSON = array('Status'=>'Success');
+        }
+    }
+    else if($roomName === ""){
+        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber' LIMIT 1");
+        $locationRow = $locationQuery->fetch_assoc();
+        if($locationRow === NULL)
+        $outputJSON = array('Status'=>'Failure');
+        else{
+        $location = $locationRow['idLocation'];
+        $insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
+        $outputJSON = array('Status'=>'Success');
+        }
+    }
+    else{
+        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber' LIMIT 1");
+        $locationRow = $locationQuery->fetch_assoc();
+        if($locationRow === NULL)
+        $outputJSON = array('Status'=>'Failure');
+        else{
+        $location = $locationRow['idLocation'];
+        $insertion = $mysqli->query("INSERT INTO Classes (User_idUser, classTime, day, Location_idLocation) VALUES ($userID, '$time', '$day', $location)");
+        $outputJSON = array('Status'=>'Success');
+        }
+    }
+        
+    echo json_encode($outputJSON);
 });
 
 $app->post('/addFavorite', function() {
@@ -350,53 +431,53 @@ $app->post('/addFavorite', function() {
     $roomNumber = $_POST['roomNumber'];
     $roomName = $_POST['roomName'];
     if($building === "")
-	$outputJSON = array('Status'=>'Failure');
+    $outputJSON = array('Status'=>'Failure');
     else if($roomNumber === "" && $roomName === ""){
-	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' LIMIT 1");
-	    $locationRow = $locationQuery->fetch_assoc();
-	    if($locationRow === NULL)
-		$outputJSON = array('Status'=>'Failure');
-	    else{
-		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
-		$outputJSON = array('Status'=>'Success');
-		}
-	}
-	else if($roomNumber === ""){
-	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName '$roomName' LIMIT 1");
-	    $locationRow = $locationQuery->fetch_assoc();
-	    if($locationRow === NULL)
-		$outputJSON = array('Status'=>'Failure');
-	    else{
-		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
-		$outputJSON = array('Status'=>'Success');
-		}
-	}
-	else if($roomName === ""){
-	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber' LIMIT 1");
-	    $locationRow = $locationQuery->fetch_assoc();
-	    if($locationRow === NULL)
-		$outputJSON = array('Status'=>'Failure');
-	    else{
-		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
-		$outputJSON = array('Status'=>'Success');
-		}
-	}
-	else{
-	    $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber' LIMIT 1");
-	    $locationRow = $locationQuery->fetch_assoc();
-	    if($locationRow === NULL)
-		$outputJSON = array('Status'=>'Failure');
-	    else{
-		$location = $locationRow['idLocation'];
-		$insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
-		$outputJSON = array('Status'=>'Success');
-		}
-	}
-	    
-	echo json_encode($outputJSON);
+        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' LIMIT 1");
+        $locationRow = $locationQuery->fetch_assoc();
+        if($locationRow === NULL)
+        $outputJSON = array('Status'=>'Failure');
+        else{
+        $location = $locationRow['idLocation'];
+        $insertion = $mysqli->query("INSERT INTO Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
+        $outputJSON = array('Status'=>'Success');
+        }
+    }
+    else if($roomNumber === ""){
+        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName '$roomName' LIMIT 1");
+        $locationRow = $locationQuery->fetch_assoc();
+        if($locationRow === NULL)
+        $outputJSON = array('Status'=>'Failure');
+        else{
+        $location = $locationRow['idLocation'];
+        $insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
+        $outputJSON = array('Status'=>'Success');
+        }
+    }
+    else if($roomName === ""){
+        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber' LIMIT 1");
+        $locationRow = $locationQuery->fetch_assoc();
+        if($locationRow === NULL)
+        $outputJSON = array('Status'=>'Failure');
+        else{
+        $location = $locationRow['idLocation'];
+        $insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
+        $outputJSON = array('Status'=>'Success');
+        }
+    }
+    else{
+        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber' LIMIT 1");
+        $locationRow = $locationQuery->fetch_assoc();
+        if($locationRow === NULL)
+        $outputJSON = array('Status'=>'Failure');
+        else{
+        $location = $locationRow['idLocation'];
+        $insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
+        $outputJSON = array('Status'=>'Success');
+        }
+    }
+        
+    echo json_encode($outputJSON);
     
 });
 
@@ -406,24 +487,24 @@ $app->post('/getFavorites', function() {
     $userID = $_POST['userID'];
     $outputJSON = array();
     if($userID === "")
-	$outputJSON = array('Status'=>'Failure');
+    $outputJSON = array('Status'=>'Failure');
     else{
-	array_push($outputJSON, array('Status'=>'Success'));
-	$classQuery = $mysqli->query("SELECT * FROM Favorites INNER JOIN Location ON Favorites.Location_idLocation = Location.idLocation INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates WHERE User_idUser = $userID");
-	$counter = 0;
-	while(true){
-	    $classOutput = array();
-	    $classList = $classQuery->fetch_assoc();
-	    if($classList === NULL)
-		break;
-	    $classOutput["buildingName"] = $classList["buildingName"]; //array_push($classOutput, array("buildingName" => $classList["buildingName"]));
-	    $classOutput["roomName"] = $classList["roomName"]; //array_push($classOutput, array("roomName" => $classList["roomName"]));
-	    $classOutput["roomNumber"] = $classList["roomNumber"]; //array_push($classOutput, array("roomNumber" => $classList["roomNumber"]));
-	    $classOutput["x"] = $classList["x"]; //array_push($classOutput, array("x" => $classList["x"]));
-	    $classOutput["y"] = $classList["y"]; //array_push($classOutput, array("y" => $classList["y"]));
-	    $classOutput["z"] = $classList["z"]; //array_push($classOutput, array("z" => $classList["z"]));
-	    $outputJSON[$counter+=1] = $classOutput;
-	}
+    array_push($outputJSON, array('Status'=>'Success'));
+    $classQuery = $mysqli->query("SELECT * FROM Favorites INNER JOIN Location ON Favorites.Location_idLocation = Location.idLocation INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates WHERE User_idUser = $userID");
+    $counter = 0;
+    while(true){
+        $classOutput = array();
+        $classList = $classQuery->fetch_assoc();
+        if($classList === NULL)
+        break;
+        $classOutput["buildingName"] = $classList["buildingName"]; //array_push($classOutput, array("buildingName" => $classList["buildingName"]));
+        $classOutput["roomName"] = $classList["roomName"]; //array_push($classOutput, array("roomName" => $classList["roomName"]));
+        $classOutput["roomNumber"] = $classList["roomNumber"]; //array_push($classOutput, array("roomNumber" => $classList["roomNumber"]));
+        $classOutput["x"] = $classList["x"]; //array_push($classOutput, array("x" => $classList["x"]));
+        $classOutput["y"] = $classList["y"]; //array_push($classOutput, array("y" => $classList["y"]));
+        $classOutput["z"] = $classList["z"]; //array_push($classOutput, array("z" => $classList["z"]));
+        $outputJSON[$counter+=1] = $classOutput;
+    }
     echo json_encode($outputJSON);
     }
 });

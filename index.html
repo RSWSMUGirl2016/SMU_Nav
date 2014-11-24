@@ -55,19 +55,18 @@
         <div id="body">
             <div id="menuWrapper" collapsed="false">
                 <div id="menu">
-                    <ul>
-                        <div id="directionsWrapper">
-                            <div id="directions">
-                            </div>  
-                            <button class="direc_bttn" id="print">Print</button>
-                            <button class="direc_bttn" id="cancel_direcs">Cancel</button>
-                            <button id="emailButton" class="direc_bttn">Send to Email</button>                          
-                        </div>
+                    <div id="directionsWrapper">
+                        <div id="directions">
+                        </div>  
+                        <button class="direc_bttn" id="print">Print</button>
+                        <button class="direc_bttn" id="cancel_direcs">Cancel</button>
+                        <button id="emailButton" class="direc_bttn">Send to Email</button>                          
+                    </div>
+                    <div id="favRecWrapper">
                         <div id="favorites">
                             <li class="favs_title"><p>Favorites</p>
                                 <ul class="favs_list">
                                     <!--Populate with api calls -->
-                                    <li><a href="">Favorite #1</a></li>
                                 </ul>
                             </li>
                         </div>
@@ -77,33 +76,36 @@
                                     <!--Populate with api calls -->
                                 </ul>
                             </li>  
-                        <div>                     
-                    </ul>
+                        </div> 
+                    </div>                    
                 </div>
             </div>
-            <div id="search_form">
-                <form id="searchingForm" action="index.html" method="POST">
-                    <input type="text" id="buildingName" placeholder="Building Name">
-                    <input type="text" id="roomName" placeholder="Room Name">
-                    <input type="text" id="roomNumber" placeholder="Room Number">
-                    <input type="submit" id="submitSearch" class="button" value="Search">
-                </form> 
+           
+            <div id="mapContainer" align="right">
+                 <div id="search_form">
+                    <form id="searchingForm" action="index.html" method="POST">
+                        <input type="text" id="buildingName" placeholder="Building Name">
+                        <input type="text" id="roomName" placeholder="Room Name">
+                        <input type="text" id="roomNumber" placeholder="Room Number">
+                        <input type="submit" id="submitSearch" class="button" value="Search">
+                    </form> 
+                </div>
+                
+                <div id="marker_form" title="Info Box">
+                    <form id ="marker_area" action ="index.html" method="POST">
+                        <h3 id="favoritesHeading" class="favoritesHeading">Add to Favorites</h3>
+                        <input id="favorites_bttn" type="submit" class="button" value="Add">
+                        <h3 id="getDirectionsHeading" class="firstHeading">Get Directions</h3>
+                        <input id="getDirections_bttn" type="submit" class="button" value="Start">
+                    </form>
+                </div>
+
+                <div id="mapWrapper">
+                    <div id="map">
+                    </div>
+                </div>
             </div>
             
-            <div id="marker_form" title="Info Box">
-                <form id ="marker_area" action ="index.html" method="POST">
-                    <h3 id="favoritesHeading" class="favoritesHeading">Add to Favorites</h3>
-                    <input id="favorites_bttn" type="submit" class="button" value="Add">
-                    <h3 id="getDirectionsHeading" class="firstHeading">Get Directions</h3>
-                    <input id="getDirections_bttn" type="submit" class="button" value="Start">
-                </form>
-            </div>
-
-            <div id="mapWrapper">
-                <div id="map">
-                </div>
-
-            </div>
         </div>      
         <footer>
             <p>Copyright &copy; 2014 Compass Studios. All Rights Reserved.</p>
