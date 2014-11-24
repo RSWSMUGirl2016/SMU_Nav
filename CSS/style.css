@@ -1,5 +1,5 @@
 body {
-	background-color: #c9e4ec;
+	background-image: url("../img/plaid.png");
 	margin: 0;
 	padding: 0;
 }
@@ -22,7 +22,7 @@ div#body {
 
 footer {
 	box-shadow: -1px -1px 1px 2px #000;
-	background-color: #96001B;
+	background-color: rgba(147, 0, 0, 0.65);
 	text-shadow: -1px -1px 1px #000;
 	color: #FFF;
 	text-align: center;
@@ -100,7 +100,7 @@ footer {
 #menuWrapper {
 	float: left;
 	width: 16%;
-	background-color: #DCDCDC;
+	background-color: rgba(22,59,140, .3);
 	border: 2px solid;
 	border-left: none;
 	border-top-right-radius: 25px;
