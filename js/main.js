@@ -50,6 +50,8 @@ $(document).ready(function () {
                             $("#favoritesHeading").hide();
                             $("#favorites_bttn").hide();
                         }
+                        var infoBoxTitle = $("#buildingName").val() + " " + $("#roomNumber").val() + " " + $("#roomName").val();
+                        $('#marker_form').dialog('option', 'title', infoBoxTitle);
                         $("#marker_form").dialog("open");
                     });
 
@@ -124,13 +126,18 @@ $(document).ready(function () {
             var pos = new google.maps.LatLng(position.coords.latitude,
                     position.coords.longitude);
 
-            var infowindow = new google.maps.InfoWindow({
+            var currPosMarker = new google.maps.Marker({
                 map: map,
-                position: pos,
-                content: 'My Location.'
+                position: pos
+            });
+            var contentString = '<p id="myLoc">My Location</p>';
+            google.maps.event.addListener(currPosMarker, 'click', function () {
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                infowindow.open(map, currPosMarker);
             });
 
-            map.setCenter(pos);
         }, function () {
             console.log("geolocation not working");
         });
@@ -292,17 +299,17 @@ function toggleMenu(action) {
 }
 
 function toggleMap(action) {
-  if (action == 'grow') {
-      $('#mapContainer').animate({
-        width: '98%'
-      }, 300);
-  } else if (action == 'shrink') {
-      $('#mapContainer').animate({
-        width: '83%'
-      }, 300);
-  } else {
-      console.log('Invalid parameter: toggleMap(' + action + ')');
-  }
+    if (action == 'grow') {
+        $('#mapContainer').animate({
+            width: '98%'
+        }, 300);
+    } else if (action == 'shrink') {
+        $('#mapContainer').animate({
+            width: '83%'
+        }, 300);
+    } else {
+        console.log('Invalid parameter: toggleMap(' + action + ')');
+    }
 }
 
 $(document).ready(function () {
@@ -394,17 +401,17 @@ function getBuildingNames() {
         success: function (result) {
             var json = JSON.parse(result);
             var buildings = new Array();
-            $.each(json, function(key, value) {
-                $.each(value, function(key2, value2) {
+            $.each(json, function (key, value) {
+                $.each(value, function (key2, value2) {
                     buildings.push(value2);
                 });
-                
+
             });
             $("#buildingName").autocomplete({
                 source: buildings
             });
         }
-    });    
+    });
 }
 
 function getRoomNames() {
@@ -415,17 +422,17 @@ function getRoomNames() {
         success: function (result) {
             var json = JSON.parse(result);
             var roomnames = new Array();
-            $.each(json, function(key, value) {
-                $.each(value, function(key2, value2) {
+            $.each(json, function (key, value) {
+                $.each(value, function (key2, value2) {
                     roomnames.push(value2);
                 });
-                
+
             });
             $("#roomName").autocomplete({
                 source: roomnames
             });
         }
-    });    
+    });
 }
 
 function getRoomNumbers() {
@@ -436,17 +443,17 @@ function getRoomNumbers() {
         success: function (result) {
             var json = JSON.parse(result);
             var roomnumbers = new Array();
-            $.each(json, function(key, value) {
-                $.each(value, function(key2, value2) {
+            $.each(json, function (key, value) {
+                $.each(value, function (key2, value2) {
                     roomnumbers.push(value2);
                 });
-                
+
             });
             $("#roomNumber").autocomplete({
                 source: roomnumbers
             });
         }
-    });    
+    });
 }
 
 function selectEvent(event) {

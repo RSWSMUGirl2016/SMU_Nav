@@ -92,7 +92,9 @@ footer {
 }
 
 /* --Body Elements-- */
-
+#myLoc{
+    text-align: center;
+}
 /* Menu */
 
 #menuWrapper {
