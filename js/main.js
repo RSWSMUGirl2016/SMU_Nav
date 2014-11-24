@@ -253,6 +253,7 @@ function register(event) {
                 datatype: "json",
                 data: loginInfo,
                 success: function (result) {
+                    var statusJson = JSON.parse(result);
                     $("#login_form").css('display', 'none');
                     $("#SignedIn").css('display', 'inline');
                     $("#register_form").dialog("close");
@@ -374,6 +375,7 @@ function getFavorites() {
                 }
             });
             $(".favs_list").append(html);
+            $(".user_fav").css("font-family", "Architects Daughter, cursive");
         }
     });
 }
@@ -392,6 +394,7 @@ function getEvents() {
                 html += '<li><a class="campus_events" href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</a></li>';
             });
             $(".events_list").append(html);
+            $(".campus_events").css("font-family", "Architects Daughter, cursive");
         }
     });
 }

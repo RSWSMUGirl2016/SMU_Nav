@@ -59,6 +59,7 @@ footer {
     position:absolute;
     top:35px;
     left:50px;
+    font-family: 'Roboto', sans-serif;
 }
 
 #registration{
@@ -66,6 +67,7 @@ footer {
     position:absolute;
     top:35px;
     left:200px;
+    font-family: 'Roboto', sans-serif;
 }
 
 #SignedIn{
@@ -173,16 +175,24 @@ html>body #menu li a, html>body #menu li p {
 	width: 100%; 
 }
 
+.favs_title{
+    font-family: Architects Daughter, cursive;
+}
+
 /* Favorites */
 
 #favorites{
 	margin-top: 1em;
 }
 
-/* Evets */
+/* Events */
 
 #events{
 	margin-top: 1em;
+}
+
+.events_title{
+    font-family: Architects Daughter, cursive;
 }
 
 /* Directions */
