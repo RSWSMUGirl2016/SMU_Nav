@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   `firstName` VARCHAR(45) NULL,
   `lastName` VARCHAR(45) NULL,
   `password` VARCHAR(45) NULL,
-  `saltValue` VARCHAR(45) NULL,
+  `saltValue` VARCHAR(70) NULL,
   PRIMARY KEY (`idUser`))
 ENGINE = InnoDB;
 
