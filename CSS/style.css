@@ -93,6 +93,25 @@ footer {
     display: none;
 }
 
+.ui-dialog,.ui-dialog,.ui-widget, .ui-widget-content, .ui-corner-all, .foo, .ui-draggable, .ui-resizable {
+	background:rgba(22,59,140, .3) !important
+}​
+
+.ui-dialog .ui-widget-header {
+	
+    
+	text-align: center;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	text-align: center;
+	font-size: 1.5em;
+	color: #FFFFFF;
+	font-family: 'Roboto', sans-serif;
+   	text-shadow: -1px 0 0 #96001B, 1px 1px 0 #96001B,
+           2px -1px 0 #96001B, 3px 0 0 #96001B;
+}
+
 /* --Body Elements-- */
 #myLoc{
     text-align: center;
