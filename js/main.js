@@ -21,6 +21,9 @@ $(document).ready(function () {
     //Use the getCoordinats API call and push marker onto map
     $("#submitSearch").click(function () {
         event.preventDefault();
+        if(marker !== undefined){
+            marker.setMap(null);
+        }
         var coordinatesInfo = {buildingName: $("#buildingName").val(), roomNumber: $("#roomNumber").val(), roomName: $("#roomName").val()};
         $.ajax({
             type: "POST",
@@ -36,7 +39,7 @@ $(document).ready(function () {
                     var x = json.x;
                     var y = json.y;
                     var z = json.z;
-                    var bounds = new google.maps.LatLngBounds();
+                    //var bounds = new google.maps.LatLngBounds();
                     marker = new google.maps.Marker({
                         position: new google.maps.LatLng(x, y),
                         title: "Testing!"
@@ -280,13 +283,13 @@ function logout(event) {
 }
 
 function toggleMenu(action) {
-    if (action == 'show') {
+    if (action === 'show') {
         $('#menuWrapper').show("slide", {direction: "left"}, 300);
         $("#menuWrapper").attr("collapsed", "false");
 
         // Shrink Map
         toggleMap('shrink');
-    } else if (action == 'hide') {
+    } else if (action === 'hide') {
         $('#menuWrapper').hide("slide", {direction: "left"}, 300);
         $("#menuWrapper").attr("collapsed", "true");
 
@@ -299,11 +302,11 @@ function toggleMenu(action) {
 }
 
 function toggleMap(action) {
-    if (action == 'grow') {
+    if (action === 'grow') {
         $('#mapContainer').animate({
             width: '98%'
         }, 300);
-    } else if (action == 'shrink') {
+    } else if (action === 'shrink') {
         $('#mapContainer').animate({
             width: '83%'
         }, 300);
