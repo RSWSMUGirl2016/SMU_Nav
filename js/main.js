@@ -279,6 +279,11 @@ function logout(event) {
         success: function (result) {
             $("#login_form").css('display', 'inline');
             $("#SignedIn").css('display', 'none');
+            $("#favoritesHeading").hide();
+            $("#favorites_bttn").hide();
+            $('#favorites').hide();
+            $(".favs_list").remove();
+            
         }
     });
 }
