@@ -125,6 +125,16 @@ $app->post('/getCoordinates', function (){
     }
 });
 
+define("PBKDF2_HASH_ALGORITHM", "sha256");
+define("PBKDF2_ITERATIONS", 1500);
+define("PBKDF2_SALT_BYTE_SIZE", 10);
+define("PBKDF2_HASH_BYTE_SIZE", 60);
+define("HASH_SECTIONS", 6);
+define("HASH_ALGORITHM_INDEX", 2);
+define("HASH_ITERATION_INDEX", 3);
+define("HASH_SALT_INDEX", 5);
+define("HASH_PBKDF2_INDEX", 8);
+
 function create_hash($password)
 {
     global $mysqli;
