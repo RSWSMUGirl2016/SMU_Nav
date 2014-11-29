@@ -1,54 +1,60 @@
 body {
-	background-image: url("../img/plaid.png");
-	margin: 0;
-	padding: 0;
+    background-image: url("../img/plaid.png");
+    margin: 0;
+    padding: 0;
 }
 
 header {
-	margin-top: -2em;
-	position: relative;
-	background-color: #163B8C;
-	background-image: url("../img/MastheadGradientBG.jpg");
-	background-size: 100% 100%;
-	background-repeat: no-repeat; 
-	text-align: center;
+    margin-top: -2em;
+    position: relative;
+    background-color: #163B8C;
+    background-image: url("../img/MastheadGradientBG.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat; 
+    text-align: center;
 }
 
 div#body {
-	margin: -1em 0 1.3em 0;
-	padding-top: 0;
-	overflow: hidden;
+    margin: -1em 0 1.3em 0;
+    padding-top: 0;
+    overflow: hidden;
 }
 
 footer {
-	box-shadow: -1px -1px 1px 2px #000;
-	background-color: rgba(147, 0, 0, 0.65);
-	text-shadow: -1px -1px 1px #000;
-	color: #FFF;
-	text-align: center;
+    box-shadow: -1px -1px 1px 2px #000;
+    background-color: rgba(147, 0, 0, 0.65);
+    text-shadow: -1px -1px 1px #000;
+    color: #FFF;
+    text-align: center;
+}
+
+.button{
+    font-family: Roboto, sans-serif
 }
 
 /* --Header Elements-- */
 
 #logo {
-	position: absolute;
-	top: .2em;
-	left: 5em;
-	height: 6em;
+    position: absolute;
+    top: .2em;
+    left: 5em;
+    height: 6em;
 }
 
 #title {
-	padding: .5em;
-	font-size: 3em;
-	color: #FFFFFF;
-        font-family: 'Roboto', sans-serif;
-   	text-shadow: -1px 0 0 #96001B, 1px 1px 0 #96001B,
-           2px -1px 0 #96001B, 3px 0 0 #96001B;
+    padding: .5em;
+    font-size: 3em;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: -1px 0 0 #96001B, 1px 1px 0 #96001B,
+        2px -1px 0 #96001B, 3px 0 0 #96001B;
 
 }
 
 #login_form {
     position: absolute;
+    margin:auto;
+    width:auto;
     top:1em;
     right: 3em;
     padding:10px;
@@ -94,35 +100,35 @@ footer {
 }
 
 .ui-dialog,.ui-dialog,.ui-widget, .ui-widget-content, .ui-corner-all, .foo, .ui-draggable, .ui-resizable {
-	background:rgba(22,59,140, .3) !important
+    background:rgba(22,59,140, .3) !important
 }​
 
 .ui-dialog .ui-widget-header {
-	text-align: center;
+    text-align: center;
 }
 
 .ui-dialog .ui-dialog-titlebar {
-	text-align: center;
-	font-size: 1.5em;
-	color: #FFFFFF;
-	font-family: 'Roboto', sans-serif;
-   	text-shadow: -1px 0 0 #96001B, 1px 1px 0 #96001B,
-           2px -1px 0 #96001B, 3px 0 0 #96001B;
+    text-align: center;
+    font-size: 1.5em;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: -1px 0 0 #96001B, 1px 1px 0 #96001B,
+        2px -1px 0 #96001B, 3px 0 0 #96001B;
 }
 
 #register_form #fName, #register_form #lName {
-	width: 47%;
-	margin-bottom: 2%;
-	
+    width: 47%;
+    margin-bottom: 2%;
+
 }
 
 #register_form #fName {
-	margin-right: 1%;
+    margin-right: 1%;
 }
 
 #register_form #Email, #register_form #Password, #register_form #ConPassword  {
-	width: 98%;
-	margin-bottom: 2%;
+    width: 98%;
+    margin-bottom: 2%;
 }
 
 /* --Body Elements-- */
@@ -132,133 +138,133 @@ footer {
 /* Menu */
 
 #menuWrapper {
-	float: left;
-	width: 16%;
-	background-color: rgba(22,59,140, .3);
-	border: 2px solid;
-	border-left: none;
-	border-top-right-radius: 25px;
-	border-bottom-right-radius: 25px;
-	position: absolute;
-	left: -1em;
+    float: left;
+    width: 16%;
+    background-color: rgba(22,59,140, .3);
+    border: 2px solid;
+    border-left: none;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    position: absolute;
+    left: -1em;
 }
 
 #menu {
-	float: left;
-	width: 85%;
-	margin-bottom: 1em;
-	font-size: 1.25em;
+    float: left;
+    width: 85%;
+    margin-bottom: 1em;
+    font-size: 1.25em;
 }
 
 #menu_button {
-	float: left;
-	background-image: url(../img/menu_icon.png);
-	background-color: transparent;
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
-	height: 3em;
-	width: 3em;
-	margin-top: 2.5em;
-	margin-left: 1.5em;
+    float: left;
+    background-image: url(../img/menu_icon.png);
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 3em;
+    width: 3em;
+    margin-top: 2.5em;
+    margin-left: 1.5em;
 }
 
 #menu  ul {
-	list-style:none;
-	margin: 0;
-	padding: 0;
-	border: none;
-	/*color: white;
-	list-style-type: none;*/
+    list-style:none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    /*color: white;
+    list-style-type: none;*/
 }
 
 #menu li {
 
-	border-bottom: 1px solid #90bade;
-	margin: 0;
-	list-style: none;
-	list-style-image: none;
+    border-bottom: 1px solid #90bade;
+    margin: 0;
+    list-style: none;
+    list-style-image: none;
 }
 
 #menu li p {
-	display: block;
-	padding: 5px 5px 5px 0.5em;
-	border-left: 10px solid #CE1126;
-	border-right: 10px solid #E2D6B5;
-	background-color: #CE1126;
-	color: #fff;
-	text-decoration: none;
-	font-size: 1.2em;
-	width: 100%; 
+    display: block;
+    padding: 5px 5px 5px 0.5em;
+    border-left: 10px solid #CE1126;
+    border-right: 10px solid #E2D6B5;
+    background-color: #CE1126;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    width: 100%; 
 }
 
 html>body #menu li a, html>body #menu li p {
-	width: auto;
-	margin: 0;
+    width: auto;
+    margin: 0;
 }
 
 #menu li a {
-	border-left: 10px solid #E2D6B5;
-	border-right: 10px solid #E2D6B5;
-	background-color: #E2D6B5;
-	display: block;
-	padding: 5px 5px 5px 0.5em;
-	color: #000;
-	text-decoration: none;
-	width: 100%; 
+    border-left: 10px solid #E2D6B5;
+    border-right: 10px solid #E2D6B5;
+    background-color: #E2D6B5;
+    display: block;
+    padding: 5px 5px 5px 0.5em;
+    color: #000;
+    text-decoration: none;
+    width: 100%; 
 }
 
 .favs_title{
-    font-family: Architects Daughter, cursive;
+    font-family: 'Roboto', sans-serif;;
 }
 
 /* Favorites */
 
 #favorites{
-	margin-top: 1em;
+    margin-top: 1em;
 }
 
 /* Events */
 
 #events{
-	margin-top: 1em;
+    margin-top: 1em;
 }
 
 .events_title{
-    font-family: Architects Daughter, cursive;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Directions */
 
 #dir_title {
-	margin-bottom: -1px;
-	padding-left: 1em;
-	border: 1.75px solid #959595;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
+    margin-bottom: -1px;
+    padding-left: 1em;
+    border: 1.75px solid #959595;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 #dir_title p {
-	font-weight: bold;
-	color: #163B8C;
-	margin-left: 5%;
+    font-weight: bold;
+    color: #163B8C;
+    margin-left: 5%;
 }
 
 #directions {
-	margin-top: 0px;
-	margin-bottom: 1em;
-	padding-left: 1.5em;
+    margin-top: 0px;
+    margin-bottom: 1em;
+    padding-left: 1.5em;
 }
 
 #directions p {
-	color: #163B8C;
+    color: #163B8C;
 }
 
 #directionsWrapper {
-	margin: 1em 0 1em 0em;
+    margin: 1em 0 1em 0em;
 }
 
 .direc_bttn {
-	border-top: 1px solid #96d1f8;
+    border-top: 1px solid #96d1f8;
     background: #65a9d7;
     background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
     background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
@@ -275,17 +281,17 @@ html>body #menu li a, html>body #menu li p {
     text-shadow: rgba(0,0,0,.4) 0 1px 0;
     color: white;
     font-size: 14px;
-    font-family: Georgia, serif;
+    font-family: Roboto, sans-serif;
     text-decoration: none;
     vertical-align: middle;
     margin-left: 15%;
-	margin-right: 2.5em;
-	margin-bottom: 2em;	
+    margin-right: 2.5em;
+    margin-bottom: 2em;	
 }
 
 /*#menu > ul > li > ul {
-	color: black;
-	list-style-type: none;
+        color: black;
+        list-style-type: none;
 }
 ul li ul {
     display: none;
@@ -298,19 +304,19 @@ ul li:hover ul {
 /* Map */
 
 #mapContainer {
-	float: right;
-	width: 83%;
-	margin: 0 1% 0 1%;
+    float: right;
+    width: 83%;
+    margin: 0 1% 0 1%;
 }
 
 #mapWrapper {
-	
-	height: 40em;
+
+    height: 40em;
 }
 
 /* Searching Form*/
 #searchingForm {
-	right: 0;
+    right: 0;
 }
 
 #marker_form{
@@ -320,5 +326,6 @@ ul li:hover ul {
 /* --Footer Elements-- */
 
 footer p {
-	padding: 1em;
+    font-family: 'Roboto', sans-serif; 
+    padding: 1em;
 }

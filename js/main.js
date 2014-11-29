@@ -194,7 +194,6 @@ $(document).ready(function () {
     getRoomNumbers();
 
     $('.campus_events').click(selectEvent);
-
 });
 
 var userId;
@@ -380,7 +379,7 @@ function getFavorites() {
                 }
             });
             $(".favs_list").append(html);
-            $(".user_fav").css("font-family", "Architects Daughter, cursive");
+            $(".user_fav").css("font-family", "Roboto, sans-serif");
         }
     });
 }
@@ -399,7 +398,7 @@ function getEvents() {
                 html += '<li><a class="campus_events" href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</a></li>';
             });
             $(".events_list").append(html);
-            $(".campus_events").css("font-family", "Architects Daughter, cursive");
+            $(".campus_events").css("font-family", "Roboto, sans-serif");
         }
     });
 }
