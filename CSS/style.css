@@ -140,7 +140,7 @@ footer {
 #menuWrapper {
     float: left;
     width: 16%;
-    background-color: rgba(22,59,140, .3);
+    background-color: whitesmoke;
     border: 2px solid;
     border-left: none;
     border-top-right-radius: 25px;
