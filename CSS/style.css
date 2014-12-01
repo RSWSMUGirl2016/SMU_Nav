@@ -135,7 +135,7 @@ footer {
 }
 
 .ui-dialog,.ui-dialog,.ui-widget, .ui-widget-content, .ui-corner-all, .foo, .ui-draggable, .ui-resizable {
-    background:rgba(22,59,140, .3) !important
+    background: whitesmoke !important;
 }​
 
 .ui-dialog .ui-widget-header {
@@ -143,6 +143,10 @@ footer {
 }
 
 .ui-dialog .ui-dialog-titlebar {
+    background-color: #163B8C !important;
+    background-image: url("../img/MastheadGradientBG.jpg") !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
     text-align: center;
     font-size: 1.5em;
     color: #FFFFFF;
