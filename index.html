@@ -23,13 +23,21 @@
             <img src="img/SMU_Nav_Logo2.png" id="logo">
             <h1 id="title">SMU NAV</h1>
 
-            <div id="login_form">
+            <div id="loginContainer">
                 <form id="signInArea" action="index.html" method = "POST">
-                    <input id="SignInEmail" type = "email" name="email" placeholder="Email">
-                    <input id="SignInPassword" type="password" name="password" placeholder="Password" required pattern=".{8,}">
-                    <input id="login" class="button" type="submit" value="Login">
-                    <a id ="registration" href="#register_form">Register?</a>
-                    <a id ="forgotPass" href = "forgotpass.html">Forgot Password?</a>
+                    <div id="loginInputWrapper">
+                        <div class="loginInputWrapper">
+                            <input id="SignInEmail" class="loginInput" type = "email" name="email" placeholder="Email">
+                            <a id ="registration" class="loginLink" href="#register_form">Register?</a>
+                        </div>
+                        <div class="loginInputWrapper">
+                            <input id="SignInPassword" class="loginInput" type="password" name="password" placeholder="Password" required pattern=".{8,}">
+                            <a id ="forgotPass" class="loginLink" href = "forgotpass.html">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <div id="loginButtonWrapper">
+                        <input id="login" class="button" type="submit" value="Login">
+                    </div>
                 </form>
             </div>
             

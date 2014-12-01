@@ -214,8 +214,8 @@ function login(event) {
                 window.alert("Incorrect Password or Email");
             }
             else {
-                $("#login_form").css('display', 'none');
-                $("#SignedIn").css('display', 'inline');
+                $("#loginContainer").hide();
+                $("#SignedIn").show();
                 $("#welcome").text("Welcome!!");
                 $("#favorites").show();
                 $("#favoritesHeading").show();
@@ -253,8 +253,8 @@ function register(event) {
                 data: loginInfo,
                 success: function (result) {
                     var statusJson = JSON.parse(result);
-                    $("#login_form").css('display', 'none');
-                    $("#SignedIn").css('display', 'inline');
+                    $("#loginContainer").hide();
+                    $("#SignedIn").show();
                     $("#register_form").dialog("close");
                     $("#welcome").text("Welcome!!");
                     $("#favorites").show();
@@ -276,7 +276,7 @@ function logout(event) {
         type: "POST",
         url: "api/index.php/logout",
         success: function (result) {
-            $("#login_form").css('display', 'inline');
+            $("#loginContainer").show();
             $("#SignedIn").css('display', 'none');
             $("#favoritesHeading").hide();
             $("#favorites_bttn").hide();

@@ -53,27 +53,62 @@ footer {
 
 #login_form {
     position: absolute;
-    margin:auto;
-    width:auto;
     top:1em;
-    right: 3em;
+    right: 1em;
     padding:10px;
+    width: 30%;
 }
 
-#forgotPass{
+#loginContainer {
+    position: absolute;
+    width: 30%;
+    height: 80%;
+    right: 0;
+    top: 0;
+    padding: 1.2em;
+    /* text-align: right; */
+}
+
+#loginWrapper {
+    top:auto;
+    bottom:auto;
+    height: 90%;
+}
+
+#loginInputWrapper {
+    width: 80%;
+    /* float: right; */
+    /* position: absolute; */
+    /* text-align: right; */
+}
+
+.loginInputWrapper {
+    /* position: absolute; */
+    float: left;
+    width: 13em;
+    text-align: left;
+}
+
+#loginButtonWrapper {
+    width: 10%;
+    height: 100%;
+    float: left;
+}
+
+.loginInput {
+    width: 15em;
+}
+
+.loginLink {
+    float: left;
+    width: 100%;
     color:white;
-    position:absolute;
-    top:35px;
-    left:50px;
     font-family: 'Roboto', sans-serif;
 }
 
-#registration{
-    color:white;
-    position:absolute;
-    top:35px;
-    left:200px;
-    font-family: 'Roboto', sans-serif;
+#login {
+    /* position: absolute; */
+    /* left: 0; */
 }
 
 #SignedIn{
