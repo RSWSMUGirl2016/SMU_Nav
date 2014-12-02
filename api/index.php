@@ -244,7 +244,7 @@ $app->post('/loginUser', function(){
         $stmt1 = $mysqli -> prepare($sql);
         $stmt1 -> bind_param('s', $email);
         $stmt1 -> execute();
-        
+        $passwordVal = '';
         $stmt1->bind_result($passwordVal);
         $stmt1 -> fetch();
        
