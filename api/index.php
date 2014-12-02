@@ -240,7 +240,7 @@ $app->post('/loginUser', function(){
     else{
         $stmt->close();
 
-        $sql = "SELECT password FROM User WHERE email=(?)";
+        $sql = "SELECT saltValue FROM User WHERE email=(?)";
         $stmt1 = $mysqli -> prepare($sql);
         $stmt1 -> bind_param('s', $email);
         $stmt1 -> execute();
