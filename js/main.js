@@ -90,8 +90,10 @@ $(document).ready(function () {
                         $('#directionsWrapper').show();
                         $("#marker_form").dialog("close");
                         if (navigator.geolocation) {
+                            console.log("In navigator");
                             browserSupportFlag = true;
                             navigator.geolocation.getCurrentPosition(function (position) {
+                                console.log("Entered");
                                 initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
                                 var start = initialLocation;
@@ -102,8 +104,10 @@ $(document).ready(function () {
                                     travelMode: google.maps.TravelMode.WALKING
                                 };
                                 directionsService.route(request, function (response, status) {
-                                    if (status == google.maps.DirectionsStatus.OK) {
+                                    if (status === google.maps.DirectionsStatus.OK) {
                                         directionsDisplay.setDirections(response);
+                                    } else {
+                                        console.log("Directions not displaying");
                                     }
                                 });
                                 $("#cancel_direcs").click(function () {
