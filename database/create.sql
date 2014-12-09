@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Location` (
   `roomName` VARCHAR(45) NULL,
   `roomNumber` INT NULL,
   `Coordinates_idCoordinates` INT NOT NULL,
+  `favoriteCount` INT NULL,
   PRIMARY KEY (`idLocation`, `Coordinates_idCoordinates`),
   INDEX `fk_Location_Coordinates1_idx` (`Coordinates_idCoordinates` ASC),
   CONSTRAINT `fk_Location_Coordinates1`

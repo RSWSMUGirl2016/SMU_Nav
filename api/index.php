@@ -2,7 +2,7 @@
 require 'vendor/autoload.php';
 require 'SendGrid/vendor/autoload.php';
 $app = new \Slim\Slim();
-$mysqli = new mysqli("localhost", "root", "SMUGirl2016", "mydb");
+$mysqli = new mysqli("localhost", "root", "compassstudios", "mydb");
 if ($mysqli->connect_errno)
     die("Connection failed: " . $mysqli->connect_error);
 
@@ -443,7 +443,7 @@ $app->post('/addFavorite', function() {
     if($building === "")
     $outputJSON = array('Status'=>'Failure');
     else if($roomNumber === "" && $roomName === ""){
-        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' LIMIT 1");
+        $locationQuery = $mysqli->query("SELECT * FROM Location WHERE buildingName = '$building' LIMIT 1");
         $locationRow = $locationQuery->fetch_assoc();
         if($locationRow === NULL)
         $outputJSON = array('Status'=>'Failure');
@@ -451,10 +451,15 @@ $app->post('/addFavorite', function() {
         $location = $locationRow['idLocation'];
         $insertion = $mysqli->query("INSERT INTO Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
         $outputJSON = array('Status'=>'Success');
+	$countQuery = $mysqli->query("SELECT favoriteCount FROM Location WHERE idLocation = '$location' LIMIT 1");
+	$countRow = $countQuery->fetch_assoc();
+	$count = $locationRow['favoriteCount'];
+	$count = $count + 1;
+	$update = $mysqli->query("UPDATE Location SET favoriteCount = '$count' WHERE idLocation = '$location'");
         }
     }
     else if($roomNumber === ""){
-        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName '$roomName' LIMIT 1");
+        $locationQuery = $mysqli->query("SELECT * FROM Location WHERE buildingName = '$building' AND roomName '$roomName' LIMIT 1");
         $locationRow = $locationQuery->fetch_assoc();
         if($locationRow === NULL)
         $outputJSON = array('Status'=>'Failure');
@@ -462,10 +467,15 @@ $app->post('/addFavorite', function() {
         $location = $locationRow['idLocation'];
         $insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
         $outputJSON = array('Status'=>'Success');
+	$countQuery = $mysqli->query("SELECT favoriteCount FROM Location WHERE idLocation = '$location' LIMIT 1");
+	$countRow = $countQuery->fetch_assoc();
+	$count = $locationRow['favoriteCount'];
+	$count = $count + 1;
+	$update = $mysqli->query("UPDATE Location SET favoriteCount = '$count' WHERE idLocation = '$location'");
         }
     }
     else if($roomName === ""){
-        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber' LIMIT 1");
+        $locationQuery = $mysqli->query("SELECT * FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber' LIMIT 1");
         $locationRow = $locationQuery->fetch_assoc();
         if($locationRow === NULL)
         $outputJSON = array('Status'=>'Failure');
@@ -473,10 +483,15 @@ $app->post('/addFavorite', function() {
         $location = $locationRow['idLocation'];
         $insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
         $outputJSON = array('Status'=>'Success');
+	$countQuery = $mysqli->query("SELECT favoriteCount FROM Location WHERE idLocation = '$location' LIMIT 1");
+	$countRow = $countQuery->fetch_assoc();
+	$count = $locationRow['favoriteCount'];
+	$count = $count + 1;
+	$update = $mysqli->query("UPDATE Location SET favoriteCount = '$count' WHERE idLocation = '$location'");
         }
     }
     else{
-        $locationQuery = $mysqli->query("SELECT idLocation FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber' LIMIT 1");
+        $locationQuery = $mysqli->query("SELECT * FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber' LIMIT 1");
         $locationRow = $locationQuery->fetch_assoc();
         if($locationRow === NULL)
         $outputJSON = array('Status'=>'Failure');
@@ -484,6 +499,11 @@ $app->post('/addFavorite', function() {
         $location = $locationRow['idLocation'];
         $insertion = $mysqli->query("INSERT INTO  Favorites (User_idUser, Location_idLocation) VALUES ($userID, $location)");
         $outputJSON = array('Status'=>'Success');
+	$countQuery = $mysqli->query("SELECT favoriteCount FROM Location WHERE idLocation = '$location' LIMIT 1");
+	$countRow = $countQuery->fetch_assoc();
+	$count = $locationRow['favoriteCount'];
+	$count = $count + 1;
+	$update = $mysqli->query("UPDATE Location SET favoriteCount = '$count' WHERE idLocation = '$location'");
         }
     }
         
@@ -491,6 +511,66 @@ $app->post('/addFavorite', function() {
     
 });
 
+$app->post('/getFavoriteCount', function() {
+    global $mysqli;
+    $building = $_POST['building'];
+    $roomNumber = $_POST['roomNumber'];
+    $roomName = $_POST['roomName'];
+    $outputJSON = array();
+    if($building === "")
+        $outputJSON = array('Count'=>'-1');
+    else if($roomNumber === "" && $roomName === "")
+	{    
+            $countQuery = $mysqli->query("SELECT * FROM Location WHERE buildingName = '$building'");
+	    $countRow = $countQuery->fetch_assoc();
+	    $count = $countRow['favoriteCount'];
+	    $outputJSON = array('Count'=>$count);
+	}
+    else if($roomNumber === "")
+	{
+	    $countQuery = $mysqli->query("SELECT * FROM Location WHERE buildingName = '$building' AND roomName = '$roomName'");
+	    $countRow = $countQuery->fetch_assoc();
+	    $count = $countRow['favoriteCount'];
+	    $outputJSON = array('Count'=>$count);
+	}
+    else if($roomName === "")
+	{
+	    $countQuery = $mysqli->query("SELECT * FROM Location WHERE buildingName = '$building' AND roomNumber = '$roomNumber'");
+	    $countRow = $countQuery->fetch_assoc();
+	    $count = $countRow['favoriteCount'];
+	    $outputJSON = array('Count'=>$count);
+	}
+    else
+	{
+	    $countQuery = $mysqli->query("SELECT * FROM Location WHERE buildingName = '$building' AND roomName = '$roomName' AND roomNumber = '$roomNumber'");
+	    $countRow = $countQuery->fetch_assoc();
+	    $count = $countRow['favoriteCount'];
+	    $outputJSON = array('Count'=>$count);
+	}
+    echo json_encode($outputJSON);
+});
+
+$app->get('/getTopTen', function() {
+    global $mysqli;
+    $outputJSON = array();
+    $countQuery = $mysqli->query("SELECT * FROM Location INNER JOIN Coordinates ON Location.Coordinates_idCoordinates = Coordinates.idCoordinates ORDER BY favoriteCount DESC LIMIT 10");
+    $counter = 0;
+    while(true){
+        $countOutput = array();
+        $countList = $countQuery->fetch_assoc();
+        if($countList === NULL)
+        break;
+        $countOutput["favoriteCount"] = $countList["favoriteCount"]; 
+        $countOutput["buildingName"] = $countList["buildingName"];
+        $countOutput["roomName"] = $countList["roomName"]; 
+        $countOutput["roomNumber"] = $countList["roomNumber"];
+        $countOutput["x"] = $countList["x"]; 
+        $countOutput["y"] = $countList["y"]; 
+        $countOutput["z"] = $countList["z"]; 
+        $outputJSON[$counter+=1] = $countOutput;
+    }
+    echo json_encode($outputJSON);
+});
 
 $app->post('/getFavorites', function() {
     global $mysqli;
