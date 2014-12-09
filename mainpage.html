@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400italic,400' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="CSS/style.css">
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" /> 
+        <!--<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+            THIS CAUSES AN ERROR!!! (Chris) -->
+        <script type="text/javascript" src="js/main.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYQFQZrHScITrdvdYilzjSuJIE4gjHXB8&libraries=places"></script>
+    </head>
+    <body>
+        <header>
+            <button id="menu_button"></button>
+            <img src="img/SMU_Nav_Logo2.png" id="logo">
+            <h1 id="title">SMU NAV</h1>
+
+            <div id="loginContainer">
+                <form id="signInArea" action="mainpage.html" method = "POST">
+                    <div id="loginInputWrapper">
+                        <div class="loginInputWrapper">
+                            <input id="SignInEmail" class="loginInput" type = "email" name="email" placeholder="Email">
+                            <a id ="registration" class="loginLink" href="#register_form">Register?</a>
+                        </div>
+                        <div class="loginInputWrapper">
+                            <input id="SignInPassword" class="loginInput" type="password" name="password" placeholder="Password" required pattern=".{8,}">
+                            <a id ="forgotPass" class="loginLink" href = "forgotpass.html">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <div id="loginButtonWrapper">
+                        <input id="login" class="button" type="submit" value="Login">
+                    </div>
+                </form>
+            </div>
+            
+            <div id ="SignedIn">
+                <h1 id ="welcome"></h1>
+                <form id="signOutArea" action ="mainpage.html" method="POST">
+                   <input id="logout" class="button" type="submit" value="Logout"> 
+                </form>
+            </div>
+            
+            <div id="register_form" title="Registration Form">
+                <form id ="registerArea" action ="mainpage.html" method="POST">
+                    <input id ="fName" type="text" name="fName" placeholder="First Name">
+                    <input id ="lName" type="text" name="lName" placeholder="Last Name">
+                    <input id="Email" type = "email" name="email" placeholder="Email">
+                    <input id="Password" type="password" name="password" placeholder="Password" required pattern=".{8,}">
+                    <input id="ConPassword" type="password" name="conPassword" placeholder="Confirm Password" required pattern=".{8,}">
+                    <input id="register" class="button" type="submit" value="Register" >
+                    <input id="cancel" class="button" type="button" value="Cancel" >
+                </form>
+            </div>
+        </header>
+
+        <div id="body">
+            <div id="menuWrapper" collapsed="false">
+                <div id="menu">
+                    <div id="directionsWrapper">
+                        <div id="directions">
+                        </div>  
+                        <button class="direc_bttn" id="print">Print</button>
+                        <button class="direc_bttn" id="cancel_direcs">Cancel</button>
+                        <button id="emailButton" class="direc_bttn">Send to Email</button>                          
+                    </div>
+                    <div id="favRecWrapper">
+                        <div id="favorites">
+                            <li class="favs_title"><p>Favorites</p>
+                                <ul class="favs_list">
+                                    <!--Populate with api calls -->
+                                </ul>
+                            </li>
+                        </div>
+                        <div id="events">
+                            <li class="events_title"><p>Events</p>
+                                <ul class="events_list">
+                                    <!--Populate with api calls -->
+                                </ul>
+                            </li>  
+                        </div> 
+                    </div>                    
+                </div>
+            </div>
+           
+            <div id="mapContainer" align="right">
+                 <div id="search_form">
+                    <form id="searchingForm" action="mainpage.html" method="POST">
+                        <input type="text" id="buildingName" placeholder="Building Name">
+                        <input type="text" id="roomName" placeholder="Room Name">
+                        <input type="text" id="roomNumber" placeholder="Room Number">
+                        <input type="submit" id="submitSearch" class="button" value="Search">
+                    </form> 
+                </div>
+                
+                <div id="marker_form" title="Info Box">
+                    <form id ="marker_area" action ="mainpage.html" method="POST">
+                        <h3 id="favoritesHeading" class="favoritesHeading">Add to Favorites</h3>
+                        <input id="favorites_bttn" type="submit" class="button" value="Add">
+                        <h3 id="getDirectionsHeading" class="firstHeading">Get Directions</h3>
+                        <input id="getDirections_bttn" type="submit" class="button" value="Start">
+                    </form>
+                </div>
+
+                <div id="mapWrapper">
+                    <div id="map">
+                    </div>
+                </div>
+            </div>
+            
+        </div>      
+        <footer>
+            <p>Copyright &copy; 2014 Compass Studios. All Rights Reserved.</p>
+        </footer> 
+    </body>
+</html>
