@@ -103,8 +103,13 @@ $(document).ready(function () {
                                     destination: end,
                                     travelMode: google.maps.TravelMode.WALKING
                                 };
+                                console.log("Start: " + start);
+                                console.log("End: " + end);
+                                console.log("Start directions");
                                 directionsService.route(request, function (response, status) {
                                     if (status === google.maps.DirectionsStatus.OK) {
+                                        directionsDisplay.setMap(map);
+                                        directionsDisplay.setPanel(document.getElementById('directions'));
                                         directionsDisplay.setDirections(response);
                                     } else {
                                         console.log("Directions not displaying");
