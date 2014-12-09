@@ -370,3 +370,27 @@ footer p {
     font-family: 'Roboto', sans-serif; 
     padding: 1em;
 }
+
+
+/* -- About Us Page-- */
+#aboutUsBody > * {
+    font-size: 2em;
+}
+
+#aboutUsBody {
+    width: 50%;
+    background-color: whitesmoke;
+    border: 2px solid;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    left: 25%;
+    top: 40%;
+    position: absolute;
+    text-align: center;
+}
+
+#mainPage_bttn {
+    margin-bottom: 2em;
+}
