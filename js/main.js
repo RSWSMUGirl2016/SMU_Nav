@@ -203,6 +203,28 @@ $(document).ready(function () {
     getRoomNumbers();
 
     $('.campus_events').click(selectEvent);
+
+    $("#events_info_dialog").dialog({
+        autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
+    });
+    $("#more_info_events").click(function () {
+        $("#events_info_dialog").dialog("open");
+    });
+
+    $("#favs_info_dialog").dialog({
+        autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
+    });
+    $("#more_info_favs").click(function () {
+        $("#favs_info_dialog").dialog("open");
+    });
+
+    $("#search_info_dialog").dialog({
+        autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
+    });
+    $("#more_info_search").click(function () {
+        $("#search_info_dialog").dialog("open");
+    });
+
 });
 
 var userId;

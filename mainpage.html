@@ -73,19 +73,36 @@
                     </div>
                     <div id="favRecWrapper">
                         <div id="favorites">
+                            <a id="more_info_favs" class="more_info" href="#favs_info_dialog"></a>
                             <li class="favs_title"><p>Favorites</p>
                                 <ul class="favs_list">
                                     <!--Populate with api calls -->
                                 </ul>
                             </li>
                         </div>
+                        <div id="favs_info_dialog" title="More Info">
+                                <form>
+                                    <p> Add a favorite by entering a location in the autocompletes
+                                    and then pressing the "Find" button.</p>
+                                    <p> Left click the marker that appears on the map </p>
+                                    <p> Click the "Add" button to add the location to your favorites.</p>
+                                </form>
+                            </div>
                         <div id="events">
+                            <a id="more_info_events" class="more_info" href="#events_info_dialog"></a>
                             <li class="events_title"><p>Events</p>
                                 <ul class="events_list">
                                     <!--Populate with api calls -->
                                 </ul>
                             </li>  
                         </div> 
+                        <div id="events_info_dialog" title="More Info">
+                            <form>
+                                <p> Get directions to an event by clicking one of the links below.</p>
+                                <p> Left click the marker that appears on the map </p>
+                                <p> Click the "Start" button to get directions.</p>
+                            </form>
+                        </div>
                     </div>                    
                 </div>
             </div>
@@ -93,12 +110,21 @@
             <div id="mapContainer" align="right">
                  <div id="search_form">
                     <form id="searchingForm" action="mainpage.html" method="POST">
+                        <a id="more_info_search" class="more_info" href="#search_info_dialog"></a>
                         <input type="text" id="buildingName" placeholder="Building Name">
                         <input type="text" id="roomName" placeholder="Room Name">
                         <input type="text" id="roomNumber" placeholder="Room Number">
                         <input type="submit" id="submitSearch" class="button" value="Find">
                     </form> 
                 </div>
+                <div id="search_info_dialog" title="More Info">
+                    <form>
+                        <p> Find a location by entering a building name, along with
+                            a room name and/or room number.</p>
+                        <p> Then click the "Find" button and a marker should appear
+                            at that location.</p>
+                    </form>
+                </div>     
                 
                 <div id="marker_form" title="Info Box">
                     <form id ="marker_area" action ="mainpage.html" method="POST">
