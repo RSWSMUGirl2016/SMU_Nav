@@ -136,6 +136,15 @@ footer {
     display: none;
 }
 
+#forgot_password_form{
+    display: none;
+}
+
+#forgot_password_form input[type="email"]{
+    display:block;
+}
+
+
 .ui-dialog,.ui-dialog,.ui-widget, .ui-widget-content, .ui-corner-all, .foo, .ui-draggable, .ui-resizable {
     background: whitesmoke !important;
 }​

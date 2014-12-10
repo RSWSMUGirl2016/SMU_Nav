@@ -171,6 +171,38 @@ $(document).ready(function () {
         }
     });
 
+    //Password Recovery Popup
+    $("#forgot_password_form").dialog({
+        autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
+    });
+     $("#forgotPass").click(function () {
+        $("#forgot_password_form").dialog("open");
+    });
+    $("#recoverCancel").click(function () {
+        $("#forgot_password_form").dialog("close");
+    });
+    $("#recover").click(recoverPassword);
+
+    function recoverPassword(event){
+        event.preventDefault();
+        var theMessage="Your SMU Nav password has been reset to whatever!!!";
+        var emailMssg = {"to": $("#recoveryEmail").val(), "html": theMessage};
+         $.ajax({
+            type: "POST",
+            datatype: "json",
+            data: emailMssg,
+            url: "api/index.php/sendEmail",
+            success: function (result) {
+                window.alert("Email sent");
+            }
+        });
+        $("#forgot_password_form").dialog("close");
+    }
+
+
+
+
+
     //Registration Popup
     $("#register_form").dialog({
         autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
