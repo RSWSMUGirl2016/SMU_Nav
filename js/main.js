@@ -271,12 +271,48 @@ function login(event) {
     });
 }
 
+function validateEmail(x) {
+    var atpos = x.indexOf("@");
+    var dotpos = x.lastIndexOf(".");
+    if (atpos< 1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+        return false;
+    }else{
+        return true;
+    }
+}
+
 function register(event) {
+
     event.preventDefault();
+    if($("#Email").val()==""){    //form validation for register
+        window.alert("Email field required");
+        return;
+    }
+    if($("#lName").val()==""){
+        window.alert("Last Name field required.");
+        return;
+    }
+    if($("#fName").val()==""){
+        window.alert("First Name field required.");
+        return;
+    }
+    if($("#Password").val()==""){
+        window.alert("Password field required");
+        return;
+    }
+    if($("#Password").val().length<8){
+        window.alert("Password must 8 or more characters.");
+        return;
+    }
     if($("#Password").val() != $("#ConPassword").val()){//if password and confrim password
         window.alert("Confirm password does not match.");//do not match
         return;
     }
+    if(validateEmail($("#Email").val())==false){
+        window.alert("Invalid Email");
+        return;
+    }
+
     var registerInfo = {"fName": $("#fName").val(),
         "lName": $("#lName").val(),
         "email": $("#Email").val(),
