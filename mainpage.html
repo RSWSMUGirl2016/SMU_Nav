@@ -32,7 +32,7 @@
                         </div>
                         <div class="loginInputWrapper">
                             <input id="SignInPassword" class="loginInput" type="password" name="password" placeholder="Password" required pattern=".{8,}">
-                            <a id ="forgotPass" class="loginLink" href = "forgotpass.html">Forgot Password?</a>
+                            <a id ="forgotPass" class="loginLink" href = "#forgot_password_form">Forgot Password?</a>
                         </div>
                     </div>
                     <div id="loginButtonWrapper">
@@ -59,6 +59,16 @@
                     <input id="cancel" class="button" type="button" value="Cancel" >
                 </form>
             </div>
+
+            <div id="forgot_password_form" title="Password Recovery">
+                <p>Enter your email to recover your password.</p>
+                <form id="emailArea" action="mainpage.html" method="POST">
+                    <input id="recoveryEmail" type="email" name="email" palceholder="Email">
+                    <input id="recover" class="button" type="submit" value="Recover">
+                    <input id="recoverCancel" class="button" type="button" value="Cancel">
+                </form>
+            </div>
+
         </header>
 
         <div id="body">

@@ -146,6 +146,13 @@ footer {
 
 #search_info_dialog{
     display: none;
+
+#forgot_password_form{
+    display: none;
+}
+
+#forgot_password_form input[type="email"]{
+    display:block;
 }
 
 
