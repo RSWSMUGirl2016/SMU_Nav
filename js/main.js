@@ -273,6 +273,10 @@ function login(event) {
 
 function register(event) {
     event.preventDefault();
+    if($("#Password").val() != $("#ConPassword").val()){//if password and confrim password
+        window.alert("Confirm password does not match.");//do not match
+        return;
+    }
     var registerInfo = {"fName": $("#fName").val(),
         "lName": $("#lName").val(),
         "email": $("#Email").val(),
