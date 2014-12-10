@@ -374,23 +374,35 @@ footer p {
 
 /* -- About Us Page-- */
 #aboutUsBody > * {
-    font-size: 2em;
+    font-size: 1.5em;
+    font-family: 'Roboto', sans-serif;
 }
 
 #aboutUsBody {
-    width: 50%;
+    width: 60%;
     background-color: whitesmoke;
     border: 2px solid;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
-    left: 25%;
-    top: 40%;
+    left: 20%;
+    top: 20%;
     position: absolute;
     text-align: center;
 }
 
 #mainPage_bttn {
     margin-bottom: 2em;
+    height: 5em;
+    font-size: 1em;
+    webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    margin-top: 3%;
+    border: solid rgb(184, 181, 186) 1px;
+    height: 2.25em;
+    width: 9em;
 }
