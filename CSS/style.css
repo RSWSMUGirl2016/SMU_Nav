@@ -326,12 +326,12 @@ footer {
     width: 100%; 
 }
 
-html>body #menu li a, html>body #menu li p {
+html>body #menu li span, html>body #menu li p {
     width: auto;
     margin: 0;
 }
 
-#menu li a {
+#menu li span {
     border-left: 10px solid #E2D6B5;
     border-right: 10px solid #E2D6B5;
     background-color: #E2D6B5;
