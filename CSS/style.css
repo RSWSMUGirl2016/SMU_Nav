@@ -103,6 +103,14 @@ footer {
     background-repeat: no-repeat;
     background-image: url("../img/background.jpg");
 }
+
+#backgroundFull{
+    width:auto;
+    height:1000px;
+    background-size:  100%;
+    background-repeat: no-repeat;
+    background-image: url("../img/background_full.jpg");
+}
 /* --Header Elements-- */
 
 /*DELETE*/
@@ -277,6 +285,7 @@ footer {
     left: -1em;
     top: 110px;
     height: 100%;
+    display:none;
 }
 
 #menu {
@@ -436,7 +445,7 @@ ul li:hover ul {
 
 #mapContainer {
     float: right;
-    width: 83%;
+    width: 98%;
     margin: 0 1% 0 1%;
 }
 
