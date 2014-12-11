@@ -442,7 +442,7 @@ function toggleMap(action) {
         }, 300);
     } else if (action === 'shrink') {
         $('#mapContainer').animate({
-            width: '83%'
+            width: '81%'
         }, 300);
     } else {
         console.log('Invalid parameter: toggleMap(' + action + ')');
