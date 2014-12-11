@@ -273,8 +273,10 @@ footer {
     border-left: none;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: -1em;
+    top: 110px;
+    height: 100%;
 }
 
 #menu {
