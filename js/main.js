@@ -33,6 +33,16 @@ $(document).ready(function () {
 
             map.setCenter(marker.getPosition());
             marker.setMap(map);
+
+            google.maps.event.addListener(marker, 'click', function () {
+                        if (userId === undefined) {
+                            $("#favoritesHeading").hide();
+                            $("#favorites_bttn").hide();
+                        }
+                        var infoBoxTitle = $("#buildingName").val() + " " + $("#roomNumber").val() + " " + $("#roomName").val();
+                        $('#marker_form').dialog('option', 'title', infoBoxTitle);
+                        $("#marker_form").dialog("open");
+                    });
         }
     }); 
 
