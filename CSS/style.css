@@ -77,7 +77,6 @@ footer {
     border-radius: 4px;
     border: none;
     padding: 7px;
-    width:40%;
     padding-right: 10px;
     margin-right: 10px;
 }
@@ -166,9 +165,6 @@ footer {
     float: left;
 }
 
-.loginInput {
-    width: 15em;
-}
 
 .loginLink {
     float: left;
