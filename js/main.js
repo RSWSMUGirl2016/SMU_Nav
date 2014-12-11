@@ -478,7 +478,7 @@ function getFavorites() {
                     //console.log(key, value);
                     var coords = value.x + "," + value.y + "," + value.z;
                     var rel = value.buildingName + "," + value.roomNumber;
-                    html += '<li class="user_fav"><a href="" coords="' + coords + '" rel="' + rel + '">' + value.roomName + '</a></li>';
+                    html += '<li class="user_fav"><span href="" coords="' + coords + '" rel="' + rel + '">' + value.roomName + '</span></li>';
                 }
             });
             $(".favs_list").append(html);
@@ -498,7 +498,7 @@ function getEvents() {
             $.each(json, function (key, value) {
                 var coords = value.x + "," + value.y + "," + value.z;
                 var rel = value.time + "," + value.description;
-                html += '<li><a class="campus_events" href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</a></li>';
+                html += '<li><span class="campus_events" href="" coords="' + coords + '" rel="' + rel + '">' + value.name + '</span></li>';
             });
             $(".events_list").append(html);
             $(".campus_events").css("font-family", "Roboto, sans-serif");
@@ -573,4 +573,5 @@ function selectEvent(event) {
     event.preventDefault();
     var html = this.innerHTML;
     window.alert(html);
+    console.log(html);
 }
