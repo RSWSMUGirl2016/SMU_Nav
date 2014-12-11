@@ -5,6 +5,7 @@ $(document).ready(function () {
     var initialLocation;
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
+    var coordinates;
 
     function initializeMap() {
         directionsDisplay = new google.maps.DirectionsRenderer();
@@ -17,6 +18,23 @@ $(document).ready(function () {
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directions'));
     }
+
+    $('.events_list').click(function(event){
+        if($(event.target).attr('coords') !== null){
+            coordinates = $(event.target).attr('coords');
+            var arrayCoords = coordinates.split(',');
+            var x = Number(arrayCoords[0]);
+            var y = Number(arrayCoords[1]);
+
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(x, y),
+                title: "Testing!"
+            });
+
+            map.setCenter(marker.getPosition());
+            marker.setMap(map);
+        }
+    }); 
 
     //Use the getCoordinats API call and push marker onto map
     $("#submitSearch").click(function () {
@@ -199,10 +217,6 @@ $(document).ready(function () {
         $("#forgot_password_form").dialog("close");
     }
 
-
-
-
-
     //Registration Popup
     $("#register_form").dialog({
         autoOpen: false, height: 300, width: 350, modal: true, background: "blue"
@@ -256,6 +270,8 @@ $(document).ready(function () {
     $("#more_info_search").click(function () {
         $("#search_info_dialog").dialog("open");
     });
+
+
 
 });
 
