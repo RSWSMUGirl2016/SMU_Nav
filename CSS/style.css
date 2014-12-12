@@ -328,7 +328,6 @@ footer {
     height: 3em;
     width: 3em;
     border:none;
-    margin-top: 5px;
     margin-left: 1.5em;
 }
 
@@ -544,4 +543,73 @@ footer p {
 
 #more_info_search {
     float: right;
+}
+
+/* --About Us Page (Page Version) */
+
+#aboutUsPageWrapper {
+    padding: 1em;
+}
+
+#aboutUsPageWrapper #aboutUsTitle {
+    position: relative;
+}
+
+#aboutUsPageWrapper .profilesListTitle {
+    font-weight: normal;
+}
+
+#aboutUsPageWrapper ul {
+    list-style-type: none;
+}
+
+#aboutUsPageWrapper .profileContainer {
+    height: 10em;
+}
+
+#aboutUsPageWrapper #profPicContainer {
+    position: absolute;
+    width: 20%;
+}
+
+#aboutUsPageWrapper .profilePicture {
+    width: 8em;
+    height: 8em;
+    float: left;
+    border-radius: 10px;
+}
+
+#aboutUsPageWrapper .profileInfoContainer {
+    
+    float: left;
+    padding: .2em;
+    width: 80%;
+}
+
+#aboutUsPageWrapper .aboutUsInfoWrapper {
+    float: left;
+    height: 100%;
+}
+
+#aboutUsPageWrapper .profileInfoWrapper {
+    float: left;
+    width: 100%;
+}
+
+#aboutUsPageWrapper h3 {
+    margin-top: 0;
+    margin-bottom: .5em;
+}
+
+#aboutUsPageWrapper .profileInfoLabel {
+    width: auto;
+    font-weight: bold;
+    float: left;
+}
+
+#aboutUsPageWrapper .profileInfoValue {
+    font-weight: normal;
+    margin-left: .5em;
+    width: auto;
+    float: left;
 }
