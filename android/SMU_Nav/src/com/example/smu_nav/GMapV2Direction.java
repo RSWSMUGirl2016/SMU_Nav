@@ -21,6 +21,13 @@ import com.google.android.gms.maps.model.LatLng;
 import android.content.Context;
 import android.util.Log;
 
+/*
+ * Code is from: https://github.com/akexorcist/Android-GoogleDirectionAndPlaceLibrary
+ * 
+ * Credit to: akexorcist
+ * 
+ */
+
 public class GMapV2Direction {
     public final static String MODE_DRIVING = "driving";
     public final static String MODE_WALKING = "walking";

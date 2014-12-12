@@ -13,6 +13,12 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+/*
+ * Code is from Android Hive
+ * 
+ * http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
+ */
+
 public class GPSTracker extends Service implements LocationListener {
 
 	private final Context mContext;
