@@ -502,9 +502,17 @@ function getFavorites() {
 
                 } else {
                     //console.log(key, value);
+                    console.log(value.buildingName+" "+value.roomNumber+" "+value.roomName)
                     var coords = value.x + "," + value.y + "," + value.z;
-                    var rel = value.buildingName + "," + value.roomNumber;
-                    html += '<li class="user_fav"><span href="" coords="' + coords + '" rel="' + rel + '">' + value.roomName + '</span></li>';
+                    var rel="";
+                    if(value.roomName!=null){
+                        rel=value.roomName
+                    }else if(value.roomNumber!=null){
+                        rel=value.buildingName+" "+value.roomNumber;
+                    }else{
+                        rel=value.buildingName;
+                    }
+                    html += '<li class="user_fav"><span href="" coords="' + coords + '" rel="' + rel + '">' + rel + '</span></li>';
                 }
             });
             $(".favs_list").append(html);
