@@ -548,7 +548,7 @@ footer p {
 /* --About Us Page (Page Version) */
 
 #aboutUsPageWrapper {
-    padding: 1em;
+    padding-left: 2em;
 }
 
 #aboutUsPageWrapper #aboutUsTitle {
