@@ -9,6 +9,15 @@ body {
     padding: 0;
 }
 
+table{
+    text-align: left;
+    padding:5px;
+}
+
+th {
+    border-bottom:solid black 2px;
+}
+
 #search_form {
     width: 541px;
     margin-left: auto;
@@ -120,7 +129,7 @@ footer {
 #backgroundFull{
     width:auto;
     height:1000px;
-    background-size:  100%;
+    background-size:  100% 100%;
     background-repeat: no-repeat;
     background-image: url("../img/background_full.jpg");
 }

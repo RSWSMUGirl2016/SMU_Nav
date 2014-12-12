@@ -14,10 +14,23 @@
         <!--Load the AJAX API-->
 
     <script type="text/javascript">
-        $.getJSON( "http://162.243.227.48/SMU_Nav/api/index.php/getTopTen", function( data ) {
-  $( "#aboutUsBody" ).html( data );
-  alert( "Load was performed." );
-});
+    $(document).ready(function(){
+              $.getJSON( "http://162.243.227.48/SMU_Nav/api/index.php/getTopTen", function( data ) {
+        //$( ".insertInfo" ).html( data );
+        $.each(data, function(index, value ) {
+          console.log(value);
+          var $tableInfo = $("<tr>");
+          var $location = $("<td>");
+          var $rank = $("<td>");
+          var $favorites = $("<td>");
+          $location.html(value.buildingName);
+          $rank.html(index);
+          $favorites.html(value.favoriteCount );
+          $tableInfo.append($location, $rank, $favorites);
+          $(".favoriteInformation").append($tableInfo);
+        });
+      });
+      });
     </script>
     </head>
     <body>
@@ -31,16 +44,11 @@
          <div id="backgroundFull">
          </div>
         <div id="aboutUsBody">
-          <table style="width:100%">
+          <table style="width:100%" class="favoriteInformation">
             <tr>
               <th>Location</th>
               <th>Rank</th>
               <th>Favorites</th>
-            </tr>
-            <tr>
-              <td>Meadows Museum</td>
-              <td>1</td> 
-              <td>0</td>
             </tr>
           </table>
         </div>
