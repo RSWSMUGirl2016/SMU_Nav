@@ -295,11 +295,12 @@ footer {
     border-left: none;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    position: fixed;
+    position: absolute;
     left: -1em;
-    top: 110px;
     height: 100%;
+    overflow: scroll;
     display:none;
+    margin-top: 10px;
 }
 
 #menu {
