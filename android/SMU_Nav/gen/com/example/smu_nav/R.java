@@ -409,7 +409,11 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f020020;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0015;
+        public static final int BuildingName=0x7f0a0014;
+        public static final int Find=0x7f0a0017;
+        public static final int RoomName=0x7f0a0015;
+        public static final int RoomNumber=0x7f0a0016;
+        public static final int action_settings=0x7f0a0019;
         public static final int book_now=0x7f0a000e;
         public static final int buyButton=0x7f0a000a;
         public static final int buy_now=0x7f0a000f;
@@ -419,7 +423,7 @@ containing a value of this type.
         public static final int holo_dark=0x7f0a0005;
         public static final int holo_light=0x7f0a0006;
         public static final int hybrid=0x7f0a0000;
-        public static final int map=0x7f0a0014;
+        public static final int map=0x7f0a0018;
         public static final int match_parent=0x7f0a000c;
         public static final int monochrome=0x7f0a0013;
         public static final int none=0x7f0a0001;
@@ -443,8 +447,9 @@ containing a value of this type.
     }
     public static final class string {
         public static final int accept=0x7f050002;
-        public static final int action_settings=0x7f050025;
+        public static final int action_settings=0x7f050028;
         public static final int app_name=0x7f050023;
+        public static final int buildingName=0x7f050024;
         /**   Text for notification shown when the Android Wear apps needs to be updated. Only shown on the wearable. [CHAR LIMIT=NONE] 
          */
         public static final int common_android_wear_notification_needs_update_text=0x7f050009;
@@ -547,7 +552,9 @@ containing a value of this type.
         public static final int create_calendar_message=0x7f050005;
         public static final int create_calendar_title=0x7f050004;
         public static final int decline=0x7f050003;
-        public static final int hello_world=0x7f050024;
+        public static final int find=0x7f050025;
+        public static final int roomName=0x7f050026;
+        public static final int roomNumber=0x7f050027;
         public static final int store_picture_message=0x7f050001;
         public static final int store_picture_title=0x7f050000;
         /**  Text on a placeholder buy button when Google Play services is not

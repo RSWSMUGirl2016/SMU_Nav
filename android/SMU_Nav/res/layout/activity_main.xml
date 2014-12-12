@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
  
-    <fragment 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+         <EditText
+            android:id="@+id/BuildingName"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/buildingName" />
+ 
+        
+        <EditText
+            android:id="@+id/RoomName"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/roomName" />
+        
+         <EditText
+            android:id="@+id/RoomNumber"
+            android:layout_weight="1.25"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:hint="@string/roomNumber" />
+       
+        
+         <Button
+            android:id="@+id/Find"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/find" />
+ 
+    </LinearLayout>
+ 
+    <fragment
         android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
  
-</RelativeLayout>
+</LinearLayout>

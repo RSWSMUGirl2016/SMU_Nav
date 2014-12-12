@@ -2,7 +2,10 @@
 <resources>
 
     <string name="app_name">SMU_Nav</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="buildingName">B Name</string>
+    <string name="find">Find</string>
+    <string name="roomName">R Name</string>
+    <string name="roomNumber">R Number</string>
     <string name="action_settings">Settings</string>
 
 </resources>

@@ -92,7 +92,11 @@ int drawable ic_plusone_standard_off_client 0x7f02001d
 int drawable ic_plusone_tall_off_client 0x7f02001e
 int drawable powered_by_google_dark 0x7f02001f
 int drawable powered_by_google_light 0x7f020020
-int id action_settings 0x7f0a0015
+int id BuildingName 0x7f0a0014
+int id Find 0x7f0a0017
+int id RoomName 0x7f0a0015
+int id RoomNumber 0x7f0a0016
+int id action_settings 0x7f0a0019
 int id book_now 0x7f0a000e
 int id buyButton 0x7f0a000a
 int id buy_now 0x7f0a000f
@@ -102,7 +106,7 @@ int id grayscale 0x7f0a0012
 int id holo_dark 0x7f0a0005
 int id holo_light 0x7f0a0006
 int id hybrid 0x7f0a0000
-int id map 0x7f0a0014
+int id map 0x7f0a0018
 int id match_parent 0x7f0a000c
 int id monochrome 0x7f0a0013
 int id none 0x7f0a0001
@@ -118,8 +122,9 @@ int integer google_play_services_version 0x7f070000
 int layout activity_main 0x7f030000
 int menu main 0x7f090000
 int string accept 0x7f050002
-int string action_settings 0x7f050025
+int string action_settings 0x7f050028
 int string app_name 0x7f050023
+int string buildingName 0x7f050024
 int string common_android_wear_notification_needs_update_text 0x7f050009
 int string common_android_wear_update_text 0x7f050016
 int string common_android_wear_update_title 0x7f050014
@@ -151,7 +156,9 @@ int string common_signin_button_text_long 0x7f050020
 int string create_calendar_message 0x7f050005
 int string create_calendar_title 0x7f050004
 int string decline 0x7f050003
-int string hello_world 0x7f050024
+int string find 0x7f050025
+int string roomName 0x7f050026
+int string roomNumber 0x7f050027
 int string store_picture_message 0x7f050001
 int string store_picture_title 0x7f050000
 int string wallet_buy_button_place_holder 0x7f050022
