@@ -17,9 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -28,6 +25,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,7 +33,6 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -103,15 +100,11 @@ public class MainActivity extends Activity {
 				String bName = buildingName.getText().toString();
 				String rName = roomName.getText().toString();
 				String rNumber = roomNumber.getText().toString();
-				// JSONObject json = new JSONObject();
-				// try {
-				// json.put("buildingName", bName);
-				// json.put("roomName", rName);
-				// json.put("roomNumber", rNumber);
-				// } catch (JSONException e) {
-				// e.printStackTrace();
-				// }
-				// getCoordinates(json);
+
+				InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+				inputManager.hideSoftInputFromWindow(getCurrentFocus()
+						.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
 				new coordinateRequest(getApplicationContext()).execute(bName,
 						rName, rNumber);
@@ -151,7 +144,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			
+
 			Log.d("buildingName", params[0]);
 			Log.d("roomName", params[1]);
 			Log.d("roomNumber", params[2]);
